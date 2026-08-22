@@ -41,6 +41,66 @@ const wait = (page, ms) => page.evaluate((m) => new Promise((r) => setTimeout(r,
 
 const CLIPS = [
   {
+    name: 'store-preview',
+    what: 'the App Store / Play submission cut, one continuous vertical run',
+    /*
+     * SIZED BY THE STORE, NOT BY TASTE.
+     *
+     * Apple accepts exactly one iPhone preview resolution across every modern
+     * display size -- 886x1920 portrait -- and requires 15-30 seconds. The
+     * landing-page clips are 6.5s and 6.9s at 1170x2532, so they fail both:
+     * under half the duration floor, and the wrong dimensions.
+     *
+     * 390x844 CSS still renders as a real phone; 1170x2532 is only 0.13% off
+     * 886x1920 in aspect, so the master rescales with no visible reframing.
+     * What could not be fixed in the encode is length, which is why this clip
+     * exists instead of a longer hold on the existing ones -- padding a 7s
+     * clip to 15s is a still with a timer on it, not a preview.
+     *
+     * It opens on gameplay inside a second because that is the one thing every
+     * ASO source agrees on: the store autoplays muted, and viewers decide in
+     * the first three seconds. No title card, no logo, no menu.
+     *
+     * The holds are slower than the landing-page clips on purpose, and the
+     * first cut proves why they have to be: it mastered to 14.8 seconds, two
+     * tenths under Apple's floor, and only the post-encode assertion caught
+     * it. There are four rows in the board and no fifth to add, so the
+     * remaining seconds come from letting each detent land -- which is what
+     * the footage wanted anyway. A 60-degree turn that goes by in 150ms is a
+     * transition; one that settles is the mechanic.
+     */
+    size: { width: 390, height: 844, dsf: 3 },
+    play: async (page) => {
+      await wait(page, 600);
+      for (const w of ROWS.slice(0, 2)) {
+        for (const ch of w) { await page.keyboard.press(ch); await wait(page, 170); }
+        await page.keyboard.press('Enter');
+        await wait(page, 2100);
+      }
+      const tiles = await page.evaluate(() =>
+        [...document.querySelectorAll('button[aria-label^="Letter "]')].map((b) => {
+          const r = b.getBoundingClientRect();
+          return { L: b.getAttribute('aria-label').match(/Letter (\w)/)[1],
+                   x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height / 2) };
+        }));
+      const pts = ['C', 'R', 'Y'].map((L) => tiles.find((t) => t.L === L)).filter(Boolean);
+      if (pts.length === 3) {
+        await page.mouse.move(pts[0].x, pts[0].y);
+        await page.mouse.down();
+        for (const q of pts.slice(1)) { await page.mouse.move(q.x, q.y, { steps: 22 }); await wait(page, 240); }
+        await wait(page, 450);
+        await page.mouse.up();
+      }
+      await wait(page, 2100);
+      for (const w of ROWS.slice(2, 4)) {
+        for (const ch of w) { await page.keyboard.press(ch); await wait(page, 170); }
+        await page.keyboard.press('Enter');
+        await wait(page, 2100);
+      }
+      await wait(page, 1800);
+    },
+  },
+  {
     name: 'dial-turns',
     what: 'a row lands and the wheel advances 60 degrees',
     /*
@@ -221,11 +281,70 @@ for (const clip of CLIPS) {
     '-vf', 'scale=trunc(iw/2)*2:trunc(ih/2)*2', '-pix_fmt', 'yuv420p',
     '-c:v', 'libx264', '-crf', '18', '-preset', 'slow', '-r', '30', mp4],
     { stdio: 'pipe' });
-  fs.rmSync(frameDir, { recursive: true, force: true });
+  /* The submission master is encoded from THESE frames, not from the mp4 just
+     written -- see the mastering pass. Everything else can drop its frames. */
+  const keepFrames = clip.name === 'store-preview';
+  if (!keepFrames) fs.rmSync(frameDir, { recursive: true, force: true });
 
   const bytes = fs.statSync(mp4).size;
-  made.push({ name: clip.name, what: clip.what, mp4, bytes });
+  made.push({ name: clip.name, what: clip.what, mp4, bytes, list: keepFrames ? list : null, frameDir: keepFrames ? frameDir : null });
   console.log(`  ✔ ${clip.name.padEnd(18)} ${clip.size.width}x${clip.size.height}  ${(bytes / 1024 / 1024).toFixed(1)}MB`);
+}
+
+
+/*
+ * THE SUBMISSION MASTER.
+ *
+ * The capture above is graded for a landing page; a store preview is a
+ * different file with different rules, and measuring the landing-page clips
+ * against Apple's published spec failed five of nine checks. Four of those are
+ * encode-level and get fixed here:
+ *
+ *   886x1920   the only iPhone preview resolution Apple accepts, for every
+ *              modern display size from 6.1" to 6.9"
+ *   High L4.0  the capture lands at L5.0 purely because 1170x2532 is a lot of
+ *              macroblocks; at 886x1920 the same footage fits inside 4.0
+ *   ~11 Mbps   Apple targets 10-12; the capture sits near 1, which is fine for
+ *              a web page and reads as mush next to a 12 Mbps neighbour
+ *   silent AAC Apple's table lists stereo audio as a specification. A silent
+ *              256k stereo track satisfies it. The game HAS sound, and a real
+ *              mix would be better -- this only guarantees the file is not
+ *              rejected for a missing track.
+ *
+ * Duration is the one thing no encode can fix, which is why store-preview is
+ * captured long rather than stretched.
+ */
+const submission = made.find((m) => m.name === 'store-preview');
+if (submission) {
+  const out = path.join(OUT, 'store-preview__886x1920.mp4');
+  execFileSync('ffmpeg', ['-y', '-f', 'concat', '-safe', '0', '-i', submission.list,
+    '-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=48000',
+    '-vf', 'scale=886:1920:flags=lanczos',
+    '-c:v', 'libx264', '-profile:v', 'high', '-level:v', '4.0',
+    '-crf', '16', '-maxrate', '12M', '-bufsize', '24M',
+    '-pix_fmt', 'yuv420p', '-r', '30',
+    '-c:a', 'aac', '-b:a', '256k', '-ar', '48000', '-ac', '2',
+    '-shortest', '-movflags', '+faststart', out], { stdio: 'pipe' });
+  for (const m of made) if (m.frameDir) fs.rmSync(m.frameDir, { recursive: true, force: true });
+
+  /* Assert the spec rather than trust the flags: a silent -shortest can clip
+     the video, and a level ceiling is a request the encoder may decline. */
+  const probe = JSON.parse(execFileSync('ffprobe', ['-v', 'error', '-of', 'json',
+    '-show_entries', 'stream=codec_type,width,height,level,duration,channels,bit_rate', out]).toString());
+  const v = probe.streams.find((x) => x.codec_type === 'video');
+  const a = probe.streams.find((x) => x.codec_type === 'audio');
+  const secs = Number(v.duration);
+  const bad = [];
+  if (v.width !== 886 || v.height !== 1920) bad.push(`${v.width}x${v.height}, need 886x1920`);
+  if (v.level > 40) bad.push(`H.264 level ${v.level / 10}, need <= 4.0`);
+  if (secs < 15 || secs > 30) bad.push(`${secs.toFixed(1)}s, Apple requires 15-30s`);
+  if (!a || a.channels !== 2) bad.push('no stereo audio track');
+  if (bad.length) console.log(`\n\u2716 store-preview__886x1920.mp4 is NOT submittable: ${bad.join('; ')}`);
+  else {
+    const mbps = (Number(v.bit_rate) / 1e6).toFixed(1);
+    const note = Number(v.bit_rate) < 10e6 ? `; ${mbps} Mbps, under Apple's 10-12 target -- a target, not a floor, and CRF 16 says the picture is there` : `; ${mbps} Mbps`;
+    console.log(`\n\u2714 store-preview__886x1920.mp4 meets Apple's preview spec (${secs.toFixed(1)}s, 886x1920, L${v.level / 10}, stereo${note})`);
+  }
 }
 
 console.log(`\n${made.length} clips -> store/video/`);
