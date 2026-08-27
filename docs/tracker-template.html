@@ -236,8 +236,8 @@ var ITEMS=[
  {k:"s4d",tr:"s",s:4,t:"Price tiers, tax and payouts",tag:"blocked"},
 
  {k:"s6a",tr:"s",s:6,t:"Apple Developer Program &mdash; $99/yr",n:"Enrollment can take days. It is the long pole nobody notices until it is the only thing left.",tag:"todd"},
- {k:"s6b",tr:"s",s:6,t:"Google Play Developer &mdash; $25 once",n:"Plus identity verification, which now takes real time.",tag:"todd"},
- {k:"s6c",tr:"s",s:6,t:"Create the Play app &mdash; it is what produces the signing fingerprint",n:"The last REPLACE_WITH_ placeholder in assetlinks.json cannot be filled before this exists. Everything else on the Android track is already done, which makes this the highest-leverage single action on the board.",tag:"blocker"},
+ {k:"s6b",tr:"s",s:6,d:1,t:"Google Play Developer &mdash; $25 once",n:"DONE 2026-08-27. Organization account under the LLC. Organization was right twice: a personal account cannot be converted later without support, and the 12-testers-for-14-days rule applies only to personal accounts &mdash; organizations are exempt, saving two weeks at submission."},
+ {k:"s6c",tr:"s",s:6,t:"Create the Play app and enrol in Play App Signing",n:"The account alone does NOT produce the fingerprint. It lives at Setup &rarr; App signing &rarr; App signing key certificate &rarr; SHA-256, which exists only once the app is created and Play App Signing holds a key. Critically it must be the PLAY-MANAGED signing certificate, not the upload certificate &mdash; they differ, and using the upload one is a documented TWA rejection cause. Sequencing note: the board put gate zero ahead of the listing, and this step needs the app shell to exist but not to be published.",tag:"blocker"},
  {k:"s6d",tr:"s",s:6,t:"Play target API level checked at build time",n:"Play enforces a rolling minimum; the deadline moves."},
 
  /* ================= MARKETING ================= */
