@@ -9,6 +9,7 @@ import {
   useSyncExternalStore,
 } from 'react';
 import { createPortal } from 'react-dom';
+import { gate0From, showsTeachCard, showsGoalFirst } from '@/lib/gate0';
 import LetterWheel from './LetterWheel';
 import WordTray from './WordTray';
 import RankBar from './RankBar';
@@ -186,6 +187,8 @@ function sinceBackup(key: string): string {
   return `${days} days ago`;
 }
 
+
+const GATE0_NEVER_CHANGES = () => () => {};
 
 export default function Game({ data }: { data: PuzzleFile }) {
   const today = useMemo(() => new Date(), []);
@@ -1535,6 +1538,28 @@ export default function Game({ data }: { data: PuzzleFile }) {
    * the only thing that has to be read. 17 is the threshold because 16 is the
    * stock default and the next step up any browser offers clears it.
    */
+  /*
+   * The gate-zero variant, through the same door as every other
+   * server-differs-from-browser value in this file.
+   *
+   * Reading location.search in a render body is the React #418 bug this repo
+   * already paid for once, with `fullscreenSupported()`: the value differs
+   * between server and browser, so the prerendered tree is thrown away on
+   * every load. An effect avoids that but costs a second render and trips the
+   * cascading-renders lint rule, which is how the first version of this was
+   * written and why it is not written that way now.
+   *
+   * useSyncExternalStore is the shape that already exists here for exactly
+   * this. Subscribe is a no-op because the variant cannot change without a
+   * reload, and the server snapshot is 'a' — so a real player renders the
+   * shipping tree on the server and keeps it.
+   */
+  const gate0 = useSyncExternalStore(
+    GATE0_NEVER_CHANGES,
+    () => gate0From(window.location.search),
+    () => 'a' as const
+  );
+
   const [rootPx, setRootPx] = useState(16);
   useEffect(() => {
     const read = () =>
@@ -1812,10 +1837,37 @@ export default function Game({ data }: { data: PuzzleFile }) {
       {/* Sits in the flow, above the board, so it pushes nothing over and traps
           nothing. It is the first thing read in DOM order too, which is what a
           screen-reader player needs from a goal statement. */}
-      {!progress.seenIntro && (
+      {!progress.seenIntro && showsTeachCard(gate0) && (
         <p className="mx-auto mt-2 max-w-[22rem] rounded-full border border-edge-mid px-4 py-1.5 text-center text-meta font-medium text-text-secondary short:mt-0.5">
           Six letters. Six words. All from the wheel.
         </p>
+      )}
+
+      {/*
+        Gate-zero variant C: the same goal, ahead of the board instead of on
+        it. The bench's reading was that the card fails because nobody reads a
+        line above a board they have not understood yet; this separates whether
+        it fails for what it SAYS or for where it SITS. Dismissed by a tap and
+        then never seen again, exactly like the card.
+      */}
+      {!progress.seenIntro && showsGoalFirst(gate0) && (
+        <div
+          className="fixed inset-0 z-50 grid place-items-center bg-[var(--color-surface-sunk)]/95 px-6 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-label="How to play"
+        >
+          <button
+            type="button"
+            className="max-w-[26rem] text-center"
+            onClick={() => markIntroSeen()}
+          >
+            <span className="block text-title font-semibold text-text-primary">
+              Spell six words using only the six letters on the wheel.
+            </span>
+            <span className="mt-4 block text-meta text-text-muted">Tap to start</span>
+          </button>
+        </div>
       )}
 
       {puzzle.theme && (
