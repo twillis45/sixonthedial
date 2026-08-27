@@ -30,7 +30,7 @@ with no instrument behind it is worth less than an admitted blank.
 | 3 | Interaction, motion & feel | **9** | Motion, drag, depth and feedback all guarded |
 | 4 | Onboarding, friction & first run | **UNSCORED** | The bench predicts failure; nothing has tested it |
 | 5 | Accessibility | **9** | WCAG AA measured clean, calibrated, red-proofed |
-| 6 | Monetization & pay | **3** | Ruled, nothing built |
+| 6 | Monetization & pay | **5** | Entitlement designed and tested; no purchase flow |
 | 7 | Store readiness & release | **7** | Everything but the accounts |
 | 8 | Security, privacy & IP | **9** | Structural, not promised |
 | 9 | Cultural authenticity | **BLOCKED** | No pack has had a real reader |
@@ -71,10 +71,20 @@ number the whole exercise exists to avoid.
 
 ## The two that are genuinely low
 
-**Monetization (6) — 3.** Ruled on 2026-08-26: free daily, packs sold outright.
-Nothing is built. No IAP, no StoreKit, no Play Billing, and entitlement still
-lives in `localStorage` where a player can edit it. A ruling is not an
-implementation.
+**Monetization (6) — 5, up from 3 on 2026-08-27.** The defect ruling 3 named is
+now answered rather than pending: entitlement never lives in `localStorage` as
+truth. `lib/entitlement.ts` treats the store as the ledger and the device as an
+expiring cache — a live store answer always wins in both directions so a refund
+lands, a cache the store never confirmed grants nothing so a hand-edited key
+buys nothing, and a confirmed cache survives thirty days offline so a tunnel
+does not lock a paid pack. Twelve tests, red-proofed on each rule.
+
+Still 5 and not higher because **nothing can actually be bought**: no Play
+Billing, no StoreKit, no purchase flow, no restore. Those need the developer
+accounts. What is done is the part that needed thinking rather than an account,
+and it is the part that keeps `connect-src 'self'` intact — validating receipts
+would have meant a server, and a server would have ended the privacy position
+both store forms are filed on.
 
 **Live ops & retention (10) — 4.** A daily reminder ships as a calendar file and
 the streak logic is careful about what counts. But retention is the thing this
