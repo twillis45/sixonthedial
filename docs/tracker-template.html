@@ -320,7 +320,15 @@ function wire(){
     });
   });
   Array.prototype.forEach.call(document.querySelectorAll('.tracks button'),function(b){
-    b.addEventListener('click',function(){ STATE.track=b.dataset.tr; render(); schedule(); });
+    /*
+     * A TRACK IS A VIEW PREFERENCE, NOT SHARED STATE.
+     *
+     * This used to call schedule(), so merely switching tabs published a new
+     * version of the page for every viewer and woke the authoring session with
+     * a change notification. Ticks are the record and belong in the document;
+     * which tab you were last looking at is yours alone. Local only.
+     */
+    b.addEventListener('click',function(){ STATE.track=b.dataset.tr; render(); schedule(true); });
   });
 }
 
@@ -343,9 +351,9 @@ function docHtml(){
     .replace(PH_STATE,JSON.stringify(STATE).replace(/</g,'\\u003c'))
     .replace(PH_SRC,SRC);
 }
-function schedule(){
+function schedule(localOnly){
   try{ localStorage.setItem(LS,JSON.stringify(STATE)); }catch(e){}
-  if(STATE.readOnly||!api) return;
+  if(localOnly||STATE.readOnly||!api) return;
   clearTimeout(timer); say('Saving…',false,true);
   timer=setTimeout(save,1400);
 }

@@ -80,6 +80,24 @@ ol.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin:0 0 
 ol.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:1px;
   font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;color:var(--accent)}
 ol.steps strong{color:var(--ink);font-weight:600}
+ul.checks{list-style:none;padding:0;margin:14px 0 0;border:1px solid var(--rule);background:var(--surface)}
+ul.checks li{display:flex;gap:13px;padding:14px 17px;border-bottom:1px solid var(--rule)}
+ul.checks li:last-child{border-bottom:0}
+ul.checks li.crit:not(.done){border-left:3px solid var(--crit)}
+.box{flex:0 0 auto;width:19px;height:19px;margin-top:2px;padding:0;cursor:pointer;
+  border:1.5px solid var(--rule-2);background:var(--bg);color:transparent;
+  display:grid;place-items:center;border-radius:2px}
+.box:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.box[aria-checked="true"]{background:var(--ok);border-color:var(--ok);color:#fff}
+.box[disabled]{cursor:default;opacity:.55}
+.box svg{width:11px;height:11px;display:block}
+.chk .t{margin:0;font-size:15px;font-weight:500;color:var(--ink);line-height:1.45}
+.chk .n{margin:5px 0 0;font-size:13.5px;line-height:1.55;color:var(--ink-2);max-width:76ch}
+.chk.done .t{color:var(--ink-3);text-decoration:line-through;text-decoration-thickness:1px}
+.chk.done .n{color:var(--ink-3)}
+.flag{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--crit);background:var(--crit-soft);border:1px solid currentColor;padding:2.5px 6px;margin-left:8px;
+  white-space:nowrap;vertical-align:1.5px}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:1px;
   background:var(--rule);border:1px solid var(--rule);margin:16px 0 0}
 .card{background:var(--surface);padding:16px 17px 15px;display:flex;flex-direction:column;gap:9px}
@@ -163,6 +181,10 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin
   <p style="margin-top:9px">This is a <strong>kill screen, not a validator.</strong> It can prove the first run illegible. It cannot prove anyone will come back tomorrow, and retention is the thing this product actually lives on. Passing here earns a day-2 test, not a launch.</p>
 </div></div>
 
+<h2>Before you test anybody</h2>
+<p class="lede">Gate zero is <strong>not runnable today</strong> &mdash; three of the four variants do not exist, and one item below will silently invalidate every run after the first if it is skipped. Ticks save into the page.</p>
+<ul class="checks" id="checks"></ul>
+
 <h2>The four variants</h2>
 <p class="lede">Same game, four first-runs. D is the control and exists so the other three have something to beat — without it, any number looks like a result.</p>
 <div class="cards" id="cards"></div>
@@ -180,6 +202,7 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin
 var SRC="__SRC__";
 var STATE=JSON.parse(document.getElementById('state').textContent);
 var LS="sixonthedial-gate0-v1";
+var CHECK='<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>';
 
 var VARIANTS=[
  {k:"a",tag:"Variant A",name:"As it ships today",
@@ -191,8 +214,35 @@ var VARIANTS=[
  {k:"d",tag:"Control",name:"No teach at all",ctl:1,
   d:"Straight to the board. If this scores level with A, the teach card is decoration and the number it was earning belongs to something else."}
 ];
+var CHECKS=[
+ {k:"c1",crit:1,t:"Wipe the device between every single stranger",
+  n:"The teach card retires after the first banked word and that fact is STORED (markIntroSeen, guarded by check:intro). Stranger two on the same device therefore sees no teach at all &mdash; they silently become variant D. Skip this and every run after the first is contaminated toward the control, and the numbers will look fine. Private window per person, or clear site data, every time."},
+ {k:"c2",crit:1,t:"Build variant B &mdash; the scripted first board",
+  n:"Does not exist. A first board that cannot be lost, spells one row itself, then names what happened."},
+ {k:"c3",crit:1,t:"Build variant C &mdash; the goal before the board",
+  n:"Does not exist. One imperative sentence, dismissed by a tap, before the board is shown."},
+ {k:"c4",crit:1,t:"Build variant D &mdash; suppress the teach",
+  n:"Does not exist. The control needs a way to turn the teach card off without editing code between strangers."},
+ {k:"c5",t:"A way to pick a variant without touching code mid-test",
+  n:"A query parameter is enough. Editing source between strangers is how a variant gets mislabelled and a run gets thrown away."},
+ {k:"c6",t:"Write the round-robin assignment down before you start",
+  n:"Which stranger gets which variant, decided in advance. Choosing in the moment is where bias enters."},
+ {k:"c7",t:"One scorer, the same person throughout",
+  n:"Read/Partial/Miss is a judgement call. Two scorers means two rubrics and no comparable set."},
+ {k:"c8",t:"Twelve people who have never seen it",
+  n:"Not friends, not family, not anyone who has heard you describe the game. Somebody who knows what you want will find it."},
+ {k:"c9",t:"Timer where you can see it and they cannot",
+  n:"A visible countdown changes how somebody plays."},
+ {k:"c10",t:"Phone ready: charged, notifications off, app already open",
+  n:"Every second of fumbling is a second of the ninety they do not get."},
+ {k:"c11",t:"Rehearse saying nothing",
+  n:"The hardest part. Encouragement, laughing, and \u201Ctry tapping there\u201D are all hints the App Store cannot give."},
+ {k:"c12",d:1,t:"Kill rule frozen before the first test",
+  n:"60% Read, at most 20% Quit, minimum 12 strangers. Set, written down, and not to be moved once anyone is tested."}
+];
 var COLS=[{k:"read",l:"Read"},{k:"partial",l:"Partial"},{k:"miss",l:"Miss"},{k:"quit",l:"Quit"}];
 
+function checkDone(c){return STATE.checks&&STATE.checks[c.k]!==undefined?!!STATE.checks[c.k]:!!c.d;}
 function tally(v,c){var t=STATE.tally||(STATE.tally={});return (t[v]&&t[v][c])||0;}
 function bump(v,c){var t=STATE.tally||(STATE.tally={});t[v]=t[v]||{};t[v][c]=(t[v][c]||0)+1;}
 function totals(){
@@ -205,12 +255,24 @@ function render(){
   var t=totals();
   var pctRead=t.n?Math.round(t.read/t.n*100):0;
   var pctQuit=t.n?Math.round(t.quit/t.n*100):0;
+  var blk=CHECKS.filter(function(c){return c.crit&&!checkDone(c);}).length;
   var bars=''
+   +bar(String(blk),'Blocks the run',0,blk?'crit':'ok')
    +bar(t.n+'/12','Strangers tested',t.n/12,t.n>=12?'ok':'crit')
    +bar(pctRead+'%','Read &mdash; needs 60',pctRead/100,pctRead>=60?'ok':'crit')
    +bar(pctQuit+'%','Quit &mdash; max 20',pctQuit/100,pctQuit>20?'crit':'ok')
    +bar(t.n>=12?(pctRead>=60&&pctQuit<=20?'PASS':'KILL'):'—','Verdict',0,t.n>=12?(pctRead>=60&&pctQuit<=20?'ok':'crit'):'');
   document.getElementById('bars').innerHTML=bars;
+
+  var blockers=CHECKS.filter(function(c){return c.crit&&!checkDone(c);}).length;
+  document.getElementById('checks').innerHTML=CHECKS.map(function(c){
+    var on=checkDone(c);
+    return '<li class="chk'+(on?' done':'')+(c.crit?' crit':'')+'">'
+      +'<button class="box" role="checkbox" aria-checked="'+on+'" data-c="'+c.k+'"'
+      +(STATE.readOnly?' disabled':'')+' aria-label="'+c.t.replace(/"/g,'')+'">'+CHECK+'</button>'
+      +'<div><p class="t">'+c.t+(c.crit&&!on?'<span class="flag">blocks the run</span>':'')+'</p>'
+      +'<p class="n">'+c.n+'</p></div></li>';
+  }).join('');
 
   document.getElementById('cards').innerHTML=VARIANTS.map(function(v){
     var n=COLS.reduce(function(a,c){return a+tally(v.k,c.k);},0);
@@ -232,6 +294,14 @@ function bar(n,l,frac,cls){
     +'<div class="track"><div class="fill" style="width:'+Math.round(Math.max(0,Math.min(1,frac||0))*100)+'%"></div></div></div>';
 }
 function wire(){
+  Array.prototype.forEach.call(document.querySelectorAll('.chk .box'),function(b){
+    b.addEventListener('click',function(){
+      STATE.checks=STATE.checks||{};
+      var c=CHECKS.filter(function(x){return x.k===b.dataset.c;})[0];
+      STATE.checks[b.dataset.c]=checkDone(c)?0:1;
+      render(); schedule();
+    });
+  });
   Array.prototype.forEach.call(document.querySelectorAll('.tally button'),function(b){
     b.addEventListener('click',function(){ bump(b.dataset.v,b.dataset.c); render(); schedule(); });
   });
@@ -277,6 +347,7 @@ function save(){
 try{
   var saved=JSON.parse(localStorage.getItem(LS)||'null');
   if(saved&&saved.tally&&Object.keys(STATE.tally||{}).length===0){ STATE.tally=saved.tally; }
+  if(saved&&saved.checks&&Object.keys(STATE.checks||{}).length===0){ STATE.checks=saved.checks; }
 }catch(e){}
 render();
 (window.claude&&window.claude.use?window.claude.use('artifact'):Promise.resolve(null))
