@@ -184,7 +184,8 @@ var ITEMS=[
  {k:"b4g",tr:"b",s:4,d:1,t:"Store preview asserted against Apple's published spec",n:"Caught a master at 14.8s &mdash; two tenths under the 15-second floor &mdash; that would have shipped silently."},
  {k:"b4h",tr:"b",s:4,t:"Drag tested on a real finger",n:"The geometry is guarded headless and the bug reproduces on demand, but a thumb is not a mouse.",tag:"todd"},
  {k:"b4i",tr:"b",s:4,t:"Nielsen heuristic pass on the playable surface",tag:"gap"},
- {k:"b4j",tr:"b",s:4,t:"WCAG AA audit &mdash; contrast, targets, motion preference",tag:"gap"},
+ {k:"b4j",tr:"b",s:4,d:1,t:"WCAG AA audit &mdash; contrast, targets, motion preference",n:"<em>check-a11y.mjs</em>: 189 text boxes across six surface/theme combinations, zero failures, red-proofed at 118 caught. The finding count went 101 &rarr; 19 &rarr; 13 &rarr; 3 &rarr; 0 and every step was a defect in the instrument, not a fix to the app &mdash; including six bugs nearly filed against a correct reduced-motion accommodation. It refuses to report anything until it recovers four known ratios at 12px, 13px and 44px."},
+ {k:"b4l",tr:"b",s:4,t:"Thumb targets &mdash; 81 controls under the 44px HIG bar",n:"Not a WCAG failure: the standard's floor is 24px and everything clears it. But four header controls sit at 36&times;36 and the six hint rows at 24&times;24, on a game played with a thumb. Enlarging them is a layout change against a rail tuned over 108 viewport combinations, so it is a decision with a cost rather than a defect to patch.",tag:"todd"},
  {k:"b4k",tr:"b",s:4,t:"Old &rarr; new service-worker transition observed in production",n:"Store row 5.1. All three fixes are confirmed in the live artifact, but the live deploy equals HEAD, so there has never been a stale build to escape from. Needs a deploy in flight that actually touches src/.",tag:"gap"},
 
  {k:"b6a",tr:"b",s:6,d:1,t:"sixonthedial.com serves the app from the origin root"},
@@ -193,7 +194,7 @@ var ITEMS=[
  {k:"b6d",tr:"b",s:6,t:"Version and build numbering scheme",n:"Neither store lets you reuse a build number, and the mistake is unrecoverable for that number."},
  {k:"b6e",tr:"b",s:6,t:"Staged rollout and rollback plan"},
 
- {k:"b7a",tr:"b",s:7,t:"HANDOFF.md refreshed against current main",n:"It still says Android needs a custom domain before it can start. That closed. Anyone reading it cold today gets the single biggest gate wrong &mdash; and it also reports 225 tests against the current 317.",tag:"now"},
+ {k:"b7a",tr:"b",s:7,d:1,t:"HANDOFF.md refreshed against current main",n:"It had said Android needs a custom domain before it can start, which closed on 2026-08-21 &mdash; so a cold reader got the single biggest gate wrong. Now carries the leverage order, the corrected test count, and the ten days of work the file had missed."},
  {k:"b7b",tr:"b",s:7,d:1,t:"Traps recorded where they will actually be hit",n:"Light theme declared twice; spellability is a multiset question, not a set one; merge-pack refuses on check-pack failure after an unspellable row once reached the catalogue."},
  {k:"b7c",tr:"b",s:7,d:1,t:"No analytics, by design and by structure",n:"connect-src 'self' in the shipped CSP makes it a property of the build rather than a promise in a document."},
 

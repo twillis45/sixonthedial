@@ -2,14 +2,22 @@
 
 Read this first. It is written for a session that has none of the context.
 
-Last verified 2026-08-15 against `main` at 0866d5f. Every number below was
+Last verified 2026-08-26 against `main` at 2944bb8. Every number below was
 measured on the day, not carried forward.
+
+**There is now a board.** `docs/tracker.html` puts every open item against the
+ten-stage spine in three tracks, and it is the faster read for "what is left".
+This file is the one that explains WHY, which a checklist cannot.
 
 ## Where the catalogue stands
 
 **118 boards. 15 themes declared, 14 carrying boards. On-theme rate 0.710
-across 590 rows. 225 tests pass in 8 files.** Working tree clean, everything
-pushed to `main`, no open PRs or issues.
+across 590 rows. 317 tests pass in 14 files.** Working tree clean, no open PRs
+or issues.
+
+The catalogue has not moved since 2026-08-15 and those numbers still hold. What
+grew in between was everything around it: the domain, the store assets, the
+guards, and the test count.
 
 Reproduce the rate with `node scripts/pack-radar.mjs` — it prints per theme,
 and excludes the base row the way `src/lib/catalogue.test.ts` does.
@@ -88,10 +96,34 @@ check that fails the build for saying "stoop has no boards" just gets muted.
 
 ## Store readiness
 
-`docs/STORE_READINESS.md` is the live tracker and is current. The short version:
-web ships today; **Android via TWA needs a custom domain before it can start**
-(see 0.3 there); iOS needs a ruling on whether it is a wrapper or a real client.
-The licence work (ENABLE provenance, WordNet notice) is done.
+`docs/STORE_READINESS.md` is the row-by-row tracker; `docs/tracker.html` is the
+same material as a board you can tick.
+
+**The domain gate is CLOSED.** Until 2026-08-21 this section said Android could
+not start without a custom domain, and that was the single biggest blocker on
+the project. It is done: `sixonthedial.com` serves the app from the origin root,
+and **`/.well-known/assetlinks.json` returns 200 from that root** — the path
+this repo structurally could not publish while it lived on `github.io`, because
+it belonged to the user-pages repo.
+
+What that leaves, in order of leverage:
+
+1. **Create the Play app.** Everything else on the Android track is finished.
+   The signing fingerprint is the last `REPLACE_WITH_` placeholder in
+   `assetlinks.json` and it cannot exist until the app does. One signup
+   unblocks the whole track.
+2. **Rule Apple 4.2** (STORE_READINESS 0.1) — wrapper or real client, and
+   therefore whether iOS is worth starting at all.
+3. **Rule the age band** (1.4) — both stores ask, and the answer changes
+   obligations.
+4. **One real community reader per pack** (1.10). This is the blocker no amount
+   of engineering clears, and it gates the paid half of the product.
+   `docs/CULTURAL_BOARD.md` says plainly that the bench is structured
+   perspective, NOT community consultation.
+
+Licence work (ENABLE provenance, WordNet notice) is done. Privacy is measured
+rather than asserted: "Data Not Collected" for Apple, "No data collected" for
+Play, with `connect-src 'self'` as the structural backstop.
 
 ## Traps in this repo
 
@@ -110,7 +142,8 @@ The licence work (ENABLE provenance, WordNet notice) is done.
 - **Shell quoting mangles inline node scripts** (backticks, `${...}`,
   apostrophes). Write to a scratchpad file and run that. Commit messages with
   backticks get shell-evaluated — use `git commit -F file`.
-- Node must be PATH-pinned: `export PATH="/usr/local/opt/node@20/bin:$PATH"`.
+- Node must be PATH-pinned. There are TWO Node 20 installs on this machine and
+  either works: `/usr/local/opt/node@20/bin` or `~/.local/node20/bin`.
 - Dev server: `npm run dev -- -p 3007`. Port 3000 is a different project.
 
 ## What CI runs
@@ -134,6 +167,31 @@ prerendered tree was thrown away on every load. It is now read through
 `useSyncExternalStore` with a server snapshot of `false`. `Preferences.tsx`,
 written as a patch for the symptom, is no longer load-bearing for it.
 
-One thing is fixed but unconfirmed in production: the stale-service-worker fix
-(STORE_READINESS 5.1) was verified end to end locally and **still needs one
-confirmation on the live Pages deploy**.
+One thing is fixed but still unconfirmed in production: the stale-service-worker
+fix (STORE_READINESS 5.1). All three fixes are confirmed present in the live
+artifact, not just in source — but the live deploy has equalled HEAD every time
+it was checked, so **there has never been a stale build to escape from**, and
+the actual old-to-new transition remains unobserved.
+
+Close it on the next deploy that touches `src/`, before touching anything else:
+open the live URL, leave the tab open, let the deploy land, then confirm the tab
+reloads itself and `caches.keys()` returns exactly one entry at the new stamp.
+A commit that only touches `scripts/` or `store/` will NOT do — neither is a
+build input, so the artifact can come out byte-identical and prove nothing.
+
+## What shipped since this file was last accurate
+
+Between 2026-08-16 and 2026-08-26, none of it in the catalogue:
+
+- **The domain chain** — registration, DNS, origin-root serving, HTTPS
+  enforcement, and three defensive domains redirecting with paths preserved.
+- **A capture pipeline that checks itself** — 60 marketing stills that assert
+  the theme and accent they claim (it caught ten shot on the wrong accent), 12
+  mockups, three campaign clips, and a store-preview master measured against
+  Apple's published spec (it caught a cut at 14.8s, two tenths under the floor).
+- **Guards** — the rail now holds at 108 viewport and text-size combinations
+  including a browser-font axis; a mutation harness with a lockfile; and
+  `check-color`, `check-depth`, `check-drag`, `check-settings`.
+- **Player-facing** — feedback intensity, two accents a colour-blind player can
+  separate (Tide, Plum), a daily reminder as a calendar file, and theme polish
+  across studio, dark and light.
