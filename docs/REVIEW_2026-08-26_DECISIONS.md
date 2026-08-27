@@ -1,0 +1,200 @@
+# Decision board — 2026-08-26
+
+Convened under operator override (20 seats, players wing included). Seats drawn
+from `REVIEW_BOARD_GAME_WING.md` and `PLAYER_BOARD.md`, which are authoritative.
+
+**The doctrine's own caution, recorded once:** the convening skill holds that
+above 12 seats accountability dilutes and a board drifts toward mush. Twenty was
+directed. It is mitigated here by seating no general observers — every seat is
+attached to a named open decision, and the cut list below says who was left out
+and why.
+
+**Limits that do not move.** These are lenses, not people. No real person
+reviewed this build, no quote here is attributed to anyone, and the players wing
+is structured personas, not user research. A persona cannot rage-quit, so it
+cannot tell you the truth about retention. The cultural seat is structured
+perspective and is **not** community consultation — that still requires a real
+reader per pack, which is store row 1.10 and remains the blocker.
+
+---
+
+## The 20
+
+**Store & release (4)** — App Store Review specialist · Play policy specialist ·
+mobile release engineer · privacy counsel
+
+**Monetization (3)** — F2P puzzle-economy designer · subscription strategist ·
+Ramit Sethi *(is the paid thing worth paying for, and is the ask honest)*
+
+**Game design (3)** — Jesse Schell *(does every system serve the essential
+experience)* · Zach Gage *(teaching without tutorials)* · Josh Wardle *(radical
+restraint; the anti-engagement-farming conscience)*
+
+**Accessibility (2)** — WCAG 2.2 / mobile-a11y lead · motor-accessibility
+specialist
+
+**Onboarding & feel (2)** — Luke Wroblewski *(thumb zones)* · Emil Kowalski
+*(purposeful motion, haptic and audio timing)*
+
+**Cultural authenticity (1, holds a block)** — the culture bench seat
+
+**Players (5)** — Latoya, 45, Wordscapes/Word Cookies, 40 min/day, ad-tolerant ·
+Ellen, 49, NYT Games subscriber at $6/mo · Jess, 33, limited fine motor in one
+hand · Marcus, 43, playing with his 9-year-old · Karen S., 57, non-Black player
+meeting the packs
+
+**Cut, and why:** Marisol (first-ever word game) — her finding is onboarding and
+the first-run teach already ships and is guarded by `check:intro`. Bea (200%
+text) and Tom (deuteranopia) — their dimensions were **measured** clean this
+week rather than debated, by `check:a11y` and by the Tide/Plum accents; a seat
+that would only re-argue a measurement is decoration. Priya (900-day streak) —
+retention is not on today's decision list. Speedrunner, Scrabble and ESL seats —
+no open decision touches them.
+
+---
+
+## Rulings
+
+Each is a recommendation with its evidence. The operator can overturn any of
+them; what they cannot do is claim one was checked when it was not.
+
+### 1. Apple guideline 4.2 — DEFER iOS. Ship Android first.
+
+**Ruling: do not submit a wrapper to Apple.** Not now, and not as a first
+release.
+
+The roster names 4.2 "the live grenade" and it is aimed correctly. What exists
+today is a static export with no native capability — no widget, no Game Center,
+no Live Activity, nothing the web build cannot do. That is the textbook shape of
+what 4.2 rejects, and a rejection is not free: it attaches to the developer
+account and colours later reviews.
+
+Android has no equivalent risk. Play accepts a TWA, the domain work that gated
+it is done, and `assetlinks.json` serves from the origin root. **Every remaining
+Android blocker is one signup away.**
+
+What would make iOS viable later is a build, not a wrap: a home-screen widget
+carrying today's board, Live Activity for a streak, Game Center for the ladder,
+or native haptics beyond what Safari exposes. Any one of those is a genuine
+answer to 4.2. None of them exists today.
+
+*Dissent recorded:* Ellen (NYT subscriber) notes the audience most likely to pay
+$6/mo for a daily word game is on iOS. That is a real cost of deferring, and it
+is a reason to build the native features, not a reason to risk 4.2.
+
+### 2. COPPA and the age band — rate for everyone, and hold the line that earns it
+
+**Ruling: Everyone / 4+, with "no data collected" on both forms.**
+
+This is the strongest COPPA position available and it is already true rather
+than promised: no accounts, no ads, no analytics, no third-party SDKs, and
+`connect-src 'self'` in the shipped CSP as the structural backstop. COPPA
+exposure in a game like this lives almost entirely in advertising and analytics,
+and neither exists.
+
+Marcus playing with his nine-year-old is therefore a supported case, not a
+liability.
+
+**The condition attached, which is the whole point:** this ruling is contingent
+on the privacy position, not independent of it. Adding an ad SDK, an analytics
+SDK, or a third-party crash reporter reverses it and drags in Play's Families
+policy and Apple's kids rules. See ruling 4.
+
+**One check still owed, and it is not optional:** nobody has audited the clue
+corpus for age-appropriateness. The themes include the barbershop, spades and
+90s R&B — adult cultural settings, which is not the same as adult content, but
+"not the same" is a claim and there is no check behind it. Ruling 2 is
+provisional until that sweep runs.
+
+### 3. Business model — paid packs. No ads, no subscription.
+
+**Ruling: a free daily puzzle, with hand-authored themed packs sold outright.**
+
+Three seats converge and one dissents.
+
+*Against ads:* they require SDKs that reverse ruling 2 and break a privacy claim
+already filed with both stores. Latoya is ad-tolerant and plays 40 minutes a
+day, and she is the category leader's player — but serving her means becoming
+the category leader's business, and the category leader earns roughly 55% of
+revenue from advertising. That is a different product.
+
+*Against subscription:* Ellen pays $6/mo to NYT for **five games daily**, in
+perpetuity. A subscription is a promise about cadence. This catalogue is 118
+boards across 14 carrying themes, and six of those themes are shallow. Selling a
+recurring promise the content pipeline cannot keep is the dishonest ask Sethi's
+seat exists to refuse.
+
+*For paid packs:* it matches what the thing actually is — finite, hand-authored,
+researched, cited. You can sell that honestly because it is what was made.
+
+*Consequence:* store row 4.1 goes live. Digital goods must use Play Billing and
+StoreKit, entitlement cannot live in `localStorage` where a player can edit it,
+and restore-purchases becomes mandatory on Apple. That is real work and it was
+blocked behind this ruling.
+
+*Dissent recorded:* the F2P economy seat notes that a hint currency already
+exists with a faucet and a sink, and that hint packs are the conventional
+monetization for exactly this loop. Declined on Wardle's grounds — selling
+relief from a difficulty you control is the engagement-farming this product has
+otherwise refused. Worth revisiting only with real retention data, which does
+not exist.
+
+### 4. Crash reporting — no third-party SDK
+
+**Ruling: ship without a third-party crash reporter. Do not trade the privacy
+position for it.**
+
+The rollout plan says halt on a crash-rate move, and there is no crash
+reporting, which is a real gap. But a third-party reporter is a data-sharing
+decision that reverses rulings 2 and 3 and breaks a filed claim, and it would be
+traded for telemetry on a binary that, by design, almost never changes.
+
+What covers the gap instead:
+
+1. **The web layer is the rollback.** A bad clue or logic change is `git revert`
+   plus a deploy, and network-first with `no-store` takes it on one online load.
+2. **Stage the rollout small**, held at least one full daily cycle, because a
+   bug in daily rollover is invisible inside an hour.
+3. If crash data is genuinely wanted later, it should be **first-party and
+   opt-in** — an error the player chooses to send — which keeps "Data Not
+   Collected" honest.
+
+### 5. Thumb targets — raise the four header controls, leave the rows
+
+**Ruling: header controls to 44. Hint rows stay at 24.**
+
+Measured, not argued: 81 controls sit under Apple's 44px bar. WCAG's floor is 24
+and everything clears it, so none of this is a conformance failure.
+
+The four header controls are 36×36 and are persistent chrome — present on every
+board, in the corner, reached one-handed. Jess's seat is decisive: a control you
+hit on every session should not be the one you miss. Raising them costs layout
+work against a rail tuned over 108 viewport combinations, and that cost is worth
+paying for four controls.
+
+The hint rows at 24×24 stay. They sit in a spaced list, they are not persistent,
+and enlarging them pushes the ladder — which is the component that has already
+cost the most layout work in this project.
+
+### 6. Never claim the wheel — CONFIRMED
+
+Wordscapes is built on the letter wheel and leads the category. No listing,
+landing page or preview may use "only", "first" or "unique" about the dial.
+Karen S.'s seat adds the adjacent trap: do not describe the themed packs as
+teaching or explaining Black culture to anyone. They are made for the people in
+them first.
+
+---
+
+## What this board did NOT settle
+
+- **Cultural reader per pack** — cannot be settled by a board. It needs a real
+  person per pack and remains store row 1.10.
+- **Prize words for six packs** — `prize-words.mjs` ranks and deliberately
+  refuses to choose, because "is this satisfying to be rewarded with" is human
+  judgment. Unchanged.
+- **Campaign theme** — deferred to the cultural seat, which cannot rule without
+  the reader above.
+- **Preview audio** — Kowalski's seat wants the real mix; the pipeline cannot
+  capture page audio. Open as an engineering task, not a decision.
+- **The age-appropriateness sweep** that ruling 2 depends on.
