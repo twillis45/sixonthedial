@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Six on the Dial Path to Production</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#EDEEF0; --surface:#FFFFFF; --surface-2:#E3E5E8; --sunk:#D9DCE0;
+  --ink:#15171A; --ink-2:#4A505A; --ink-3:#7F8791;
+  --rule:#D3D7DC; --rule-2:#B3B9C1;
+  --accent:#12657D; --accent-soft:#12657D14;
+  --ok:#256B4F; --ok-soft:#256B4F14;
+  --warn:#8A5A08; --warn-soft:#8A5A0814;
+  --crit:#B4342A; --crit-soft:#B4342A14;
+  --shadow:0 1px 2px rgba(18,22,28,.07), 0 10px 30px rgba(18,22,28,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121417; --surface:#1A1D21; --surface-2:#22262B; --sunk:#0D0F12;
+    --ink:#ECEEF1; --ink-2:#98A0AA; --ink-3:#6A727C;
+    --rule:#292E34; --rule-2:#3A4149;
+    --accent:#4FBEDC; --accent-soft:#4FBEDC1C;
+    --ok:#5FBE95; --ok-soft:#5FBE951C;
+    --warn:#D6A23F; --warn-soft:#D6A23F1C;
+    --crit:#E5705F; --crit-soft:#E5705F1C;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 30px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121417; --surface:#1A1D21; --surface-2:#22262B; --sunk:#0D0F12;
+  --ink:#ECEEF1; --ink-2:#98A0AA; --ink-3:#6A727C;
+  --rule:#292E34; --rule-2:#3A4149;
+  --accent:#4FBEDC; --accent-soft:#4FBEDC1C;
+  --ok:#5FBE95; --ok-soft:#5FBE951C;
+  --warn:#D6A23F; --warn-soft:#D6A23F1C;
+  --crit:#E5705F; --crit-soft:#E5705F1C;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Public Sans",-apple-system,BlinkMacSystemFont,sans-serif;font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1020px;margin:0 auto;padding:0 20px 96px}
+
+.kick{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);display:flex;gap:12px;flex-wrap:wrap;margin:0 0 16px}
+header.top{padding:50px 0 26px;border-bottom:1px solid var(--rule-2)}
+h1{font-family:"Archivo",system-ui,sans-serif;font-weight:700;
+  font-size:clamp(30px,5.2vw,48px);line-height:1.02;letter-spacing:-.032em;margin:0 0 14px;text-wrap:balance}
+.sub{font-size:clamp(15px,1.9vw,17.5px);line-height:1.55;color:var(--ink-2);max-width:64ch;margin:0}
+.sub strong{color:var(--ink);font-weight:600}
+
+.gate{display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;
+  border:1px solid var(--rule);border-left:3px solid var(--crit);background:var(--surface);
+  padding:18px 20px;margin:26px 0 0;box-shadow:var(--shadow)}
+.gate .mark{font-family:"Archivo",sans-serif;font-weight:700;font-size:13px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--crit);white-space:nowrap;padding-top:2px}
+.gate .t{font-weight:600;margin:0 0 4px;color:var(--ink)}
+.gate p{margin:0;color:var(--ink-2);font-size:14.5px;line-height:1.55;max-width:70ch}
+.gate .body{flex:1 1 320px}
+
+.bars{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);margin:26px 0 0}
+.bar{background:var(--surface);padding:15px 16px 14px}
+.bar .n{font-family:"Archivo",sans-serif;font-weight:700;font-size:27px;line-height:1;
+  letter-spacing:-.02em;display:block;font-variant-numeric:tabular-nums}
+.bar .l{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin:7px 0 10px}
+.bar .track{height:3px;background:var(--sunk)}
+.bar .fill{height:3px;background:var(--ink-3)}
+.bar.acc .n{color:var(--accent)} .bar.acc .fill{background:var(--accent)}
+.bar.crit .n{color:var(--crit)} .bar.crit .fill{background:var(--crit)}
+.bar.ok .n{color:var(--ok)} .bar.ok .fill{background:var(--ok)}
+
+.tracks{display:flex;gap:1px;background:var(--rule);border:1px solid var(--rule);margin:22px 0 0;flex-wrap:wrap}
+.tracks button{flex:1 1 auto;appearance:none;border:0;background:var(--surface);color:var(--ink-2);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+  padding:13px 14px;cursor:pointer;min-height:44px}
+.tracks button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.tracks button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+
+.stage{border:1px solid var(--rule);border-top:0;background:var(--surface)}
+.stage:first-of-type{border-top:1px solid var(--rule);margin-top:30px}
+.stage-hd{display:flex;align-items:baseline;gap:13px;padding:15px 18px;background:var(--surface-2);
+  border-bottom:1px solid var(--rule)}
+.stage-n{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;color:var(--ink-3);
+  letter-spacing:.06em}
+.stage-t{font-family:"Archivo",sans-serif;font-weight:600;font-size:15.5px;letter-spacing:-.012em;flex:1}
+.stage-c{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.stage.clear .stage-c{color:var(--ok)}
+
+.items{list-style:none;margin:0;padding:0}
+.item{display:flex;gap:13px;padding:14px 18px;border-bottom:1px solid var(--rule)}
+.item:last-child{border-bottom:0}
+.box{flex:0 0 auto;width:19px;height:19px;margin-top:2px;padding:0;cursor:pointer;
+  border:1.5px solid var(--rule-2);background:var(--bg);color:transparent;
+  display:grid;place-items:center;border-radius:2px}
+.box:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.box[aria-checked="true"]{background:var(--ok);border-color:var(--ok);color:#fff}
+.box[disabled]{cursor:default;opacity:.55}
+.box svg{width:11px;height:11px;display:block}
+.item .body{flex:1;min-width:0}
+.title{margin:0;font-size:15px;font-weight:500;line-height:1.45;color:var(--ink)}
+.item.done .title{color:var(--ink-3);text-decoration:line-through;text-decoration-thickness:1px}
+.note{margin:5px 0 0;font-size:13.5px;line-height:1.55;color:var(--ink-2);max-width:78ch}
+.item.done .note{color:var(--ink-3)}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  padding:2.5px 6px;margin-left:8px;border:1px solid currentColor;vertical-align:1.5px;white-space:nowrap}
+.tag.todd{color:var(--accent);background:var(--accent-soft)}
+.tag.blocker{color:var(--crit);background:var(--crit-soft)}
+.tag.now{color:var(--crit);background:var(--crit-soft)}
+.tag.gap{color:var(--warn);background:var(--warn-soft)}
+.tag.blocked{color:var(--ink-3)}
+.tag.partial{color:var(--warn);background:var(--warn-soft)}
+
+footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:34px;
+  padding-top:18px;border-top:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+
+.savechip{position:fixed;right:14px;bottom:14px;background:var(--ink);color:var(--bg);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;padding:8px 12px;opacity:0;
+  transition:opacity .2s;pointer-events:none;max-width:min(88vw,340px)}
+.savechip.on{opacity:1}
+.savechip.warn{background:var(--warn);color:#12140f}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap"><div id="app"></div></div>
+<div class="savechip" id="chip" role="status" aria-live="polite"></div>
+<script id="state" type="application/json">__STATE__</script>
+<script>
+"use strict";
+var SRC="__SRC__";
+var STATE=JSON.parse(document.getElementById('state').textContent);
+var LS="sixonthedial-p2p-v1";
+var CHECK='<svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>';
+
+var STAGES=[
+ ["01","Idea &rarr; Problem statement"],["02","Scope &amp; design"],["03","Build"],["04","Verify"],
+ ["05","Security &amp; data review"],["06","Deploy"],["07","Observe &amp; handoff"],["08","Maintain"],
+ ["09","Promotion"],["10","Sunset"]
+];
+
+var ITEMS=[
+ /* ================= BUILD ================= */
+ {k:"b1a",tr:"b",s:1,d:1,t:"Mechanic defined &mdash; six letters on a dial, six rows to fill",n:"The constraint that governs everything downstream: a base is only ever six letters, so <em>mantle</em> and <em>mental</em> are the same puzzle wearing different names."},
+ {k:"b1b",tr:"b",s:1,d:1,t:"Themed content named as the paid half",n:"300 hand-authored puzzles across 15 themes, most describing Black American cultural life. <em>docs/CULTURAL_BOARD.md</em> governs who reviews it and under what limits."},
+ {k:"b1c",tr:"b",s:1,d:1,t:"On-theme rate adopted as a floor, never a target",n:"0.710 across 590 rows, measured today. It caught a real disaster once, taking the catalogue from 0.216 to 0.62 &mdash; and chasing it past its useful range is how a vocabulary got padded and a rate got reported as 0.58 when the truth was 0.34."},
+ {k:"b1d",tr:"b",s:1,t:"Competitor sweep across the daily-word category",n:"No documented sweep against NYT Games or the Wordle-likes. Needed before the word &ldquo;only&rdquo; appears anywhere public.",tag:"gap"},
+ {k:"b1e",tr:"b",s:1,t:"Business model ruled &mdash; free, paid packs, or both",n:"Every monetization item below is blocked on this single answer, and store row 4.1 is a blocker only if the answer is paid.",tag:"todd"},
+
+ {k:"b2a",tr:"b",s:2,d:1,t:"Four authoring rules written with their measurements attached",n:"<em>docs/AUTHORING.md</em>. Each rule was bought with a mistake rather than reasoned out in advance."},
+ {k:"b2b",tr:"b",s:2,d:1,t:"Density gate runs before authoring, not after",n:"<em>viability.mjs</em>. It was not run for Laundry Day or Caribbean; both were written, shipped, found unfixable at any wheel size, and cut."},
+ {k:"b2c",tr:"b",s:2,d:1,t:"Authoring runs against the vetted base pool",n:"<em>vet-bases.mjs</em> writes every base the build would accept. Authoring the first two packs without it cost seven full re-authors, and skipping the anagram check cost fourteen boards."},
+ {k:"b2d",tr:"b",s:2,d:1,t:"Seventh letter ruled out, with the number that ruled it",n:"Answers per board roughly double, 43 &rarr; 91 &mdash; which changes the product from a one-to-three board sitting into a Spelling Bee style hunt, and costs a full re-tune of the wheel geometry. Revisit only if longer sessions are wanted."},
+ {k:"b2e",tr:"b",s:2,d:1,t:"One doubled letter permitted in a base",n:"The old six-distinct rule threw away 76 usable theme words. Capped at one pair because two pairs leaves four distinct letters &mdash; CHURCH yields three answers total."},
+ {k:"b2f",tr:"b",s:2,d:1,t:"Rank ladder and board marks redesigned flat",n:"Rank now reads as encoding rather than dimensional decoration."},
+ {k:"b2g",tr:"b",s:2,d:1,t:"Theme polish shipped &mdash; studio, dark, light",n:"Trap worth knowing before touching it: the light theme is declared TWICE in <em>globals.css</em>, and patching one block without the other has caused two separate bugs."},
+ {k:"b2h",tr:"b",s:2,d:1,t:"Two accents a colour-blind player can actually separate",n:"Tide and Plum. Added because the shipped pair was not distinguishable, and the fix was measured rather than eyeballed."},
+ {k:"b2i",tr:"b",s:2,t:"stoop &mdash; a theme already paid for, with zero boards",n:"107 usable words, density 159, comfortably over the floor of 12. The cheapest win left in the catalogue."},
+ {k:"b2j",tr:"b",s:2,t:"tailgate &mdash; vocabulary exists, theme not yet in themes.json",n:"204 words, density 453. One step further back than stoop, same shape."},
+ {k:"b2k",tr:"b",s:2,t:"Depth for the six shallow packs",n:"sitcom 50, spades 52, juneteenth 52, beautysupply 75, garden 82, steppers 89 &mdash; against roughly 140&ndash;150 for the packs that reach 0.80. Vocabulary depth outmoved every structural lever tried."},
+ {k:"b2l",tr:"b",s:2,t:"Prize words for the six packs that own none",n:"<em>prize-words.mjs</em> ranks but deliberately refuses to choose &mdash; &ldquo;is this satisfying to be rewarded with&rdquo; is a human judgment, and an auto-picking version returned PLATES for church.",tag:"todd"},
+
+ {k:"b3a",tr:"b",s:3,d:1,t:"Static export ships on GitHub Pages"},
+ {k:"b3b",tr:"b",s:3,d:1,t:"Service worker is network-first with cache: 'no-store'",n:"Stronger than it sounds: a bare fetch still consults the HTTP cache, and Pages sends max-age on HTML, so network-first would otherwise quietly degrade to whatever the browser kept."},
+ {k:"b3c",tr:"b",s:3,d:1,t:"Daily reminder ships as a calendar file",n:"RFC 5545 &mdash; CRLF, folding at 75 octets, floating local time so it fires at the player's morning rather than a timezone's."},
+ {k:"b3d",tr:"b",s:3,d:1,t:"Feedback intensity and accent under the player's control"},
+ {k:"b3e",tr:"b",s:3,t:"Android TWA wrapper",n:"Not a domain problem any more. It needs the Play app to exist, because the signing fingerprint cannot be generated before then.",tag:"blocked"},
+ {k:"b3f",tr:"b",s:3,t:"iOS &mdash; wrapper or a real client",n:"Store row 0.1. Apple guideline 4.2 minimum functionality is the gate, and the answer decides whether iOS happens at all.",tag:"todd"},
+ {k:"b3g",tr:"b",s:3,t:"Crash reporting",n:"None today. A store build without it is blind to everything a player hits.",tag:"gap"},
+
+ {k:"b4a",tr:"b",s:4,d:1,t:"317 tests across 14 files"},
+ {k:"b4b",tr:"b",s:4,d:1,t:"Rail holds at 108 viewport and text-size combinations",n:"Includes a browser-font axis driven through CDP. An earlier version set that font size before documentElement existed, so 26 rows passed vacuously &mdash; measuring nothing while reporting green."},
+ {k:"b4c",tr:"b",s:4,d:1,t:"Mutation harness, locked against concurrent runs",n:"Added after a shared browser profile leaked played state between runs and an audit read a constant mid-mutation."},
+ {k:"b4d",tr:"b",s:4,d:1,t:"assetlinks.json held to exactly two legal states",n:"Red-proofed against the two most likely wrong values: a SHA-1 from the adjacent Play Console screen, and lowercase hex. Android does not error on a mismatch &mdash; it silently falls back to a visible address bar, which is the exact &ldquo;repackaged website&rdquo; read this avoids."},
+ {k:"b4e",tr:"b",s:4,d:1,t:"Canon citations fail the build when a cited clue is edited",n:"A clue is a factual claim wearing a joke. Editing cited text without updating the canon entry means the citation vouches for something nobody checked."},
+ {k:"b4f",tr:"b",s:4,d:1,t:"Every marketing still asserts the look it claims to be",n:"Caught ten stills shot on the wrong accent, which would otherwise have reached a landing page."},
+ {k:"b4g",tr:"b",s:4,d:1,t:"Store preview asserted against Apple's published spec",n:"Caught a master at 14.8s &mdash; two tenths under the 15-second floor &mdash; that would have shipped silently."},
+ {k:"b4h",tr:"b",s:4,t:"Drag tested on a real finger",n:"The geometry is guarded headless and the bug reproduces on demand, but a thumb is not a mouse.",tag:"todd"},
+ {k:"b4i",tr:"b",s:4,t:"Nielsen heuristic pass on the playable surface",tag:"gap"},
+ {k:"b4j",tr:"b",s:4,t:"WCAG AA audit &mdash; contrast, targets, motion preference",tag:"gap"},
+ {k:"b4k",tr:"b",s:4,t:"Old &rarr; new service-worker transition observed in production",n:"Store row 5.1. All three fixes are confirmed in the live artifact, but the live deploy equals HEAD, so there has never been a stale build to escape from. Needs a deploy in flight that actually touches src/.",tag:"gap"},
+
+ {k:"b6a",tr:"b",s:6,d:1,t:"sixonthedial.com serves the app from the origin root"},
+ {k:"b6b",tr:"b",s:6,d:1,t:"assetlinks.json returns 200 from the origin root",n:"The path this repo structurally could not publish while it lived on github.io, because it belonged to the user-pages repo. This is the gate that used to block the entire Android track."},
+ {k:"b6c",tr:"b",s:6,d:1,t:"HTTPS enforced; www and three defensive domains 301 with paths preserved"},
+ {k:"b6d",tr:"b",s:6,t:"Version and build numbering scheme",n:"Neither store lets you reuse a build number, and the mistake is unrecoverable for that number."},
+ {k:"b6e",tr:"b",s:6,t:"Staged rollout and rollback plan"},
+
+ {k:"b7a",tr:"b",s:7,t:"HANDOFF.md refreshed against current main",n:"It still says Android needs a custom domain before it can start. That closed. Anyone reading it cold today gets the single biggest gate wrong &mdash; and it also reports 225 tests against the current 317.",tag:"now"},
+ {k:"b7b",tr:"b",s:7,d:1,t:"Traps recorded where they will actually be hit",n:"Light theme declared twice; spellability is a multiset question, not a set one; merge-pack refuses on check-pack failure after an unspellable row once reached the catalogue."},
+ {k:"b7c",tr:"b",s:7,d:1,t:"No analytics, by design and by structure",n:"connect-src 'self' in the shipped CSP makes it a property of the build rather than a promise in a document."},
+
+ {k:"b8a",tr:"b",s:8,d:1,t:"Cache is swept at activate, not accumulated",n:"CACHE is the build id; activate deletes every key that is not current, then claims clients. A controlled page reports exactly one cache."},
+ {k:"b8b",tr:"b",s:8,d:1,t:"Catalogue ratchet gates the corpus"},
+
+ /* ================= STORE &amp; LEGAL ================= */
+ {k:"s1a",tr:"s",s:1,t:"Apple guideline 4.2 &mdash; minimum functionality",n:"Store row 0.1, and the oldest open blocker on the project. It decides whether iOS is a wrapper or a real client, and therefore whether iOS is worth starting.",tag:"blocker"},
+
+ {k:"s5a",tr:"s",s:5,d:1,t:"Privacy policy, terms and support URL published"},
+ {k:"s5b",tr:"s",s:5,d:1,t:"Apple nutrition labels &mdash; file as Data Not Collected",n:"Measured, not assumed: zero analytics or tracker SDKs in source or export, three runtime dependencies total, and four fetch sites of which none reaches a third party in a shipped build."},
+ {k:"s5c",tr:"s",s:5,d:1,t:"Play Data Safety &mdash; no data collected",n:"Must stay in step with the Apple answer. On-device localStorage keys are storage, not collection &mdash; nothing transmits them."},
+ {k:"s5d",tr:"s",s:5,d:1,t:"ENABLE1 wordlist license recorded"},
+ {k:"s5e",tr:"s",s:5,d:1,t:"WordNet definitions license recorded"},
+ {k:"s5f",tr:"s",s:5,t:"COPPA and the target age band ruled",n:"A word game attracts children whether or not it is aimed at them. Both stores ask, the answer changes obligations, and it must be settled before the rating questionnaires.",tag:"todd"},
+ {k:"s5g",tr:"s",s:5,t:"Content rating &mdash; IARC via Play, Apple age rating"},
+ {k:"s5h",tr:"s",s:5,t:"Trademark clearance on the name and on theme text",n:"The knockout search is done. Full clearance is not.",tag:"partial"},
+ {k:"s5i",tr:"s",s:5,t:"One real community reader per pack",n:"Store row 1.10, and the limit CULTURAL_BOARD.md states plainly: the bench is structured perspective, NOT community consultation. A reader is budgeted per pack before anything ships commercially, and it has not been done for a single pack.",tag:"blocker"},
+
+ {k:"s4a",tr:"s",s:4,t:"IAP and Play Billing for digital goods",n:"Both stores require their own billing for digital goods, with no exception for a web wrapper.",tag:"blocked"},
+ {k:"s4b",tr:"s",s:4,t:"Restore purchases",n:"Apple requires it explicitly.",tag:"blocked"},
+ {k:"s4c",tr:"s",s:4,t:"Receipt validation",n:"Today all state is localStorage, which a player can edit. Entitlement cannot live there.",tag:"blocked"},
+ {k:"s4d",tr:"s",s:4,t:"Price tiers, tax and payouts",tag:"blocked"},
+
+ {k:"s6a",tr:"s",s:6,t:"Apple Developer Program &mdash; $99/yr",n:"Enrollment can take days. It is the long pole nobody notices until it is the only thing left.",tag:"todd"},
+ {k:"s6b",tr:"s",s:6,t:"Google Play Developer &mdash; $25 once",n:"Plus identity verification, which now takes real time.",tag:"todd"},
+ {k:"s6c",tr:"s",s:6,t:"Create the Play app &mdash; it is what produces the signing fingerprint",n:"The last REPLACE_WITH_ placeholder in assetlinks.json cannot be filled before this exists. Everything else on the Android track is already done, which makes this the highest-leverage single action on the board.",tag:"blocker"},
+ {k:"s6d",tr:"s",s:6,t:"Play target API level checked at build time",n:"Play enforces a rolling minimum; the deadline moves."},
+
+ /* ================= MARKETING ================= */
+ {k:"m9a",tr:"m",s:9,d:1,t:"Domain registered, canonical and defended"},
+ {k:"m9b",tr:"m",s:9,d:1,t:"App icon &mdash; 1024 for iOS, 512 for Play"},
+ {k:"m9c",tr:"m",s:9,d:1,t:"Play feature graphic, 1024&times;500"},
+ {k:"m9d",tr:"m",s:9,d:1,t:"iPhone screenshots"},
+ {k:"m9e",tr:"m",s:9,d:1,t:"Play phone screenshots"},
+ {k:"m9f",tr:"m",s:9,d:1,t:"60 marketing stills, each asserting its own look",n:"Two frames &times; six looks &times; five states, and the run fails rather than reporting green when a still is not the theme and accent it claims."},
+ {k:"m9g",tr:"m",s:9,d:1,t:"12 mockups &mdash; six framed, six full-bleed",n:"The perspective rotation was dropped: rotateY(-7deg) turned a circular dial into an ellipse, which reads as a rendering bug rather than a product shot."},
+ {k:"m9h",tr:"m",s:9,d:1,t:"Three campaign clips driven from the shipped build",n:"Recorded as timestamped frames rather than a screencast, because screencast records the OS window surface and ignores device scale factor."},
+ {k:"m9i",tr:"m",s:9,d:1,t:"Store preview master &mdash; 17.9s, 886&times;1920, High L4.0, stereo",n:"886&times;1920 is the only iPhone preview resolution Apple accepts, across every modern display size from 6.1&Prime; to 6.9&Prime;."},
+ {k:"m9j",tr:"m",s:9,t:"Preview audio &mdash; a real mix, not the silent compliance track",n:"The silent stereo track satisfies the specification and nothing else. The game's tones are in C major deliberately, and the capture pipeline cannot record page audio.",tag:"gap"},
+ {k:"m9k",tr:"m",s:9,t:"iPad screenshots",n:"Only if the iOS build declares iPad support. Shipping iPhone-only first is cheaper."},
+ {k:"m9l",tr:"m",s:9,t:"Description, subtitle and keywords"},
+ {k:"m9m",tr:"m",s:9,t:"Privacy-policy URL pasted into both listings"},
+ {k:"m9n",tr:"m",s:9,t:"Which theme fronts the campaign",n:"Every clip and still currently runs on THE PIT &middot; BARBECUE. That is a content decision as much as a visual one, and the themed packs are the cited half of the game.",tag:"todd"},
+ {k:"m9o",tr:"m",s:9,t:"ASO keyword research",n:"The category is crowded and the leaders open on gameplay inside three seconds. Nothing here has been researched against actual search terms.",tag:"gap"}
+];
+
+var TRACKS=[["b","Build"],["s","Store &amp; legal"],["m","Marketing"]];
+
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+function txt(s){return s;}
+function isDone(it){return STATE.done[it.k]!==undefined?!!STATE.done[it.k]:!!it.d;}
+
+function render(){
+  var tr=STATE.track||'b';
+  var shown=ITEMS.filter(function(i){return i.tr===tr;});
+  var all=ITEMS.length,done=ITEMS.filter(isDone).length;
+  var toddOpen=ITEMS.filter(function(i){return i.tag==='todd'&&!isDone(i);}).length;
+  var blockers=ITEMS.filter(function(i){return i.tag==='blocker'&&!isDone(i);}).length;
+  var v=ITEMS.filter(function(i){return i.s===4&&i.tr==='b';});
+  var vDone=v.filter(isDone).length;
+
+  var h='<header class="top">'
+   +'<p class="kick"><span>Path to production</span><span>&middot;</span><span>Six on the Dial</span>'
+   +'<span>&middot;</span><span>Web live &mdash; stores not started</span></p>'
+   +'<h1>Six on the Dial Path to Production</h1>'
+   +'<p class="sub">Every open item against the ten-stage spine, in three tracks. The web game ships today at <strong>sixonthedial.com</strong>. What is left is almost entirely <strong>decisions and accounts, not code</strong> &mdash; and one blocker that no amount of engineering will clear. Ticks save into the page.</p>'
+   +'<div class="gate"><span class="mark">Blocker</span><div class="body">'
+   +'<p class="t">No pack has had a real community reader</p>'
+   +'<p>The bench in <em>CULTURAL_BOARD.md</em> is structured perspective, <strong>not</strong> community consultation &mdash; it says so itself. One real reader per pack is budgeted before anything ships commercially, and it has not happened for a single pack. This gates the paid half of the product, and it is the one item here that cannot be closed by writing code.</p>'
+   +'</div></div><div class="bars">'
+   +bar(String(blockers),'Blockers open',0,'crit')
+   +bar(String(toddOpen),'Decisions on you',0,'acc')
+   +bar(vDone+'/'+v.length,'Verify gates held',vDone/v.length,'ok')
+   +bar(done+'/'+all,'All items',done/all,'')
+   +'</div>'
+   +'<div class="tracks" role="group" aria-label="Track">';
+  TRACKS.forEach(function(t){
+    h+='<button data-tr="'+t[0]+'" aria-pressed="'+(tr===t[0])+'">'+t[1]+'</button>';
+  });
+  h+='</div></header>';
+
+  STAGES.forEach(function(st,idx){
+    var n=idx+1, list=shown.filter(function(i){return i.s===n;});
+    if(!list.length) return;
+    var d=list.filter(isDone).length;
+    h+='<div class="stage'+(d===list.length?' clear':'')+'"><div class="stage-hd">'
+     +'<span class="stage-n">'+st[0]+'</span><span class="stage-t">'+st[1]+'</span>'
+     +'<span class="stage-c">'+d+'/'+list.length+'</span></div><ul class="items">';
+    list.forEach(function(it){
+      var on=isDone(it);
+      h+='<li class="item'+(on?' done':'')+'">'
+       +'<button class="box" role="checkbox" aria-checked="'+on+'" data-k="'+it.k+'"'
+       +(STATE.readOnly?' disabled':'')+' aria-label="'+esc(it.t.replace(/&[a-z]+;/g,' '))+'">'+CHECK+'</button>'
+       +'<div class="body"><p class="title">'+txt(it.t)
+       +(it.tag?'<span class="tag '+it.tag+'">'+(it.tag==='todd'?'your call':it.tag)+'</span>':'')
+       +'</p>'+(it.n?'<p class="note">'+txt(it.n)+'</p>':'')+'</div></li>';
+    });
+    h+='</ul></div>';
+  });
+
+  h+='<footer><span>Six on the Dial &middot; NGW Systems</span>'
+   +'<span>Companion to STORE_READINESS.md</span></footer>';
+  document.getElementById('app').innerHTML=h;
+  wire();
+}
+function bar(n,l,frac,cls){
+  return '<div class="bar '+cls+'"><span class="n">'+txt(n)+'</span><span class="l">'+l+'</span>'
+       +'<div class="track"><div class="fill" style="width:'+Math.round(Math.max(0,Math.min(1,frac||0))*100)+'%"></div></div></div>';
+}
+function wire(){
+  Array.prototype.forEach.call(document.querySelectorAll('.box'),function(b){
+    b.addEventListener('click',function(){
+      var k=b.dataset.k, it=ITEMS.filter(function(i){return i.k===k;})[0];
+      STATE.done[k]=isDone(it)?0:1;
+      render(); schedule();
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.tracks button'),function(b){
+    b.addEventListener('click',function(){ STATE.track=b.dataset.tr; render(); schedule(); });
+  });
+}
+
+/* ---------- persistence: localStorage always, artifact publish when available ---------- */
+var chip=document.getElementById('chip'),api=null,timer=null;
+function say(msg,warn,sticky){
+  chip.textContent=msg; chip.className='savechip on'+(warn?' warn':'');
+  if(!sticky) setTimeout(function(){ chip.className='savechip'; },2200);
+}
+function b64decode(b){
+  var bin=atob(b),bytes=new Uint8Array(bin.length);
+  for(var i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+/* placeholders assembled at runtime so the literals appear exactly once each
+   in this file — the build refuses to ship otherwise */
+var PH_STATE='__'+'STATE'+'__', PH_SRC='__'+'SRC'+'__';
+function docHtml(){
+  return b64decode(SRC)
+    .replace(PH_STATE,JSON.stringify(STATE).replace(/</g,'\\u003c'))
+    .replace(PH_SRC,SRC);
+}
+function schedule(){
+  try{ localStorage.setItem(LS,JSON.stringify(STATE)); }catch(e){}
+  if(STATE.readOnly||!api) return;
+  clearTimeout(timer); say('Saving…',false,true);
+  timer=setTimeout(save,1400);
+}
+function save(){
+  api.publish(docHtml()).then(function(){ say('Saved to the page'); }).catch(function(e){
+    var c=e&&e.code;
+    if(c==='conflict') return;                 /* every view reloads to the winner */
+    if(c==='not_writer'||c==='not_granted'||c==='not_declared'||c==='capability_disabled'){
+      STATE.readOnly=true; render(); say('Read-only view — ticks stay in this browser',true,true); return;
+    }
+    say('Not saved to the page ('+(c||'error')+') — kept in this browser',true,true);
+  });
+}
+
+/* restore any local ticks made before the page could publish */
+try{
+  var saved=JSON.parse(localStorage.getItem(LS)||'null');
+  if(saved&&saved.done&&Object.keys(STATE.done).length===0){ STATE.done=saved.done; STATE.track=saved.track||STATE.track; }
+}catch(e){}
+render();
+(window.claude&&window.claude.use?window.claude.use('artifact'):Promise.resolve(null))
+  .then(function(a){
+    api=a;
+    if(!a) say('Progress saves in this browser only',true,true);
+  })
+  .catch(function(){});
+</script>
+</body>
+</html>
