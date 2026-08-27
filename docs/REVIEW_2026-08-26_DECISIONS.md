@@ -413,3 +413,98 @@ capability exists to answer 4.2.
   meets** — both belong to the cultural seat, and both wait on a reader.
 - **The share card's overflow rule.** Not a board question; the operator picks
   which evidence line drops.
+
+---
+
+# Sitting 3 — 2026-08-27 · Paid app, reopened by the operator
+
+Six seats: **Ramit Sethi** (is the ask honest), **Josh Wardle** (restraint,
+anti-engagement-farming), **the F2P puzzle-economy designer**, **a mobile
+release engineer**, **Latoya** (Wordscapes, 40 min/day, ad-tolerant), and
+**Ellen** (NYT Games subscriber, $6/mo).
+
+The operator's instruction is *"it has to be paid."* The board takes that as a
+position to test, not a preference to ratify — and finds the position stronger
+than ruling 3 credited, on grounds ruling 3 never examined.
+
+## What ruling 3 got wrong
+
+It framed the choice as *paid packs versus ads versus subscription* and never
+asked the prior question: **paid download versus free download.** "Sold
+outright" was written to rule out a subscription, and it was then read as
+settling a model it had not considered. That is a real gap and the operator
+found it.
+
+Three arguments for paid that the first sitting did not weigh:
+
+**It deletes most of wing 6's remaining work.** A paid app has Google collect
+the money. No Play Billing integration, no StoreKit, no restore-purchases flow,
+no receipt validation, and no forgeable entitlement — the defect ruling 3 spent
+a paragraph on simply stops existing. Wing 6 sits at 5 largely because billing
+is unbuilt; paid download makes most of it unnecessary rather than pending.
+
+**It is the purest form of the anti-engagement-farming position.** Wardle's seat
+is decisive here and it argues *for* the operator. A paid app has no mechanism
+to manipulate: no hint economy to squeeze, no timer to sell relief from, no
+upsell inside a puzzle. The player pays once and the product has no further
+interest in their attention. Every dark pattern this project has refused is
+structurally impossible.
+
+**The thing being sold is a finished artifact.** 300 hand-authored, researched,
+cited puzzles is a book, not a service. Sethi's seat: you can ask for money for
+that honestly, and the ask is cleaner than metering it out.
+
+## The cost, which is the acquisition thesis
+
+**Marketing ruling m1a is the share loop, and a paid download breaks it.**
+Somebody pastes a result; their friend taps it and hits a paywall instead of a
+board. Wordle grew because the friend could play immediately. Latoya's seat is
+blunt: she has never paid up-front for a word game and will not start with an
+unknown one. Ellen pays $6/mo — but to a publisher with five daily games and a
+masthead, which is a different transaction from a stranger's first purchase.
+
+The release engineer adds the discovery point: a paid word game from a first-time
+developer, ranked against free Wordle and Wordscapes, has close to no organic
+install path, and no free tier means no volume of ratings to rank with.
+
+## The option neither sitting had named
+
+**Free download with a single one-time unlock is economically identical to a
+paid app and keeps the share loop.** One price, paid once, no subscription, no
+metering — and a friend who taps a shared card still lands on a playable board.
+It costs the Play Billing work that paid download avoids, and it is the reason
+most premium mobile games stopped charging up front.
+
+That is a third position, and it deserves to be chosen or rejected deliberately
+rather than by default.
+
+## Ruling — set it PAID on the create-app form, and settle the model after gate zero
+
+**Unanimous, and it is not a compromise.**
+
+Play's own warning decides the immediate question: **you cannot change a free
+app to paid after publishing, but you can change paid to free.** Pricing is
+editable up to publish. So on this form:
+
+- **Paid** keeps every option open — paid download, or drop to free later with
+  or without an unlock.
+- **Free** permanently forecloses paid download, on a model question that has
+  now been reopened and that gate zero has not informed.
+
+Choosing Paid today costs nothing and closes nothing. Choosing Free closes a
+door that cannot be reopened.
+
+**The model itself is deferred to after gate zero**, where it belongs: whether
+strangers can understand the first board bears directly on whether they will
+buy it unseen. The three live options are paid download, free plus one-time
+unlock, and free plus per-pack purchases — and the operator's stated preference
+for paid is on the record as the starting position.
+
+**Consequences recorded now**, so nothing is discovered later:
+
+- `LISTING.md` says *"Free to play, every day"* in copy that reaches buyers.
+  That sentence is now provisional and must not ship until the model is settled.
+- Store row 4.1 (IAP required for digital goods) becomes moot under paid
+  download and live under either free option.
+- `lib/entitlement.ts` is unnecessary under paid download. Twelve tests and an
+  afternoon; recorded as possibly-sunk rather than quietly kept.
