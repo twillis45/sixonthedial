@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Six on the Dial Gate Zero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#EDEEF0; --surface:#FFFFFF; --surface-2:#E3E5E8; --sunk:#D9DCE0;
+  --ink:#15171A; --ink-2:#4A505A; --ink-3:#7F8791;
+  --rule:#D3D7DC; --rule-2:#B3B9C1;
+  --accent:#12657D; --accent-soft:#12657D14;
+  --ok:#256B4F; --ok-soft:#256B4F14;
+  --warn:#8A5A08; --warn-soft:#8A5A0814;
+  --crit:#B4342A; --crit-soft:#B4342A14;
+  --shadow:0 1px 2px rgba(18,22,28,.07), 0 10px 30px rgba(18,22,28,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121417; --surface:#1A1D21; --surface-2:#22262B; --sunk:#0D0F12;
+    --ink:#ECEEF1; --ink-2:#98A0AA; --ink-3:#6A727C;
+    --rule:#292E34; --rule-2:#3A4149;
+    --accent:#4FBEDC; --accent-soft:#4FBEDC1C;
+    --ok:#5FBE95; --ok-soft:#5FBE951C;
+    --warn:#D6A23F; --warn-soft:#D6A23F1C;
+    --crit:#E5705F; --crit-soft:#E5705F1C;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 30px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121417; --surface:#1A1D21; --surface-2:#22262B; --sunk:#0D0F12;
+  --ink:#ECEEF1; --ink-2:#98A0AA; --ink-3:#6A727C;
+  --rule:#292E34; --rule-2:#3A4149;
+  --accent:#4FBEDC; --accent-soft:#4FBEDC1C;
+  --ok:#5FBE95; --ok-soft:#5FBE951C;
+  --warn:#D6A23F; --warn-soft:#D6A23F1C;
+  --crit:#E5705F; --crit-soft:#E5705F1C;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Public Sans",-apple-system,BlinkMacSystemFont,sans-serif;font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1020px;margin:0 auto;padding:0 20px 96px}
+.kick{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);display:flex;gap:12px;flex-wrap:wrap;margin:0 0 16px}
+header.top{padding:50px 0 26px;border-bottom:1px solid var(--rule-2)}
+h1{font-family:"Archivo",system-ui,sans-serif;font-weight:700;
+  font-size:clamp(30px,5.2vw,48px);line-height:1.02;letter-spacing:-.032em;margin:0 0 14px;text-wrap:balance}
+h2{font-family:"Archivo",sans-serif;font-weight:600;font-size:clamp(19px,2.5vw,23px);
+  letter-spacing:-.02em;margin:44px 0 4px}
+.sub{font-size:clamp(15px,1.9vw,17.5px);line-height:1.55;color:var(--ink-2);max-width:66ch;margin:0}
+.sub strong{color:var(--ink);font-weight:600}
+p.lede{color:var(--ink-2);max-width:70ch;margin:6px 0 0}
+.gate{display:flex;align-items:flex-start;gap:18px;flex-wrap:wrap;
+  border:1px solid var(--rule);border-left:3px solid var(--crit);background:var(--surface);
+  padding:18px 20px;margin:26px 0 0;box-shadow:var(--shadow)}
+.gate .mark{font-family:"Archivo",sans-serif;font-weight:700;font-size:13px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--crit);white-space:nowrap;padding-top:2px}
+.gate .t{font-weight:600;margin:0 0 4px;color:var(--ink)}
+.gate p{margin:0;color:var(--ink-2);font-size:14.5px;line-height:1.55;max-width:70ch}
+.gate .body{flex:1 1 320px}
+.bars{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);margin:26px 0 0}
+.bar{background:var(--surface);padding:15px 16px 14px}
+.bar .n{font-family:"Archivo",sans-serif;font-weight:700;font-size:27px;line-height:1;
+  letter-spacing:-.02em;display:block;font-variant-numeric:tabular-nums}
+.bar .l{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin:7px 0 10px}
+.bar .track{height:3px;background:var(--sunk)}
+.bar .fill{height:3px;background:var(--ink-3)}
+.bar.acc .n{color:var(--accent)} .bar.acc .fill{background:var(--accent)}
+.bar.crit .n{color:var(--crit)} .bar.crit .fill{background:var(--crit)}
+.bar.ok .n{color:var(--ok)} .bar.ok .fill{background:var(--ok)}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:14px 0 0}
+ol.steps li{counter-increment:s;position:relative;padding:0 0 0 40px;margin:0 0 13px;color:var(--ink-2);max-width:74ch}
+ol.steps li::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:1px;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;color:var(--accent)}
+ol.steps strong{color:var(--ink);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);margin:16px 0 0}
+.card{background:var(--surface);padding:16px 17px 15px;display:flex;flex-direction:column;gap:9px}
+.card .tag{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent)}
+.card h3{font-family:"Archivo",sans-serif;font-weight:600;font-size:16px;margin:0;letter-spacing:-.015em}
+.card p{margin:0;font-size:13.5px;line-height:1.5;color:var(--ink-2)}
+.card.control{background:var(--surface-2)}
+.tally{display:flex;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:4px}
+.tally button{flex:1;appearance:none;border:0;background:var(--surface);color:var(--ink-2);cursor:pointer;
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  padding:11px 4px;min-height:44px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.tally button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+.tally button b{font-family:"Archivo",sans-serif;font-size:17px;font-weight:700;color:var(--ink);
+  font-variant-numeric:tabular-nums}
+.tally button.read b{color:var(--ok)} .tally button.miss b{color:var(--crit)}
+.tally button.quit b{color:var(--crit)}
+table{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:600}
+td strong{color:var(--ink)}
+td{color:var(--ink-2)}
+.wrapscroll{overflow-x:auto}
+.reset{appearance:none;border:1px solid var(--rule-2);background:transparent;color:var(--ink-3);
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:10px 14px;margin-top:16px;cursor:pointer;min-height:44px}
+.reset:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:44px;
+  padding-top:18px;border-top:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.savechip{position:fixed;right:14px;bottom:14px;background:var(--ink);color:var(--bg);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;padding:8px 12px;opacity:0;
+  transition:opacity .2s;pointer-events:none;max-width:min(88vw,340px)}
+.savechip.on{opacity:1}
+.savechip.warn{background:var(--warn);color:#12140f}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <p class="kick"><span>Gate zero</span><span>&middot;</span><span>Six on the Dial</span><span>&middot;</span><span>Not yet run</span></p>
+  <h1>Six on the Dial Gate Zero</h1>
+  <p class="sub">The cheapest test that can kill this game, run on strangers, with the kill rule written down <strong>before</strong> the first person touches it. It asks one question: <strong>can somebody who has never seen this work out what to do, without being told?</strong></p>
+
+  <div class="gate"><span class="mark">Predicted</span><div class="body">
+    <p class="t">The player board already says this fails</p>
+    <p>Seat 1 of the player bench — a first-ever word-game player — is recorded as <strong>gone at 0:40</strong>, because the board never says what the goal is in words. She does not know she is meant to spell a six-letter word, or that the short rows are the same letters. That is a persona, not a person, and a persona cannot rage-quit. This gate exists to find out whether the prediction is real.</p>
+  </div></div>
+
+  <div class="bars" id="bars"></div>
+</header>
+
+<h2>How to run it</h2>
+<p class="lede">One stranger, one variant, first exposure only. A person who has seen any variant is spent for the rest — order effects otherwise make &ldquo;best variant&rdquo; meaningless.</p>
+<ol class="steps">
+  <li><strong>Hand them the phone with the app already open.</strong> Say nothing beyond &ldquo;have a go at this.&rdquo; Do not name the game, the goal, or the wheel. The whole test is what the screen communicates on its own.</li>
+  <li><strong>Start a timer and do not speak for 90 seconds.</strong> Not to encourage, not to correct, not to laugh. Every hint you give is a hint the App Store cannot give.</li>
+  <li><strong>Note the moment they land a first valid word</strong>, or the moment they stop trying. Both are the data.</li>
+  <li><strong>Then ask exactly two questions.</strong> &ldquo;What is this game asking you to do?&rdquo; then &ldquo;What are the boxes at the top?&rdquo; Anything you add contaminates the answer.</li>
+  <li><strong>Score it once</strong>, on this page, on the variant they saw. Note a bug-read — &ldquo;is it broken?&rdquo;, &ldquo;did that not work?&rdquo; — in the Miss column, because a game read as broken is a different failure from a game read as hard.</li>
+</ol>
+
+<h2>Scoring</h2>
+<div class="wrapscroll"><table>
+  <thead><tr><th>Score</th><th>What it means</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Read</strong></td><td>Lands a valid word unaided inside 90 seconds <em>and</em> states the rule — words come from the six letters, the boxes are the words to find. Both halves, not either.</td></tr>
+    <tr><td><strong>Partial</strong></td><td>One half only. Spells something but cannot say what the boxes are, or explains the rule but never lands a word.</td></tr>
+    <tr><td><strong>Miss</strong></td><td>Neither, inside 90 seconds. Record a bug-read separately.</td></tr>
+    <tr><td><strong>Quit</strong></td><td>Hands it back or stops trying before 90 seconds. Record the timestamp — <em>when</em> is the finding, not <em>that</em>.</td></tr>
+  </tbody>
+</table></div>
+
+<h2>The kill rule</h2>
+<p class="lede">Written before any stranger sees this, and frozen once the first person is tested. A threshold that moves after the data arrives is not a threshold.</p>
+<div class="gate"><span class="mark">Frozen</span><div class="body">
+  <p class="t">60% Read, no more than 20% Quit, minimum 12 strangers across the set</p>
+  <p>Sixty rather than Snug's seventy because that test showed a two-second clip and this one hands over a live game with a written teach card — a lower bar would be flattering, and a higher one would fail a game that is merely unfamiliar rather than illegible. <strong>Below 40% Read on every variant, the onboarding is not the problem and the mechanic is</strong>, and no amount of copy fixes that. Between 40 and 60, the winning variant ships and the gate re-runs.</p>
+  <p style="margin-top:9px">This is a <strong>kill screen, not a validator.</strong> It can prove the first run illegible. It cannot prove anyone will come back tomorrow, and retention is the thing this product actually lives on. Passing here earns a day-2 test, not a launch.</p>
+</div></div>
+
+<h2>The four variants</h2>
+<p class="lede">Same game, four first-runs. D is the control and exists so the other three have something to beat — without it, any number looks like a result.</p>
+<div class="cards" id="cards"></div>
+<button class="reset" id="reset">Reset all tallies</button>
+
+<h2>What this cannot tell you</h2>
+<p class="lede">Twelve strangers is enough to detect &ldquo;nobody understands this&rdquo; and nothing finer. It cannot rank two variants that land within about fifteen points of each other, it cannot measure whether anyone returns, and it cannot speak to the themed packs at all — a stranger in a hallway is not the audience those were written for, and testing cultural content this way would be worse than not testing it. That is store row 1.10, and it needs a real reader per pack, not a stopwatch.</p>
+
+<footer><span>Six on the Dial &middot; NGW Systems</span><span>Companion to the path-to-production board</span></footer>
+</div>
+<div class="savechip" id="chip" role="status" aria-live="polite"></div>
+<script id="state" type="application/json">__STATE__</script>
+<script>
+"use strict";
+var SRC="__SRC__";
+var STATE=JSON.parse(document.getElementById('state').textContent);
+var LS="sixonthedial-gate0-v1";
+
+var VARIANTS=[
+ {k:"a",tag:"Variant A",name:"As it ships today",
+  d:"The teach card that is live now &mdash; &ldquo;Six letters. Six words. All from the wheel.&rdquo; This is the baseline the board is actually arguing about."},
+ {k:"b",tag:"Variant B",name:"A first row solved for them",
+  d:"A scripted opening board that cannot be lost and spells one row itself, then names what just happened. This is the player bench's own prescription, tested rather than assumed."},
+ {k:"c",tag:"Variant C",name:"The goal before the board",
+  d:"One imperative sentence on its own, dismissed by tapping, before the board is ever shown. Tests whether the teach fails because of what it says or because of where it sits."},
+ {k:"d",tag:"Control",name:"No teach at all",ctl:1,
+  d:"Straight to the board. If this scores level with A, the teach card is decoration and the number it was earning belongs to something else."}
+];
+var COLS=[{k:"read",l:"Read"},{k:"partial",l:"Partial"},{k:"miss",l:"Miss"},{k:"quit",l:"Quit"}];
+
+function tally(v,c){var t=STATE.tally||(STATE.tally={});return (t[v]&&t[v][c])||0;}
+function bump(v,c){var t=STATE.tally||(STATE.tally={});t[v]=t[v]||{};t[v][c]=(t[v][c]||0)+1;}
+function totals(){
+  var out={read:0,partial:0,miss:0,quit:0,n:0};
+  VARIANTS.forEach(function(v){COLS.forEach(function(c){var n=tally(v.k,c.k);out[c.k]+=n;out.n+=n;});});
+  return out;
+}
+
+function render(){
+  var t=totals();
+  var pctRead=t.n?Math.round(t.read/t.n*100):0;
+  var pctQuit=t.n?Math.round(t.quit/t.n*100):0;
+  var bars=''
+   +bar(t.n+'/12','Strangers tested',t.n/12,t.n>=12?'ok':'crit')
+   +bar(pctRead+'%','Read &mdash; needs 60',pctRead/100,pctRead>=60?'ok':'crit')
+   +bar(pctQuit+'%','Quit &mdash; max 20',pctQuit/100,pctQuit>20?'crit':'ok')
+   +bar(t.n>=12?(pctRead>=60&&pctQuit<=20?'PASS':'KILL'):'—','Verdict',0,t.n>=12?(pctRead>=60&&pctQuit<=20?'ok':'crit'):'');
+  document.getElementById('bars').innerHTML=bars;
+
+  document.getElementById('cards').innerHTML=VARIANTS.map(function(v){
+    var n=COLS.reduce(function(a,c){return a+tally(v.k,c.k);},0);
+    var r=tally(v.k,'read');
+    return '<div class="card'+(v.ctl?' control':'')+'">'
+      +'<span class="tag">'+v.tag+(n?' &middot; '+r+'/'+n+' read':'')+'</span>'
+      +'<h3>'+v.name+'</h3><p>'+v.d+'</p>'
+      +'<div class="tally">'+COLS.map(function(c){
+        return '<button class="'+c.k+'" data-v="'+v.k+'" data-c="'+c.k+'"'
+          +(STATE.readOnly?' disabled':'')
+          +' aria-label="'+c.l+' for '+v.name.replace(/"/g,'')+'">'
+          +'<b>'+tally(v.k,c.k)+'</b><span>'+c.l+'</span></button>';
+      }).join('')+'</div></div>';
+  }).join('');
+  wire();
+}
+function bar(n,l,frac,cls){
+  return '<div class="bar '+(cls||'')+'"><span class="n">'+n+'</span><span class="l">'+l+'</span>'
+    +'<div class="track"><div class="fill" style="width:'+Math.round(Math.max(0,Math.min(1,frac||0))*100)+'%"></div></div></div>';
+}
+function wire(){
+  Array.prototype.forEach.call(document.querySelectorAll('.tally button'),function(b){
+    b.addEventListener('click',function(){ bump(b.dataset.v,b.dataset.c); render(); schedule(); });
+  });
+}
+document.getElementById('reset').addEventListener('click',function(){
+  if(!confirm('Clear every tally? Scores cannot be recovered.')) return;
+  STATE.tally={}; render(); schedule();
+});
+
+/* ---------- persistence: localStorage always, artifact publish when available ---------- */
+var chip=document.getElementById('chip'),api=null,timer=null;
+function say(msg,warn,sticky){
+  chip.textContent=msg; chip.className='savechip on'+(warn?' warn':'');
+  if(!sticky) setTimeout(function(){ chip.className='savechip'; },2200);
+}
+function b64decode(b){
+  var bin=atob(b),bytes=new Uint8Array(bin.length);
+  for(var i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+var PH_STATE='__'+'STATE'+'__', PH_SRC='__'+'SRC'+'__';
+function docHtml(){
+  return b64decode(SRC)
+    .replace(PH_STATE,JSON.stringify(STATE).replace(/</g,'\\u003c'))
+    .replace(PH_SRC,SRC);
+}
+function schedule(){
+  try{ localStorage.setItem(LS,JSON.stringify(STATE)); }catch(e){}
+  if(STATE.readOnly||!api) return;
+  clearTimeout(timer); say('Saving…',false,true);
+  timer=setTimeout(save,1400);
+}
+function save(){
+  api.publish(docHtml()).then(function(){ say('Saved to the page'); }).catch(function(e){
+    var c=e&&e.code;
+    if(c==='conflict') return;
+    if(c==='not_writer'||c==='not_granted'||c==='not_declared'||c==='capability_disabled'){
+      STATE.readOnly=true; render(); say('Read-only view — scores stay in this browser',true,true); return;
+    }
+    say('Not saved to the page ('+(c||'error')+') — kept in this browser',true,true);
+  });
+}
+try{
+  var saved=JSON.parse(localStorage.getItem(LS)||'null');
+  if(saved&&saved.tally&&Object.keys(STATE.tally||{}).length===0){ STATE.tally=saved.tally; }
+}catch(e){}
+render();
+(window.claude&&window.claude.use?window.claude.use('artifact'):Promise.resolve(null))
+  .then(function(a){ api=a; if(!a) say('Scores save in this browser only',true,true); })
+  .catch(function(){});
+</script>
+</body>
+</html>

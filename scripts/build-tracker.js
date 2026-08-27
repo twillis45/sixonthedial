@@ -10,8 +10,11 @@ const vm = require("vm");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
-const TPL = path.join(ROOT, "docs", "tracker-template.html");
-const OUT = path.join(ROOT, "docs", "tracker.html");
+/* One builder, several self-publishing pages. Pass a name; default is the
+   tracker, which is what every existing caller expects. */
+const NAME = process.argv[2] || "tracker";
+const TPL = path.join(ROOT, "docs", `${NAME}-template.html`);
+const OUT = path.join(ROOT, "docs", `${NAME}.html`);
 
 const tpl = fs.readFileSync(TPL, "utf8");
 for (const ph of ["__STATE__", "__SRC__"]) {
@@ -35,7 +38,11 @@ for (const ph of ["__STATE__", "__SRC__"]) {
   try { new vm.Script(body[1]); }
   catch (e) { console.error(`FAIL  inline script does not parse: ${e.message}`); process.exit(1); }
 
-  /* and the data must be well-formed, not merely parseable */
+  /* and the data must be well-formed, not merely parseable. Tracker-shaped
+     pages carry STAGES/ITEMS; others only have to parse. */
+  if (!/var ITEMS=/.test(body[1])) {
+    console.log("PASS  inline script parses");
+  } else {
   const ctx = { out: null };
   vm.createContext(ctx);
   try {
@@ -52,10 +59,12 @@ for (const ph of ["__STATE__", "__SRC__"]) {
   if (bad.length) { console.error(`FAIL  ${bad.length} item(s) missing k/t/tr/s`); process.exit(1); }
   const tracks = [...new Set(items.map((i) => i.tr))].sort();
   console.log(`PASS  inline script parses; ${items.length} items, tracks ${tracks.join("/")}, no duplicate keys`);
+  }
 }
 
 const B64 = Buffer.from(tpl, "utf8").toString("base64");
-const initial = { done: {}, track: "b" };
+const initial = NAME === "tracker" ? { done: {}, track: "b" } : { tally: {} };
+const TICK = NAME === "tracker" ? { done: { b1e: 1 }, track: "b" } : { tally: { a: [1] } };
 const render = state =>
   tpl.replace("__STATE__", JSON.stringify(state).replace(/</g, "\\u003c")).replace("__SRC__", B64);
 
@@ -73,13 +82,13 @@ if (embedded) {
   say(decoded === tpl, "decoded source round-trips to the template exactly");
   /* simulate a tick: regenerate as the page would, and confirm it is stable */
   const next = decoded
-    .replace("__STATE__", JSON.stringify({ done: { b1e: 1 }, track: "b" }).replace(/</g, "\\u003c"))
+    .replace("__STATE__", JSON.stringify(TICK).replace(/</g, "\\u003c"))
     .replace("__SRC__", embedded[1]);
   say(next.startsWith("<!doctype html>"), "regenerated document starts with a doctype");
   const again = next.match(/var SRC="([A-Za-z0-9+/=]+)"/);
   say(again && again[1] === embedded[1], "regenerated page can regenerate again (fixed point holds)");
-  say(next.includes('"done":{"b1e":1}'), "regenerated page carries the new state");
-  say(next.length === out.length + JSON.stringify({ done: { b1e: 1 }, track: "b" }).length
+  say(next.includes(JSON.stringify(TICK).slice(1, 24)), "regenerated page carries the new state");
+  say(next.length === out.length + JSON.stringify(TICK).length
       - JSON.stringify(initial).length, "only the state block differs");
 }
 say(out.startsWith("<!doctype html>"), "published page starts with a doctype");
