@@ -6,6 +6,7 @@
    Run: node scripts/build-tracker.js */
 "use strict";
 const fs = require("fs");
+const vm = require("vm");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
@@ -16,6 +17,41 @@ const tpl = fs.readFileSync(TPL, "utf8");
 for (const ph of ["__STATE__", "__SRC__"]) {
   const n = tpl.split(ph).length - 1;
   if (n !== 1) { console.error(`FAIL  ${ph} appears ${n} times, must be exactly 1`); process.exit(1); }
+}
+
+/*
+ * THE PAGE MUST PARSE, which this script did not used to check.
+ *
+ * Every check below verified the fixed point -- that a tick regenerates a
+ * document that can regenerate again -- and none of them verified that the
+ * document RUNS. A hand edit left `"})` where `"},` belonged, the builder
+ * printed ALL CHECKS PASSED, and the published tracker rendered a blank page.
+ * A build check that is happy with a syntactically broken page is not a build
+ * check.
+ */
+{
+  const body = tpl.match(/<script>\n"use strict";([\s\S]*?)<\/script>/);
+  if (!body) { console.error("FAIL  could not find the inline script to parse"); process.exit(1); }
+  try { new vm.Script(body[1]); }
+  catch (e) { console.error(`FAIL  inline script does not parse: ${e.message}`); process.exit(1); }
+
+  /* and the data must be well-formed, not merely parseable */
+  const ctx = { out: null };
+  vm.createContext(ctx);
+  try {
+    const decls = body[1].match(/var STAGES=[\s\S]*?\n\];[\s\S]*?var ITEMS=[\s\S]*?\n\];/);
+    new vm.Script(decls[0] + "\nout = {STAGES, ITEMS};").runInContext(ctx);
+  } catch (e) {
+    console.error(`FAIL  STAGES/ITEMS do not evaluate: ${e.message}`); process.exit(1);
+  }
+  const items = ctx.out.ITEMS;
+  const keys = items.map((i) => i.k);
+  const dupes = keys.filter((k, i) => keys.indexOf(k) !== i);
+  if (dupes.length) { console.error(`FAIL  duplicate item keys: ${[...new Set(dupes)].join(", ")}`); process.exit(1); }
+  const bad = items.filter((i) => !i.k || !i.t || !i.tr || !Number.isInteger(i.s));
+  if (bad.length) { console.error(`FAIL  ${bad.length} item(s) missing k/t/tr/s`); process.exit(1); }
+  const tracks = [...new Set(items.map((i) => i.tr))].sort();
+  console.log(`PASS  inline script parses; ${items.length} items, tracks ${tracks.join("/")}, no duplicate keys`);
 }
 
 const B64 = Buffer.from(tpl, "utf8").toString("base64");
