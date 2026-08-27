@@ -34,6 +34,23 @@ import { isBlocked } from './lib/blocklist.mjs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
 
+/*
+ * Every word any theme calls its own. Used only to break anagram ties, never
+ * to admit or reject a base on its own.
+ */
+const inSomeVocab = new Set(
+  Object.entries(JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'theme-vocab.json'), 'utf8')))
+    .filter(([k]) => !k.startsWith('_'))
+    .flatMap(([, tiers]) =>
+      Object.entries(tiers)
+        .filter(([k]) => !k.startsWith('_'))
+        .flatMap(([, s2]) => String(s2).split(/\s+/))
+    )
+    .filter(Boolean)
+);
+const seatedBy = new Map();
+const swaps = [];
+
 const MIN_ANSWERS = 24;
 const MAX_ANSWERS = 110;
 const MIN_COMMON_ROWS = 5; // featured floor, base included
@@ -139,7 +156,14 @@ for (const base of words) {
   if (new Set(base).size < 5) continue;
   if (!popular.has(base)) continue;
   if (claimed.has(base)) continue;
-  if (claimedSets.has(letterKey(base))) continue;
+  /*
+   * A letter-set already claimed by a SHIPPED board is closed for good — that
+   * puzzle exists. A set merely seated by another pool candidate is still
+   * open to the twin that a theme can actually clue; that contest is settled
+   * below, after the expensive answer count, so it is only run for bases that
+   * would otherwise qualify.
+   */
+  if (claimedSets.has(letterKey(base)) && !seatedBy.has(letterKey(base))) continue;
   if ([...base].filter((c) => RARE.has(c)).length > 1) continue;
 
   const answers = answersFor(base);
@@ -150,9 +174,37 @@ for (const base of words) {
     .sort((a, b) => b.length - a.length || a.localeCompare(b));
   if (rows.length + 1 < MIN_COMMON_ROWS) continue;
 
-  // The pool must not offer two anagrams of each other either, or two authors
-  // pick the same wheel independently and one of them is wasted work.
-  claimedSets.add(letterKey(base));
+  /*
+   * The pool must not offer two anagrams of each other either, or two authors
+   * pick the same wheel independently and one of them is wasted work.
+   *
+   * WHICH TWIN WINS THE SLOT IS NOT ARBITRARY, though it used to be.
+   *
+   * Whoever arrived first kept it, which in practice meant alphabetical. That
+   * cost a real board: ASHORE and HOARSE are the same six letters and spell
+   * exactly the same rows, so as puzzles they are identical -- but `hoarse` is
+   * a tailgate word (you shout yourself hoarse at a game) and `ashore` is a
+   * tailgate word for nobody. The base must itself be one of the six clued
+   * rows, so the slot decided whether that pack could ever open on a prize
+   * word, and alphabetical order decided it.
+   *
+   * So a twin that appears in ANY theme's vocabulary displaces one that
+   * appears in none. It costs nothing -- the rows are identical either way --
+   * and it is the difference between a board a pack can lead with and a board
+   * it cannot.
+   */
+  const key = letterKey(base);
+  const sitting = seatedBy.get(key);
+  if (sitting !== undefined) {
+    const held = pool[sitting];
+    if (inSomeVocab.has(base) && !inSomeVocab.has(held.base)) {
+      pool[sitting] = { base, answers: answers.length, rows };
+      swaps.push(`${held.base} -> ${base}`);
+    }
+    continue;
+  }
+  claimedSets.add(key);
+  seatedBy.set(key, pool.length);
   pool.push({ base, answers: answers.length, rows });
 }
 
