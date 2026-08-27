@@ -1,13 +1,11 @@
 {
   "_doc": "STAGING. General pack. Clue gate is binding: every clue names a position, a time, or a habit — never a category. Base selection avoids letter-sets held by packs without headroom to lend them.",
-
   "theme": {
     "id": "garden",
     "name": "The Garden",
     "category": "THE LONG WAY",
     "blurb": "Four square feet, one season, and something that was not there in April."
   },
-
   "boards": [
     {
       "base": "showed",
@@ -70,15 +68,15 @@
       }
     },
     {
-      "base": "growth",
-      "scene": "The week you stop being able to keep up",
+      "base": "harden",
+      "scene": "The week the seedlings sleep outside",
       "clues": {
-        "growth": "Six inches in nine days, measured against the same fence post",
-        "grow": "Faster than you can tie in, which is a good problem and still a problem",
-        "row": "Closed over entirely, so you now walk the long way round",
-        "worth": "The argument you have with yourself about the cost of the compost",
-        "throw": "The old sheet over the whole thing, done fast, done badly, and it works",
-        "tow": "What the whole thing needs, and what a stake and twine is standing in for"
+        "harden": "What seedlings do on the back steps, an hour longer each night, until they can take it",
+        "head": "What the lettuce finally makes in June, and the rabbit finds the same morning",
+        "hare": "The reason the bottom of the fence gets chicken wire, again",
+        "hand": "What does the weeding after the third trowel of the year disappears",
+        "read": "What you do to the back of the seed packet twice, and follow neither time",
+        "earn": "What the first tomato does for every hour spent kneeling since April"
       }
     },
     {
