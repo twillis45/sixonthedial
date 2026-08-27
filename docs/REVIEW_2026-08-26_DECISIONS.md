@@ -323,3 +323,93 @@ Left unchanged and recorded rather than quietly fixed: they are height-
 constrained pills in a laid-out row, none is persistent chrome, and after this
 particular error the right move is to put the corrected number in front of a
 human rather than act on it immediately.
+
+---
+
+# Sitting 2 — 2026-08-27 · What happens next
+
+Seven seats, not twenty. The standing override permits twenty; the convening
+doctrine says size to the decision, and a sequencing question does not need a
+panel too large to disagree in. Seats: **Josh Wardle** (restraint), **Zach
+Gage** (teaching without tutorials), **Ramit Sethi** (is the ask honest, and is
+the spend), **a mobile release engineer**, **the cultural authenticity seat**
+(holds a block), **Karen S.** (non-Black player meeting the packs), and
+**Marisol** (first-ever word game, the seat gate zero exists to test).
+
+## The finding that arrived before the question could be asked
+
+The recommendation put to this board — *run gate zero before spending on
+readers* — rested on an assumption nobody had checked: that gate zero tests the
+mechanic.
+
+**It does not, as currently configured.** The cold-profile ladder is `crafty`
+and `nicked`, and both are culturally-specific boards. The first thing any
+stranger sees is Eastern Carolina whole-hog barbecue:
+
+> cart — *Ash from the burn barrel to the pit, all night, by somebody's nephew*
+
+That clue requires knowing a burn barrel feeds a pit. Nothing chose it as an
+onboarding board; it is simply the easiest board by difficulty sort (0.06).
+
+## Ruling 1 — Gate zero still goes first, and it runs on a GENERAL board
+
+**Unanimous on the sequencing.** Sethi's seat is decisive on spend: commissioning
+$1,100–2,200 of reader time to review clue quality, before twelve strangers have
+shown that anybody can reach a clue at all, buys careful review of content nobody
+gets to. Wardle's restraint agrees from the other side — do not spend ahead of
+evidence you can get for free in an afternoon.
+
+**Unanimous, and material, on the board it runs on.** As configured the test
+cannot distinguish its own failure modes: a Miss might be *the mechanic is
+unclear* or *the clue is outside my world*, and those need opposite fixes. Gage's
+seat: a tutorial-free game must be legible on its own terms before cultural
+specificity is added as a variable, or you learn nothing about either.
+
+Garden and tailgate are general packs and both now ship. **Gate zero runs on a
+general board.** This is a change to the test rig, not to the product.
+
+## Ruling 2 — The warm-up ladder is a product question, and it was never decided
+
+Karen S.'s seat, and this is the sitting's most useful output.
+
+A first-time player's first board is a cultural board **because the difficulty
+sort put it there**. That is a default, not a decision. It may well be the right
+one — the packs are the product, and leading with them is a defensible stance —
+but nobody has taken it deliberately, and the same clue that delights an insider
+can read as a locked door to someone the pack was not written for.
+
+Referred back to the operator as an open decision. The board declines to rule it
+here because it is a positioning question and belongs in the marketing track's
+phase 1, not in a sequencing sitting.
+
+## Ruling 3 — Reader outreach starts now; commissions wait
+
+The cultural seat's **dissent is recorded and is not overruled**: deferring
+readers behind a legibility test reads as ranking the cultural work second, and
+this bench has been explicit that structured perspective is not consultation.
+
+What the sitting rules is narrower than the dissent fears. **Outreach — finding,
+asking, scheduling — starts immediately**, because it costs nothing and runs on
+other people's calendars. Only the *payment* waits on gate zero, and it waits
+weeks at most. If gate zero passes, nothing is lost. If it fails, the readers
+are still needed and are simply not yet spent.
+
+The seat's one binding condition, accepted: **gate zero does not become a reason
+to show unreviewed cultural material to strangers at volume.** Ruling 1 already
+satisfies it — the test moves to a general board — and the condition stands
+independently in case the test rig changes again.
+
+## Ruling 4 — Buy the Play account now. Not Apple.
+
+The release engineer's seat, uncontested. Identity verification runs on Google's
+clock, and the signing fingerprint it produces is the last placeholder in
+`assetlinks.json`. It is a queue you join, not a bet you place. Apple stays
+deferred under ruling 1 of the first sitting: $99 buys nothing until a native
+capability exists to answer 4.2.
+
+## What this sitting did not settle
+
+- **Which theme fronts the campaign**, and now also **which board a first-timer
+  meets** — both belong to the cultural seat, and both wait on a reader.
+- **The share card's overflow rule.** Not a board question; the operator picks
+  which evidence line drops.
