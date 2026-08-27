@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import type { EntitlementCache } from './entitlement';
 import {
   resolveEntitlement,
   rememberStoreAnswer,
@@ -8,7 +9,7 @@ import {
 } from './entitlement';
 
 const NOW = 1_800_000_000_000;
-const confirmed = (owned: string[], at = NOW) => ({ owned, confirmedAt: at });
+const confirmed = (owned: string[], at = NOW): EntitlementCache => ({ owned, confirmedAt: at });
 
 describe('a live store answer is authoritative', () => {
   it('grants what the store says is owned', () => {
