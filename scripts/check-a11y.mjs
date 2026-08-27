@@ -215,16 +215,31 @@ async function pixelsOf(page, clip) {
   console.log(`calibrated: recovered ${CAL.length * CAL_SIZES.length} known ratios (down to 12px) within ${CAL_TOL}\n`);
 }
 
+/*
+ * TOUCH IS PART OF THE VIEWPORT, and leaving it out measured the wrong app.
+ *
+ * The header controls are `h-9 w-9 touch:h-11 touch:w-11` — 36px with a mouse,
+ * 44px with a finger. The first version of this file set width and height and
+ * nothing else, so Chrome reported no touch, the `touch:` variant never
+ * applied, and the guard measured a 36px control at phone width that no phone
+ * has ever rendered. It then reported 81 targets under the thumb bar and a
+ * board ruling was made on that number.
+ *
+ * A phone surface without hasTouch is not a phone.
+ */
 const SURFACES = [
-  { name: 'phone', w: 390, h: 844 },
-  { name: 'desktop', w: 1440, h: 900 },
+  { name: 'phone', w: 390, h: 844, touch: true },
+  { name: 'desktop', w: 1440, h: 900, touch: false },
 ];
 const THEMES = ['dark', 'light', 'studio'];
 
 for (const surface of SURFACES) {
   for (const theme of THEMES) {
     const page = await browser.newPage();
-    await page.setViewport({ width: surface.w, height: surface.h, deviceScaleFactor: DSF });
+    await page.setViewport({
+      width: surface.w, height: surface.h, deviceScaleFactor: DSF,
+      isMobile: surface.touch, hasTouch: surface.touch,
+    });
     await page.goto(`${base}/`, { waitUntil: 'domcontentloaded' });
     await page.evaluate((t) => {
       document.documentElement.setAttribute('data-theme', t);
@@ -291,7 +306,11 @@ for (const surface of SURFACES) {
     for (const t of targets) {
       const m = `${where}  ${t.w}x${t.h}px  "${t.label}"`;
       if (t.hard) fails.push(`target under WCAG 2.5.8 and too crowded for the spacing exception — ${m}`);
-      else warns.push(`target under the 44px thumb bar — ${m}`);
+      /* The 44px bar is Apple's guidance for a FINGER. Warning about it on a
+         mouse-driven desktop is noise, and a warning list nobody can act on is
+         a warning list nobody reads. WCAG's own 24px floor still applies
+         everywhere and is checked above. */
+      else if (surface.touch) warns.push(`target under the 44px thumb bar — ${m}`);
     }
 
     /* ---------- B. accessible name (exact) ---------- */

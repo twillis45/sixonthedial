@@ -283,3 +283,43 @@ choice rather than an absence.
 
 The sweep now reports zero tobacco hits. Ruling 2 (Everyone / 4+) is no longer
 provisional on this item.
+
+---
+
+## Ruling 5 — WITHDRAWN 2026-08-26. The premise was a measurement error.
+
+**The four header controls already meet 44px on a phone.** They are
+`h-9 w-9 touch:h-11 touch:w-11` — 36 with a mouse, 44 with a finger. No phone
+has ever rendered them at 36.
+
+`check-a11y.mjs` set width, height and deviceScaleFactor and **not `hasTouch`**,
+so Chrome reported no touch, the `touch:` variant never applied, and the guard
+measured a control at a size that does not exist in the field. That produced
+"81 targets under the thumb bar", and this board ruled on it. With touch
+emulated the count falls to 69, and the twelve that vanish are exactly those
+four controls across three themes.
+
+**This is worse than the session's other instrument defects and worth saying so.**
+The other six produced bad readings. This one produced a *decision*: twenty
+seats deliberated, the motor-accessibility seat was decisive — "the control you
+hit on every session should not be the one you miss" — and the problem did not
+exist. The reasoning was sound on the input it was given. The input was
+fabricated by the harness.
+
+It is also the argument *for* measuring rather than against it. Nothing but a
+second measurement would have found this; no amount of care in the room would
+have.
+
+**What is actually under the thumb bar on a phone**, after scoping the 44px bar
+to touch surfaces (it is Apple's guidance for a finger, and warning about it on
+a mouse-driven desktop is noise nobody can act on): 9 controls, every one of
+them exactly 24px tall and therefore clearing WCAG's own floor.
+
+- The six hint rows — **already ruled to stay**, and that ruling stands.
+- `Shuffle`, `0 bonus`, and the puzzles chip — 24px tall pills, not ruled on
+  before because they were buried under twelve phantom findings.
+
+Left unchanged and recorded rather than quietly fixed: they are height-
+constrained pills in a laid-out row, none is persistent chrome, and after this
+particular error the right move is to put the corrected number in front of a
+human rather than act on it immediately.
