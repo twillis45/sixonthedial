@@ -80,6 +80,42 @@ for (const e of EXPECT) {
   if (ctx) await ctx.close().catch(() => {});
 }
 
+/*
+ * Variant B has properties the others do not, and one of them is the kind that
+ * breaks quietly: it must cost NOTHING. revealWord prices a whole word at
+ * COST_WORD, so if the free path ever regresses to a real charge, B's player
+ * starts the game with an emptied wallet, every later comparison against A is
+ * invalid, and the board still looks completely normal.
+ */
+{
+  const page = await browser.newPage();
+  await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+  await page.goto(`${base}/`, { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => { try { localStorage.clear(); } catch (err) { /* private mode */ } });
+  await page.goto(`${base}/?g0=b`, { waitUntil: 'domcontentloaded' });
+  await new Promise((r) => setTimeout(r, 2600));
+
+  const b = await page.evaluate(() => {
+    const rows = [...document.querySelectorAll('button[aria-label^="Row "]')]
+      .map((el) => el.getAttribute('aria-label'));
+    let spent = null, revealed = 0;
+    try {
+      const p = JSON.parse(localStorage.getItem('ngw-wordy/v2') || '{}');
+      spent = p.spent ?? null;
+      revealed = Object.values(p.reveals || {}).reduce((a, r) => a + ((r && r.words) || []).length, 0);
+    } catch (err) { /* private mode */ }
+    return { rows, spent, revealed, caption: /all from the wheel\. That is one row/.test(document.body.innerText) };
+  });
+
+  const solved = b.rows.filter((r) => /, done$/.test(r || '')).length;
+  const ok = (m, cond) => { console.log(`  ${cond ? '\u2714' : '\u2717'}  ${m}`); if (!cond) fails.push(`variant B: ${m}`); };
+  ok('variant B — solves exactly one row, unprompted', solved === 1);
+  ok('variant B — the row was revealed, not guessed', b.revealed === 1);
+  ok('variant B — names what happened', b.caption === true);
+  ok('variant B — charged nothing for it', b.spent === 0);
+  await page.close();
+}
+
 await browser.close();
 server.close();
 
@@ -89,4 +125,4 @@ if (fails.length) {
   console.log(`\n✖ ${fails.length} gate-zero variant(s) do not show what they claim`);
   process.exit(1);
 }
-console.log(`\n✔ all ${EXPECT.length} gate-zero paths show exactly what they claim`);
+console.log(`\n✔ all four variants show exactly what they claim (${EXPECT.length} paths + 4 checks on B)`);

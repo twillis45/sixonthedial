@@ -217,8 +217,8 @@ var VARIANTS=[
 var CHECKS=[
  {k:"c1",crit:1,t:"Wipe the device between every single stranger",
   n:"The teach card retires after the first banked word and that fact is STORED (markIntroSeen, guarded by check:intro). Stranger two on the same device therefore sees no teach at all &mdash; they silently become variant D. Skip this and every run after the first is contaminated toward the control, and the numbers will look fine. Private window per person, or clear site data, every time."},
- {k:"c2",crit:1,t:"Build variant B &mdash; the scripted first board",
-  n:"Still the only unbuilt variant, and the only one that is not a UI change: it has to solve a row without charging a hint, which touches the reveal path rather than the render. <em>?g0=b</em> currently behaves as A."},
+ {k:"c2",d:1,t:"Build variant B &mdash; the scripted first board",
+  n:"Built. <em>?g0=b</em> solves the first row 1.2s in, while they are watching, and names what happened. It is FREE &mdash; revealWord prices a whole word, so the charge is applied at zero, because a demonstration nobody asked for must not empty a wallet they have not learned about, and charging would make B&rsquo;s later play incomparable with A&rsquo;s. Red-proofed: restoring the charge fails the guard."},
  {k:"c3",d:1,t:"Build variant C &mdash; the goal before the board",
   n:"Built. <em>?g0=c</em> &mdash; one sentence on its own, dismissed by a tap, before the board is shown. Guarded by check:gate0."},
  {k:"c4",d:1,t:"Build variant D &mdash; suppress the teach",

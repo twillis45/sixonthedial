@@ -9,7 +9,12 @@ import {
   useSyncExternalStore,
 } from 'react';
 import { createPortal } from 'react-dom';
-import { gate0From, showsTeachCard, showsGoalFirst } from '@/lib/gate0';
+import {
+  gate0From,
+  showsTeachCard,
+  showsGoalFirst,
+  solvesFirstRow,
+} from '@/lib/gate0';
 import LetterWheel from './LetterWheel';
 import WordTray from './WordTray';
 import RankBar from './RankBar';
@@ -1560,6 +1565,48 @@ export default function Game({ data }: { data: PuzzleFile }) {
     () => 'a' as const
   );
 
+  /*
+   * Gate-zero variant B: the board solves its first row in front of them.
+   *
+   * The player bench's seat 1 asked for exactly this — "the first board
+   * completing itself in front of her: a guided first puzzle that spells one
+   * row FOR her and names what just happened." This is that, as an
+   * instrument, so the ask can be measured against the three other first-runs
+   * instead of assumed to be right.
+   *
+   * IT IS FREE. `revealWord` prices a whole word at COST_WORD and refuses
+   * below that, so the balance passed here is the price itself rather than the
+   * player's — and `spendHint` is then called with a cost of ZERO. A
+   * demonstration the player did not ask for must not empty a wallet they have
+   * not learned about yet, and charging them would also make B's later
+   * gameplay incomparable with A's.
+   *
+   * The delay is the point, not politeness: arriving at an already-solved row
+   * teaches nothing, because nothing was seen to happen. It has to complete
+   * while they are watching.
+   *
+   * The ref guard is load-bearing. Applying the reveal changes `reveal`, which
+   * is a dependency, so without it this effect re-arms itself and walks the
+   * whole grid.
+   */
+  const scriptedRef = useRef(false);
+  const [scriptedRow, setScriptedRow] = useState<string | null>(null);
+  useEffect(() => {
+    if (!solvesFirstRow(gate0) || scriptedRef.current) return;
+    /* first run only — a returning player is not who this is testing */
+    if (progress.seenIntro) return;
+    const first = puzzle.grid[0];
+    if (!first || rowDone(first)) return;
+    scriptedRef.current = true;
+    const t = setTimeout(() => {
+      const r = revealWord(reveal, first, { solved: false, balance: COST_WORD });
+      if (!r.ok) return;
+      spendHint(puzzleId, r.reveal, 0);
+      setScriptedRow(first.toUpperCase());
+    }, 1200);
+    return () => clearTimeout(t);
+  }, [gate0, progress.seenIntro, puzzle.grid, puzzleId, reveal, rowDone]);
+
   const [rootPx, setRootPx] = useState(16);
   useEffect(() => {
     const read = () =>
@@ -1840,6 +1887,14 @@ export default function Game({ data }: { data: PuzzleFile }) {
       {!progress.seenIntro && showsTeachCard(gate0) && (
         <p className="mx-auto mt-2 max-w-[22rem] rounded-full border border-edge-mid px-4 py-1.5 text-center text-meta font-medium text-text-secondary short:mt-0.5">
           Six letters. Six words. All from the wheel.
+        </p>
+      )}
+
+      {/* Variant B names what just happened. A row completing on its own is
+          only a lesson if the screen says what it was. */}
+      {scriptedRow && (
+        <p className="mx-auto mt-2 max-w-[24rem] rounded-2xl border border-select bg-[var(--color-select)]/10 px-4 py-2 text-center text-meta font-medium text-text-primary">
+          {scriptedRow} — six letters, all from the wheel. That is one row. Five to go.
         </p>
       )}
 
