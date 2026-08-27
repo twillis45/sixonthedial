@@ -92,6 +92,43 @@ if (embedded) {
       - JSON.stringify(initial).length, "only the state block differs");
 }
 say(out.startsWith("<!doctype html>"), "published page starts with a doctype");
-console.log(`\n${(out.length / 1024).toFixed(0)}KB → ${OUT}`);
-console.log(fail ? `${fail} CHECK(S) FAILED` : "ALL CHECKS PASSED");
-process.exit(fail ? 1 : 0);
+
+/*
+ * OPEN THE PAGE WE ACTUALLY WROTE.
+ *
+ * Every check above reads the string, and on 2026-08-27 all of them passed on
+ * a tracker that rendered a blank white screen: one item line ended `"})`
+ * instead of `"},`, the array threw, and nothing here could see it. Testing
+ * the generator is not testing the artifact. This check opens the file in a
+ * browser and asserts the board is on the page — and that the done/open toggle
+ * actually changes what is on it, which no string check can know.
+ */
+(async () => {
+  const { launch } = await import("./lib/browser.mjs");
+  const browser = await launch({ headless: true });
+  const page = await browser.newPage();
+  const errs = [];
+  page.on("pageerror", (e) => errs.push(e.message));
+  await page.goto("file://" + OUT, { waitUntil: "load" });
+  await new Promise((r) => setTimeout(r, 400));
+
+  const collapsed = await page.evaluate(() => ({
+    items: document.querySelectorAll("li.item").length,
+    text: document.body.innerText.trim().length,
+  }));
+  await page.click("#togdone");
+  await new Promise((r) => setTimeout(r, 200));
+  const expanded = await page.evaluate(() => document.querySelectorAll("li.item").length);
+  await browser.close();
+
+  say(errs.length === 0, `page runs without script errors${errs.length ? " — " + errs.join(" | ") : ""}`);
+  say(collapsed.text > 500, `page renders visible text (${collapsed.text} chars)`);
+  say(collapsed.items > 0, `open items reach the DOM (${collapsed.items} shown by default)`);
+  say(expanded > collapsed.items,
+    `the done toggle changes the board (${collapsed.items} -> ${expanded})`);
+
+  console.log(`\n${(out.length / 1024).toFixed(0)}KB → ${OUT}`);
+  console.log(fail ? `${fail} CHECK(S) FAILED` : "ALL CHECKS PASSED");
+  process.exit(fail ? 1 : 0);
+})();
+

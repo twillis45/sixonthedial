@@ -84,6 +84,12 @@ h1{font-family:"Archivo",system-ui,sans-serif;font-weight:700;
 .tracks button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
 
 .stage{border:1px solid var(--rule);border-top:0;background:var(--surface)}
+.stage.folded .stage-hd{border-bottom:0}
+.stage.folded .stage-t{color:var(--ink-3)}
+.fold{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);border:1px solid var(--rule-2);padding:2.5px 6px;white-space:nowrap}
+.tracks.showdone{margin-top:1px}
+.tracks.showdone button{flex:0 0 auto}
 .stage:first-of-type{border-top:1px solid var(--rule);margin-top:30px}
 .stage-hd{display:flex;align-items:baseline;gap:13px;padding:15px 18px;background:var(--surface-2);
   border-bottom:1px solid var(--rule)}
@@ -311,16 +317,31 @@ function render(){
   TRACKS.forEach(function(t){
     h+='<button data-tr="'+t[0]+'" aria-pressed="'+(tr===t[0])+'">'+t[1]+'</button>';
   });
-  h+='</div></header>';
+  h+='</div>';
+  var doneAll=ITEMS.filter(isDone).length;
+  h+='<div class="tracks showdone"><button id="togdone" aria-pressed="'+(!!STATE.showDone)+'">'
+   +(STATE.showDone?'Hide the '+doneAll+' done':'Show the '+doneAll+' done')+'</button></div>';
+  h+='</header>';
 
   STAGES.forEach(function(st,idx){
     var n=idx+1, list=shown.filter(function(i){return i.s===n;});
     if(!list.length) return;
     var d=list.filter(isDone).length;
-    h+='<div class="stage'+(d===list.length?' clear':'')+'"><div class="stage-hd">'
+    /*
+     * Done work collapses by default, because a board is read to find what is
+     * LEFT. Sixty-odd finished items above four open ones buries the four, and
+     * the count in the stage header carries the progress just as well as the
+     * struck-through lines did.
+     */
+    var open=STATE.showDone?list:list.filter(function(i){return !isDone(i);});
+    var hidden=list.length-open.length;
+    h+='<div class="stage'+(d===list.length?' clear':'')+(open.length?'':' folded')+'"><div class="stage-hd">'
      +'<span class="stage-n">'+st[0]+'</span><span class="stage-t">'+st[1]+'</span>'
-     +'<span class="stage-c">'+d+'/'+list.length+'</span></div><ul class="items">';
-    list.forEach(function(it){
+     +(hidden?'<span class="fold">'+hidden+' done</span>':'')
+     +'<span class="stage-c">'+d+'/'+list.length+'</span></div>';
+    if(!open.length){ h+='</div>'; return; }
+    h+='<ul class="items">';
+    open.forEach(function(it){
       var on=isDone(it);
       h+='<li class="item'+(on?' done':'')+'">'
        +'<button class="box" role="checkbox" aria-checked="'+on+'" data-k="'+it.k+'"'
@@ -349,7 +370,7 @@ function wire(){
       render(); schedule();
     });
   });
-  Array.prototype.forEach.call(document.querySelectorAll('.tracks button'),function(b){
+  Array.prototype.forEach.call(document.querySelectorAll('.tracks button[data-tr]'),function(b){
     /*
      * A TRACK IS A VIEW PREFERENCE, NOT SHARED STATE.
      *
@@ -360,6 +381,11 @@ function wire(){
      */
     b.addEventListener('click',function(){ STATE.track=b.dataset.tr; render(); schedule(true); });
   });
+  /* Showing or hiding finished work is a view preference, not shared state —
+     same reasoning as the track switcher, which used to publish a version per
+     tab switch. Local only. */
+  var tg=document.getElementById('togdone');
+  if(tg) tg.addEventListener('click',function(){ STATE.showDone=!STATE.showDone; render(); schedule(true); });
 }
 
 /* ---------- persistence: localStorage always, artifact publish when available ---------- */
