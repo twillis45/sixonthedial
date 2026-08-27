@@ -179,6 +179,27 @@ reloads itself and `caches.keys()` returns exactly one entry at the new stamp.
 A commit that only touches `scripts/` or `store/` will NOT do — neither is a
 build input, so the artifact can come out byte-identical and prove nothing.
 
+## Gates that have run, and what they found
+
+**WCAG AA — `npm run check:a11y`, 2026-08-26. Clean.** 189 text boxes across
+six surface/theme combinations, zero contrast failures, every interactive
+element named, reduced motion honoured. Red-proofed at 118 caught with faults
+injected, 0 without. Not a failure but worth a decision: 81 controls sit under
+Apple's 44px bar, including four header controls at 36x36 and the hint rows at
+24x24. WCAG's own floor is 24 and they clear it.
+
+**Nielsen 10 heuristics, 2026-08-26. No P0 or P1.** One P2: a spent hint has no
+undo. It is well guarded — a two-step chooser, prices shown, unaffordable
+options disabled rather than hidden, and the two options measured at 44px tall
+with 95px between centres, so a mistap is unlikely — but the action is still
+irreversible and consumes a scarce resource. Verified live rather than reasoned
+about: solving a row, reloading, and confirming the row comes back solved.
+
+Caveat on that pass, because it changes how much it is worth: the skill calls
+for a clean-room subagent and this session was instructed not to spawn one, so
+it ran inline. An inline pass is biased toward re-finding what the session
+already knew, and is worth redoing cold before submission.
+
 ## What shipped since this file was last accurate
 
 Between 2026-08-16 and 2026-08-26, none of it in the catalogue:
