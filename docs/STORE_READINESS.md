@@ -147,6 +147,94 @@ Activity, via Bubblewrap) for Play, **Capacitor** or a WKWebView shell for iOS.
 
 ---
 
+
+## 6. Marketing & promotion — the roadmap
+
+Per `~/.claude/PATH-TO-PRODUCTION.md`, this track **starts at stage 2, not after
+Deploy: positioning shapes the product.** It is late here, and the lateness has
+already cost something — the board ruled the business model on 2026-08-26, after
+the app was built, and that ruling closed every paid channel. Had it been asked
+at stage 2 the answer would have been the same, but the capture pipeline would
+have been built for a share loop rather than for store screenshots.
+
+**Four phases, each with an exit condition rather than a date.** A date is a
+wish; an exit condition is a thing you can hold up and check. Nothing in phase
+N+1 starts until phase N's condition is met, and the conditions are deliberately
+things other people do, because that is what this product is actually waiting
+on.
+
+### The constraint that shapes all four
+
+**Marketing here is blind by design.** `connect-src 'self'`, zero analytics, no
+ad SDKs, and GitHub Pages keeps no logs — so no UTM lands anywhere, no share is
+counted, no visit is attributable. The only instruments that will ever exist are
+**the store consoles and the reviews.**
+
+That is the privacy position working, not a gap in it, and it is filed with both
+stores as "Data Not Collected". Every phase below is written to be judged by
+installs, ratings and read reviews, or by nothing. Any proposal that needs a
+pixel is not a marketing decision — it reopens board ruling 2 and drags Play's
+Families policy in with it.
+
+### Phase 1 — Prove the thing is legible *(now)*
+
+Positioning cannot be written for a product nobody has understood. Everything
+here is about establishing that a stranger gets it.
+
+- Gate zero: twelve strangers, four first-runs, kill rule frozen at 60% Read.
+- The share text audited as the growth engine — **done**, `check:share`.
+- Press kit assembled on the domain from assets that already exist.
+
+**Exit condition:** gate zero has run and passed, or it has failed and the
+onboarding has been rebuilt once. Not "we ran it" — a scored result, on the
+page, against a threshold written before anyone was tested.
+
+### Phase 2 — Earn the right to describe it *(blocked on readers)*
+
+The packs are the differentiator, and describing them in public before a
+community reader has seen them is the one marketing move this project has
+explicitly forbidden itself.
+
+- One paid reader per pack, starting with cookout and nineties.
+- Listing copy final — **drafted**, `LISTING.md`, every sentence carrying its
+  check.
+- The framing rule holds everywhere: the packs are made for the people in them
+  first, never pitched as a lesson for anybody else.
+
+**Exit condition:** every pack that appears in launch copy has had a reader, and
+their findings are recorded — including the ones that changed a clue. A reader
+who rejects a pack is the system working, not a setback.
+
+### Phase 3 — Ship into a channel that can be measured *(blocked on accounts)*
+
+- Play staged rollout, held at least one full daily cycle, because a bug in
+  daily rollover is invisible inside an hour.
+- Launch-week cuts from the existing capture pipeline, per placement.
+- Outreach: word-game communities, category press, and — under the framing rule
+  — outlets that cover Black culture and tech.
+
+**Exit condition:** the app is listed, the rollout is past its first widening
+without a halt, and the console is showing impressions against real keywords.
+That is the first ASO instrument this project will ever possess; everything
+about keywords before it is reasoned rather than researched, and `LISTING.md`
+says so.
+
+### Phase 4 — Iterate on evidence, or stop *(blocked on phase 3)*
+
+- ASO iterated on observed ranks, not guessed ones.
+- Pack pricing set with evidence — the portfolio's ten-send discipline applies,
+  and no price ships on taste.
+- Weekly: two numbers from the console, and every review read. With no crash
+  reporting by ruling 4 and no analytics by design, **reviews are the only
+  user-research channel this product will ever have.**
+
+**Exit condition:** either the numbers justify continuing, or they do not and
+the wind-down is deliberate rather than a slow fade. What transfers is recorded
+either way — the capture pipeline, the claim-ledger listing check, the gate-zero
+protocol and the self-publishing tracker all came from the Snug and Spades
+sessions and went back improved. That is what makes an outcome an asset instead
+of an ending.
+
 ## Suggested order
 
 Revised 2026-08-15, now that all three surfaces are wanted.
