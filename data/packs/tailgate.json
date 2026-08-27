@@ -1,0 +1,83 @@
+{
+  "_doc": "The Tailgate — a general pack (no cultural gate; see docs/PACK_PIPELINE.md). Authored 2026-08-27 against the vetted pool AFTER the anagram-twin fix gave HOARSE its slot back; HOARSE is the pack's prize board and the reason the fix mattered. Clue gate per theme-vocab _note: every clue names a position, a time, or a habit — never a category. No factual/citable claims on purpose: these clues observe, so nothing here needs a canon entry.",
+  "theme": {
+    "id": "tailgate",
+    "name": "The Tailgate",
+    "category": "THE TABLE",
+    "blurb": "Four hours before kickoff, a folding table in a parking lot, and somebody you have never met handing you a plate."
+  },
+  "boards": [
+    {
+      "base": "hoarse",
+      "scene": "What is left of everybody's voice",
+      "clues": {
+        "hoarse": "How everybody sounds by Monday morning, and nobody regrets it",
+        "share": "What happens to a plate you swore was yours the second you look away",
+        "sear": "First thing that happens to anything that touches the grate, and the reason you wait",
+        "hears": "What the whole lot does at once when one radio finds the pregame call",
+        "hero": "Whoever remembered the extra propane, for exactly one afternoon",
+        "ash": "What the wind lifts off the coals and sets on somebody's white sleeve"
+      }
+    },
+    {
+      "base": "metals",
+      "scene": "The folding table, loaded past advice",
+      "clues": {
+        "metals": "Everything that clanks when the truck hits the speed bump, packed since dawn",
+        "steam": "What rolls off the pot the moment the foil comes back",
+        "meat": "Bought Thursday, seasoned Friday, argued about Saturday",
+        "salt": "The shaker that lives in the glove box between Saturdays",
+        "seat": "What you lose the moment you get up to check the score",
+        "team": "The reason one grown woman owns four shirts in a single color"
+      }
+    },
+    {
+      "base": "paints",
+      "scene": "Two hours before the gates, in team colors",
+      "clues": {
+        "paints": "What she does to three faces out of the back of the SUV, one letter each",
+        "paint": "Half a face in one color, the other half in the other, no compromise",
+        "snap": "The one moment the whole lot goes quiet, even mid-bite",
+        "pan": "What the cornbread rode in on, and what goes home scraped clean",
+        "pit": "Where the coals live, and the one job nobody gives up voluntarily",
+        "sit": "The thing folding chairs are for that nobody actually does after noon"
+      }
+    },
+    {
+      "base": "bundle",
+      "scene": "November, gates open at nine",
+      "clues": {
+        "bundle": "What your auntie makes you do before she hands you a plate — two more layers",
+        "blend": "What the third pot of chili refuses to do with the first two",
+        "lend": "What happens to your good chair the minute you say the word borrow",
+        "bun": "Always one short or eight over, never the number that came off the grill",
+        "bed": "Where the coolers ride out, and where the youngest cousins end up sitting",
+        "end": "The zone the whole lot claims it can see from here, and cannot"
+      }
+    },
+    {
+      "base": "pranks",
+      "scene": "The lot games, before anybody admits to keeping score",
+      "clues": {
+        "pranks": "What the rookie's first tailgate is mostly made of, by long tradition",
+        "prank": "The cooler that is all ice and one soda, left where the new guy will look first",
+        "spark": "What jumps when somebody pokes coals that were doing fine on their own",
+        "park": "The verb that takes four tries, two people waving, and one apology",
+        "snap": "What the folding chair does right when the argument gets good",
+        "pan": "What goes under the grease, because somebody here learned that the hard way"
+      }
+    },
+    {
+      "base": "thrown",
+      "scene": "Cornhole, and the family that takes it seriously",
+      "clues": {
+        "thrown": "How every bag in the lot has been, twice, before the smoke settles",
+        "throw": "The underhand she has practiced since January, and it shows",
+        "north": "The direction the wind swears it was not blowing on that last toss",
+        "worn": "The state of the lucky jersey at the elbows, since the championship year",
+        "horn": "What somebody's car gives the winning bag — long, loud, and unnecessary",
+        "row": "What the parking becomes by ten, tents down both sides and no lanes"
+      }
+    }
+  ]
+}
