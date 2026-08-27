@@ -198,3 +198,51 @@ them first.
 - **Preview audio** — Kowalski's seat wants the real mix; the pipeline cannot
   capture page audio. Open as an engineering task, not a decision.
 - **The age-appropriateness sweep** that ruling 2 depends on.
+
+---
+
+## Addendum — the age-appropriateness sweep ruling 2 depended on
+
+`node scripts/check-rating.mjs`, 2026-08-26. 132 boards, 1,848 strings, 14
+packs. **21 hits. Twenty are false positives. One is real.**
+
+The false positives are the whole reason the sweep was worth running, because
+every one of them is what an automated store scan or a reviewer skimming a word
+list at speed would see, stripped of its context:
+
+- **`pot liquor`** — the cooking liquid off a pot of greens, in the Sunday
+  dinner pack. The clearest case in the corpus: entirely food, reads as alcohol.
+- **`breast`** — a chicken breast, and it is the *base* of the first board in
+  the cookout pack, so it appears on the wheel.
+- **`forty`** ×4 — the number. "Minute forty", "forty times", "forty minutes".
+- **`Brandy`** — the singer. *Brandy and Monica, 1998.*
+- **`knife`** — the man carving at the pit.
+- **`shot`** — where a video *got shot* when the budget ran out.
+- **`gin`**, **`shot`** as answers — dictionary words their bases happen to
+  spell. That is the English language, not a reference, and removing one means
+  rebuilding a board.
+
+**The one real hit** is in `cookout/phased`, the clue for `ash`:
+
+> Flicked off the end of a cigarette nobody admits to having
+
+That is a tobacco reference in authored prose, and it changes an answer on a
+form that asks the question directly.
+
+**Not ruled here, deliberately.** Rewriting it would make the questionnaire
+tidier, and it would also be sanitising an observed detail out of a pack about
+Black American cultural life to make a form easier — which is the exact move
+the cultural bench exists to object to. That is a content decision belonging to
+the cultural seat and the reader at row 1.10, not a compliance chore to be
+quietly discharged by an agent.
+
+Two honest options, both defensible:
+
+1. **Keep the clue** and answer the tobacco question truthfully. One mild,
+   non-glamorising reference does not by itself push a rating out of Everyone,
+   but it must be declared rather than overlooked.
+2. **Rewrite the clue** — and record that it was rewritten for a form, so
+   nobody later mistakes the sanitised version for what was observed.
+
+Ruling 2 stays **provisional** until one of those is chosen. Everything else in
+the corpus is clear.
