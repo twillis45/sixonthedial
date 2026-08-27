@@ -246,3 +246,40 @@ Two honest options, both defensible:
 
 Ruling 2 stays **provisional** until one of those is chosen. Everything else in
 the corpus is clear.
+
+### Ruling on the one real hit — REWRITTEN 2026-08-26, and why
+
+Operator chose to rewrite. Recorded here rather than only in a diff, because a
+rewrite that is not explained becomes, within a year, indistinguishable from
+what was always there.
+
+**What was there**, on `cookout/phased`, the board whose scene is *the card
+table under the tree*:
+
+> ash — Flicked off the end of a cigarette nobody admits to having
+
+That was an observed detail. The person who quit, at the edge of the table,
+and everybody politely not seeing it. It sat in the same register as its
+neighbours on that board — *"the reason two grown people are standing up"*,
+*"and it is not the cards"*.
+
+**What replaced it:**
+
+> ash — What blows over from the grill and lands on a score pad two people
+> already disagree about
+
+**Why:** both stores ask directly whether the app references tobacco. The old
+clue made the honest answer yes. It was one mild, non-glamorising reference and
+would probably not have moved the rating on its own — the rewrite buys a
+cleaner form, not a rescue.
+
+**What was given up, stated so it is not lost:** a specific piece of observed
+life, removed because a questionnaire asked. The replacement is not worse
+writing — it keeps the board's running argument and ties the card table to the
+grill it is sitting next to — but it is *safer* writing, and safer is not the
+same as truer. If a real reader later says the original was the better clue,
+that reader is not wrong, and this note is what lets them see there was a
+choice rather than an absence.
+
+The sweep now reports zero tobacco hits. Ruling 2 (Everyone / 4+) is no longer
+provisional on this item.
