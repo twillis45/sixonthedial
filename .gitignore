@@ -82,3 +82,10 @@ android/**/local.properties
 android/.gradle/
 android/build/
 android/app/build/
+
+# Bubblewrap writes release artifacts to the android/ root, not android/build/,
+# so the build/ rules above miss them. Caught by `git status` after the first
+# successful `bubblewrap build`, with a 1 MB signed APK sitting untracked.
+android/app-release-*.apk
+android/app-release-*.aab
+android/app-release-*.idsig
