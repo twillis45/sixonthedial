@@ -368,7 +368,7 @@
    "clues": {
     "tokens": "What the seats become on a Saturday: held, traded, and fiercely defended",
     "knots": "Bantu, put in wet on Friday, taken out Sunday morning for the curl",
-    "tone": "Of the room, set by whoever has been coming longest, not by the owner",
+    "tone": "Of the room, decided by whoever has been coming longest, not by the owner",
     "set": "Standing, same time every three weeks, and it survives house moves",
     "note": "On the mirror about the price going up, ignored by everyone including her",
     "stone": "What the floor is by four, according to everybody standing on it"
@@ -507,7 +507,7 @@
    "theme": "texas",
    "clues": {
     "misled": "What everyone outside your county has been, on this subject, their whole life",
-    "mild": "On the South Side, in a squeeze bottle, and it is a specific thing not a spice level",
+    "mild": "Chicago, in a squeeze bottle, and it names a sauce rather than a heat level",
     "side": "Which one of the Carolinas you are in, and it changes the whole recipe",
     "slid": "Under the door of the argument, every family gathering, by an uncle",
     "lids": "Off the bottles at the table, because it goes on after, not before",
@@ -567,7 +567,7 @@
    "theme": "texas",
    "clues": {
     "pathos": "The mood at four when the trays are down to bread and sauce",
-    "ash": "Gray, banked at the side, and still hot enough to matter tomorrow",
+    "ash": "Gray, banked at the edge, and still warm enough to matter tomorrow",
     "post": "Oak, one log left, saved deliberately for the last hour",
     "hats": "Off, finally, and the sunburn line is exactly where it was last year",
     "hot": "The links, and the word is doing double duty on that sign",
@@ -586,7 +586,7 @@
    "base": "planet",
    "theme": "sunday",
    "clues": {
-    "planet": "The size of the plate, which is why nobody eats again until Tuesday",
+    "planet": "The size of what she hands you, which is why nobody eats again until Tuesday",
     "plate": "Fixed and covered in foil for somebody who could not come, before anyone sits",
     "late": "You are, and something is already covered in foil on the stove for you",
     "nap": "What happens at four, in the chair, mid-sentence, and nobody comments",
@@ -731,7 +731,7 @@
     "bid": "Said once, out loud, and written down before anyone can revise it",
     "blind": "The variant where you and your partner both go without looking",
     "slid": "The envelope across the table, with the running score on the back",
-    "bind": "What a nil bid puts your partner in for the entire hand"
+    "bind": "Where your partner's boldest call leaves you for the entire hand"
    },
    "prefer": [
     "nil",
@@ -807,7 +807,7 @@
    "theme": "spades",
    "clues": {
     "cradle": "Where you learned it, roughly, watching from somebody's lap",
-    "ace": "The first card you were allowed to hold, turned inward, saying nothing",
+    "ace": "The first one you were allowed to hold, turned inward, saying nothing",
     "card": "Handed to you at eight, in a hand of four, by an aunt with no patience",
     "deal": "The first thing you were taught, and badly, for about a year",
     "lead": "The second thing, and the one that takes ten years",
@@ -846,7 +846,7 @@
    "base": "candle",
    "theme": "steppers",
    "clues": {
-    "candle": "What she is not holding for anyone, which is the point of the whole dance",
+    "candle": "What she is not holding for anyone, and that is the entire point of the floor",
     "lead": "Two fingers and a change of weight. Anything more is manhandling",
     "dance": "The word does not cover it, and everyone here knows a better one",
     "clean": "What the footwork has to be before anyone will call it anything",
@@ -986,8 +986,8 @@
    "base": "adores",
    "theme": "juneteenth",
    "clues": {
-    "adores": "What the whole table does to the one who brings it, without saying so",
-    "soda": "Big Red, strawberry, or whatever the store had, and the brand is not the point",
+    "adores": "What the whole table feels about the one who brings it, without ever saying so",
+    "soda": "Strawberry, or whatever the store had, and the brand was never the point",
     "red": "Hibiscus once, and the color carried across an ocean before the flavor did",
     "read": "The label, by a child, who is checking whether this is the real one",
     "does": "What the grandmother insists the homemade one still has over the bottle",
@@ -1306,7 +1306,7 @@
    "base": "aliens",
    "theme": "church",
    "clues": {
-    "aliens": "What the line out front looks like to the new pastor, and he learns fast",
+    "aliens": "What the crowd out front looks like to the new pastor, and he learns fast",
     "sale": "Plate. Ten dollars, cash, and the flyer went up on Tuesday",
     "aisle": "Cleared of chairs by four so the tables can go where the pews are not",
     "line": "Out the door by five, and it is mostly people from the block, not the church",
@@ -1491,7 +1491,7 @@
     "gel": "In it, on its side, and this is how the lid ends up loose",
     "sale": "The sign in that window since before you moved onto this block",
     "able": "What you are, to do all of this yourself, which was never in doubt",
-    "gale": "What the wind does on that corner to a thin doubled bag, every time"
+    "gale": "What the wind does on that corner to anything thin and doubled, every time"
    },
    "prefer": [
     "bag",
@@ -1826,7 +1826,7 @@
    "base": "candor",
    "theme": "cookout",
    "clues": {
-    "candor": "What the aux cord produces within one hour, from someone's nephew",
+    "candor": "What the aux cable produces within one hour, from somebody's nephew",
     "corn": "In the husk, straight on the grate, and the silk burns off",
     "cord": "Orange, running from the kitchen window to the speaker, taped down badly",
     "can": "Handed to you without being asked for, which is how you know you are family",
@@ -1991,7 +1991,7 @@
     "year": "Since the last one, and the count is done out loud at the table",
     "acre": "What the yard is not, and the number of people here does not care",
     "race": "Of the children to the cooler the second the lid is lifted",
-    "cake": "Brought by the one person whose gets eaten first, every year"
+    "cake": "Brought by the one person whose always disappears first, and everybody knows why"
    },
    "prefer": [
     "rack",
@@ -2026,7 +2026,7 @@
    "base": "carmen",
    "theme": "cookout",
    "clues": {
-    "carmen": "Whose dish it is, and the name is said before the dish is",
+    "carmen": "Whose dish it is, said out loud before anybody says what the dish actually is",
     "mac": "The one that matters, and there is only one that counts as the one",
     "amen": "Said at the end, by everybody, a half-beat after it was expected",
     "can": "Bring a dish next year, and the answer to that is carefully worded",
@@ -2111,7 +2111,7 @@
     "case": "———, 1996 — Touch Me Tease Me, one name and one word on Def Jam",
     "east": "The coast that claimed it started here",
     "step": "Bobby Brown, and the dance that came with it",
-    "cast": "Who you put on the tape says everything about you"
+    "cast": "Who you put on the mix says everything about you, and everybody knew it"
    },
    "prefer": [
     "tape",
@@ -2350,7 +2350,7 @@
     "blend": "What the third pot of chili refuses to do with the first two",
     "lend": "What happens to your good chair the minute you say the word borrow",
     "bun": "Always one short or eight over, never the number that came off the grill",
-    "bed": "Where the coolers ride out, and where the youngest cousins end up sitting",
+    "bed": "Where the coolers ride out, and where the youngest cousins sit once it is empty",
     "end": "The zone the whole lot claims it can see from here, and cannot"
    },
    "prefer": [

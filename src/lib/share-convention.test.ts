@@ -110,10 +110,15 @@ describe('the share card holds the convention, not just the character limit', ()
 
   it('does not let the corpus-wide clue leak grow past today', () => {
     /*
-     * A ratchet, in the shape catalogue.test.ts already uses: this does not
-     * claim the corpus is clean, it claims it does not get dirtier. 17 as of
-     * 2026-08-28, down from 20. Lower it when a content pass fixes some;
-     * never raise it.
+     * A ratchet, in the shape catalogue.test.ts already uses. It was 20 when
+     * the audit first measured it, then 17, and the content pass on
+     * 2026-08-28 took it to ZERO — every clue that named another row on its
+     * own board was rewritten.
+     *
+     * Kept at 0 rather than deleted. The rule is easy to break by accident
+     * (a clue for BIND that says "nil bid" reads perfectly and gives away two
+     * rows), it went unenforced for the entire life of the corpus, and a
+     * ratchet at zero is the cheapest thing that stops it coming back.
      */
     const authored = JSON.parse(
       readFileSync(path.join(process.cwd(), 'data', 'themes.json'), 'utf8')
@@ -127,7 +132,7 @@ describe('the share card holds the convention, not just the character limit', ()
         }
       }
     }
-    expect(n, 'clues naming another row on the same board').toBeLessThanOrEqual(17);
+    expect(n, 'clues naming another row on the same board').toBe(0);
   });
 
   it('the product name and pack names DO collide, and that is accepted', () => {
