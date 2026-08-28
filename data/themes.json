@@ -2741,6 +2741,106 @@
     "star"
    ],
    "scene": "The rack by the door, in whatever order it was left"
+  },
+  {
+   "base": "wobble",
+   "theme": "barbershop",
+   "scene": "The second chair, and the shop that works around it",
+   "clues": {
+    "wobble": "What the second chair has done for years, and the fix is a folded matchbook under one leg",
+    "blow": "The dryer aimed at the back of your neck, finding every clipping the cape missed",
+    "bowl": "The cut a mother gave at the kitchen table with a dish and complete confidence",
+    "elbow": "Where his rests while he lines you up, and the reason you have stopped moving",
+    "lobe": "The piece of your ear he folds down before the clippers come past",
+    "low": "A fade taken as far down as it goes without going bald, and the most common ask"
+   },
+   "prefer": [
+    "elbow",
+    "bowl",
+    "blow",
+    "lobe",
+    "low"
+   ]
+  },
+  {
+   "base": "bought",
+   "theme": "cookout",
+   "scene": "The store run at eleven, and the list that kept growing",
+   "clues": {
+    "bought": "Paid for out of pocket by whoever has the car, and the list grew on the way",
+    "hot": "The link, coarse and red, that goes on the grill before anything else",
+    "hug": "What you cannot get out of the door without giving, twice, to everybody",
+    "tough": "Hurry the flat cut and this is what you get, with no way back from it",
+    "both": "Ribs and sausage, because choosing was never a realistic plan",
+    "out": "Called when the last tray goes and there are still people waiting"
+   },
+   "prefer": [
+    "tough",
+    "both",
+    "hot",
+    "hug",
+    "out"
+   ]
+  },
+  {
+   "base": "spirit",
+   "theme": "cookout",
+   "scene": "After nine, when the music changes",
+   "clues": {
+    "spirit": "What the cousins bring back at nine, about the time the speaker gets turned up again",
+    "stir": "Somebody gives the pot one every time they pass it, and everybody passes it",
+    "tips": "The rib ends nobody treats as a lesser cut, and they are gone before the ribs",
+    "pit": "The hole in the yard that has outlasted two houses and one marriage",
+    "trip": "The extension cord causes one before dark, and it is always the same cord",
+    "sit": "What the aunties refuse to do until everybody else has eaten"
+   },
+   "prefer": [
+    "stir",
+    "tips",
+    "trip",
+    "pit",
+    "sit"
+   ]
+  },
+  {
+   "base": "camera",
+   "theme": "cookout",
+   "scene": "The folding table by the cooler, and who is behind the lens",
+   "clues": {
+    "camera": "Somebody's cousin wears one all day and still has not sent anybody the pictures",
+    "cream": "The churn nobody wants to turn until the exact moment it is ready",
+    "mac": "The dish that gets judged hardest, and only one auntie is allowed to bring it",
+    "race": "What the kids start across the yard the second the plates are cleared",
+    "arm": "What goes round three people at once the moment the shutter works",
+    "ear": "Where the speaker leaves you ringing if you set your chair too close"
+   },
+   "prefer": [
+    "cream",
+    "race",
+    "mac",
+    "arm",
+    "ear"
+   ]
+  },
+  {
+   "base": "attend",
+   "theme": "sunday",
+   "scene": "The week's one table, and who is expected at it",
+   "clues": {
+    "attend": "What the whole house does, and nobody asked whether your Sunday was free",
+    "eat": "Told to twice before you have sat down, and once more on your way out",
+    "tend": "What she does to the pots and to everybody's business on the same trip through",
+    "neat": "How the front room stays all week, for company that rarely comes",
+    "date": "In pen on the tin lid, so nobody has to guess how long it has been in there",
+    "tea": "Sweet, in the pitcher, and the sugar went in while it was still hot"
+   },
+   "prefer": [
+    "date",
+    "tend",
+    "neat",
+    "eat",
+    "tea"
+   ]
   }
  ]
 }
