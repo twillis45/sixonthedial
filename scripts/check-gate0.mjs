@@ -62,6 +62,14 @@ for (const e of EXPECT) {
   await page.goto(`${base}/${e.q}`, { waitUntil: 'domcontentloaded' });
   await page.evaluate(() => { try { localStorage.clear(); } catch (err) { /* private mode */ } });
   await page.goto(`${base}/${e.q}`, { waitUntil: 'domcontentloaded' });
+  /* a gate-zero URL is curtained until its board is ready (see GATE0_NO_FLASH),
+     and innerText reads empty through the curtain — so wait for the lift, not
+     for a guessed number of milliseconds */
+  await page.evaluate(async () => {
+    const visible = () => !('g0Pending' in document.documentElement.dataset)
+      && getComputedStyle(document.body).visibility !== 'hidden';
+    for (let i = 0; i < 200 && !visible(); i++) await new Promise((r) => setTimeout(r, 25));
+  });
   await new Promise((r) => setTimeout(r, 800));
 
   const seen = await page.evaluate((TEACH, GOAL) => {
@@ -93,6 +101,13 @@ for (const e of EXPECT) {
   await page.goto(`${base}/`, { waitUntil: 'domcontentloaded' });
   await page.evaluate(() => { try { localStorage.clear(); } catch (err) { /* private mode */ } });
   await page.goto(`${base}/?g0=b`, { waitUntil: 'domcontentloaded' });
+  /* the scripted reveal starts once the board is real — clock it from the
+     curtain lift, not from navigation */
+  await page.evaluate(async () => {
+    const visible = () => !('g0Pending' in document.documentElement.dataset)
+      && getComputedStyle(document.body).visibility !== 'hidden';
+    for (let i = 0; i < 200 && !visible(); i++) await new Promise((r) => setTimeout(r, 25));
+  });
   await new Promise((r) => setTimeout(r, 2600));
 
   const b = await page.evaluate(() => {
@@ -116,6 +131,72 @@ for (const e of EXPECT) {
   await page.close();
 }
 
+/*
+ * The ladder swap, which is the whole reason the run is worth doing.
+ *
+ * Sitting 2's ruling: a Miss on a themed board cannot be told apart from a Miss
+ * on the mechanic, and those need opposite fixes. So every variant — A included
+ * — must meet the general board, or A is being compared against a different
+ * puzzle and the tallies mean nothing.
+ *
+ * Asserted the way the nine measurement defects taught: the ladder must EXIST
+ * and must DIFFER from the shipping one before anything is called green.
+ * Absence and success look identical to a naive query.
+ */
+{
+  const data = JSON.parse(fs.readFileSync(path.join(OUT, 'data', 'puzzles.json'), 'utf8'));
+  const ok = (m, cond) => { console.log(`  ${cond ? '\u2714' : '\u2717'}  ${m}`); if (!cond) fails.push(m); };
+
+  const g0 = data.gate0Starters;
+  ok('the gate-zero ladder exists in the built file', Array.isArray(g0) && g0.length > 0);
+  const shipBase = data.puzzles[data.starters[0]]?.base;
+  const g0Base = g0 && data.puzzles[g0[0]]?.base;
+  ok('it is a different first board from the shipping ladder', !!g0Base && g0Base !== shipBase);
+
+  const letters = (b) => [...b].sort().join('');
+  for (const q of ['?g0=a', '?g0=b', '?g0=c', '?g0=d']) {
+    const page = await browser.newPage();
+    await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+    await page.goto(`${base}/`, { waitUntil: 'domcontentloaded' });
+    await page.evaluate(() => { try { localStorage.clear(); } catch (err) { /* private mode */ } });
+    await page.goto(`${base}/${q}`, { waitUntil: 'domcontentloaded' });
+    /*
+     * The FIRST board the stranger can see, not the one that settles.
+     * A fixed wait would have passed the version of this that showed the
+     * shipping board for a second and then swapped it — measured, and the
+     * reason the head script exists. So: poll until the curtain lifts, and
+     * read the wheel at that instant.
+     */
+    const seen = await page.evaluate(async () => {
+      const read = () => [...document.querySelectorAll('[aria-label^="Letter "]')]
+        .map((el) => el.getAttribute('aria-label').slice(7, 8).toLowerCase())
+        .sort().join('');
+      const visible = () => !('g0Pending' in document.documentElement.dataset)
+        && getComputedStyle(document.body).visibility !== 'hidden';
+      for (let i = 0; i < 200 && !visible(); i++) await new Promise((r) => setTimeout(r, 25));
+      return { curtained: !visible(), wheel: read() };
+    });
+    ok(`${q} was curtained until its board was ready`, seen.curtained === false);
+    ok(`${q} shows the general board (${g0Base}) on the first visible frame`, seen.wheel === letters(g0Base));
+    await page.close();
+  }
+
+  /* and a real player, with no parameter, must NOT have been moved */
+  const page = await browser.newPage();
+  await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+  await page.goto(`${base}/`, { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => { try { localStorage.clear(); } catch (err) { /* private mode */ } });
+  await page.goto(`${base}/`, { waitUntil: 'domcontentloaded' });
+  await new Promise((r) => setTimeout(r, 900));
+  const seen = await page.evaluate(() =>
+    [...document.querySelectorAll('[aria-label^="Letter "]')]
+      .map((el) => el.getAttribute('aria-label').slice(7, 8).toLowerCase())
+      .sort().join('')
+  );
+  ok(`no parameter still lands on the shipping board (${shipBase})`, seen === letters(shipBase));
+  await page.close();
+}
+
 await browser.close();
 server.close();
 
@@ -125,4 +206,4 @@ if (fails.length) {
   console.log(`\n✖ ${fails.length} gate-zero variant(s) do not show what they claim`);
   process.exit(1);
 }
-console.log(`\n✔ all four variants show exactly what they claim (${EXPECT.length} paths + 4 checks on B)`);
+console.log(`\n✔ all four variants show exactly what they claim (${EXPECT.length} paths + 4 checks on B + the ladder swap)`);

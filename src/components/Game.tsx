@@ -11,6 +11,7 @@ import {
 import { createPortal } from 'react-dom';
 import {
   gate0From,
+  hasGate0Param,
   showsTeachCard,
   showsGoalFirst,
   solvesFirstRow,
@@ -258,12 +259,55 @@ export default function Game({ data }: { data: PuzzleFile }) {
     () => new Set(progress.clearedIds),
     [progress.clearedIds]
   );
+  /*
+   * The gate-zero variant, through the same door as every other
+   * server-differs-from-browser value in this file.
+   *
+   * Reading location.search in a render body is the React #418 bug this repo
+   * already paid for once, with `fullscreenSupported()`: the value differs
+   * between server and browser, so the prerendered tree is thrown away on
+   * every load. An effect avoids that but costs a second render and trips the
+   * cascading-renders lint rule, which is how the first version of this was
+   * written and why it is not written that way now.
+   *
+   * useSyncExternalStore is the shape that already exists here for exactly
+   * this. Subscribe is a no-op because the variant cannot change without a
+   * reload, and the server snapshot is 'a' — so a real player renders the
+   * shipping tree on the server and keeps it.
+   */
+  const gate0 = useSyncExternalStore(
+    GATE0_NEVER_CHANGES,
+    () => gate0From(window.location.search),
+    () => 'a' as const
+  );
+
+  /*
+   * And whether a run is happening at all — the ladder swap keys off this, not
+   * off the variant, so A meets the same board as B/C/D.
+   */
+  const gate0Run = useSyncExternalStore(
+    GATE0_NEVER_CHANGES,
+    () => hasGate0Param(window.location.search),
+    () => false
+  );
+
+  /*
+   * Lift the curtain the head script dropped, once the board on screen is the
+   * one the run is actually on. An effect, not a render-body write: it must
+   * happen after React has committed the swapped board, or the reveal is the
+   * flip it was meant to hide.
+   */
+  useEffect(() => {
+    delete document.documentElement.dataset.g0Pending;
+  }, [gate0Run]);
+
   const chosen = puzzleForPlayer(
     data,
     progress.warmupsDone,
     today,
     offset,
-    clearedSet
+    clearedSet,
+    gate0Run ? data.gate0Starters : undefined
   );
   /*
    * A `#play=` link outranks the warm-up ladder.
@@ -1543,27 +1587,6 @@ export default function Game({ data }: { data: PuzzleFile }) {
    * the only thing that has to be read. 17 is the threshold because 16 is the
    * stock default and the next step up any browser offers clears it.
    */
-  /*
-   * The gate-zero variant, through the same door as every other
-   * server-differs-from-browser value in this file.
-   *
-   * Reading location.search in a render body is the React #418 bug this repo
-   * already paid for once, with `fullscreenSupported()`: the value differs
-   * between server and browser, so the prerendered tree is thrown away on
-   * every load. An effect avoids that but costs a second render and trips the
-   * cascading-renders lint rule, which is how the first version of this was
-   * written and why it is not written that way now.
-   *
-   * useSyncExternalStore is the shape that already exists here for exactly
-   * this. Subscribe is a no-op because the variant cannot change without a
-   * reload, and the server snapshot is 'a' — so a real player renders the
-   * shipping tree on the server and keeps it.
-   */
-  const gate0 = useSyncExternalStore(
-    GATE0_NEVER_CHANGES,
-    () => gate0From(window.location.search),
-    () => 'a' as const
-  );
 
   /*
    * Gate-zero variant B: the board solves its first row in front of them.

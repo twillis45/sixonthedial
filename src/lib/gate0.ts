@@ -64,3 +64,37 @@ export function showsGoalFirst(v: Gate0Variant): boolean {
 export function solvesFirstRow(v: Gate0Variant): boolean {
   return v === 'b';
 }
+
+/**
+ * Whether a gate-zero run is in progress at all, variant aside.
+ *
+ * The ladder swap keys off this rather than off the variant, because A must
+ * face the SAME board as B, C and D or the comparison measures the board
+ * instead of the first-run. A typo'd `?g0=B` degrades to variant A but is
+ * still a run, so it swaps too — the operator is standing in front of someone.
+ */
+export function hasGate0Param(search: string): boolean {
+  try {
+    return new URLSearchParams(search).get(GATE0_PARAM) !== null;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Hold the first paint during a gate-zero run, and ONLY during one.
+ *
+ * The board a gate-zero player meets is decided from `location.search`, which
+ * does not exist at export time — so the prerendered HTML always carries the
+ * shipping board, and the swap lands about a second after hydration. Measured:
+ * the wheel read AHMRTW, then became KNRSTU while the page sat there.
+ *
+ * A board that changes under a stranger in the first second is not a neutral
+ * artifact of static export. It is the exact window gate zero exists to
+ * measure, and every Miss recorded in it would be unreadable.
+ *
+ * So the run is curtained until React has the real value. A player with no
+ * `g0` parameter never enters this branch, never gets the attribute, and
+ * paints on the very first frame exactly as before.
+ */
+export const GATE0_NO_FLASH = `try{if(new URLSearchParams(location.search).has('${GATE0_PARAM}'))document.documentElement.dataset.g0Pending=''}catch(e){}`;

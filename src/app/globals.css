@@ -2591,3 +2591,9 @@ body {
     inset 0 1px 2px -0.5px rgba(0, 0, 0, 0.34),
     inset 0 -1px 0 rgba(255, 255, 255, 0.035);
 }
+
+/* See GATE0_NO_FLASH. Set only when a ?g0= run is loading; cleared by Game
+   once React knows which board the run is on. Never set for a real player. */
+html[data-g0-pending] body {
+  visibility: hidden;
+}

@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import {
   gate0From,
+  hasGate0Param,
+  GATE0_NO_FLASH,
   showsTeachCard,
   showsGoalFirst,
   solvesFirstRow,
@@ -81,5 +83,52 @@ describe('what each variant shows', () => {
     expect(showsGoalFirst('d')).toBe(showsGoalFirst('a'));
     expect(solvesFirstRow('d')).toBe(solvesFirstRow('a'));
     expect(showsTeachCard('d')).not.toBe(showsTeachCard('a'));
+  });
+});
+
+describe('hasGate0Param', () => {
+  /*
+   * The ladder swap keys off presence, not variant, so that A meets the same
+   * board as B/C/D. A typo is still a run — the operator is standing in front
+   * of someone — so `?g0=B` degrades to variant A but must NOT fall back to
+   * the shipping board, or A is silently compared against a different puzzle.
+   */
+  it('is false for a real player', () => {
+    expect(hasGate0Param('')).toBe(false);
+    expect(hasGate0Param('?utm=x')).toBe(false);
+  });
+
+  it('is true for every run, including a typo that degrades to A', () => {
+    for (const q of ['?g0=a', '?g0=b', '?g0=c', '?g0=d', '?g0=B', '?g0=zzz', '?g0=']) {
+      expect(hasGate0Param(q)).toBe(true);
+    }
+  });
+
+  it('agrees with gate0From on the shipping default', () => {
+    expect(gate0From('?g0=zzz')).toBe('a');
+    expect(hasGate0Param('?g0=zzz')).toBe(true);
+  });
+});
+
+describe('GATE0_NO_FLASH', () => {
+  /* It runs on EVERY page load, before paint, for every player. It must be
+     inert without the parameter and it must never throw. */
+  const run = (search: string) => {
+    const html: { dataset: Record<string, string> } = { dataset: {} };
+    new Function('location', 'document', GATE0_NO_FLASH)(
+      { search },
+      { documentElement: html }
+    );
+    return 'g0Pending' in html.dataset;
+  };
+
+  it('leaves a real player alone', () => {
+    expect(run('')).toBe(false);
+    expect(run('?play=12')).toBe(false);
+  });
+
+  it('curtains every gate-zero run', () => {
+    expect(run('?g0=a')).toBe(true);
+    expect(run('?g0=d')).toBe(true);
   });
 });

@@ -5,6 +5,7 @@ import { withBase } from '@/lib/basePath';
 import { NO_FLASH_SCRIPT } from '@/lib/theme';
 import { NO_FLASH_SCRIPT as A11Y_NO_FLASH } from '@/lib/a11y';
 import { NO_FLASH_SCRIPT as ACCENT_NO_FLASH } from '@/lib/accent';
+import { GATE0_NO_FLASH } from '@/lib/gate0';
 import { SITE_URL, absoluteUrl } from '@/lib/site';
 import { isDailyEligible } from '@/lib/game';
 import themes from '../../data/themes.json';
@@ -218,6 +219,9 @@ export default function RootLayout({
             colour change on every solved row at once, which lands on exactly
             the part of the board the player is looking at. */}
         <script dangerouslySetInnerHTML={{ __html: ACCENT_NO_FLASH }} />
+        {/* Only ever runs for a gate-zero URL: holds the paint so a stranger
+            is not shown the shipping board and then a different one. */}
+        <script dangerouslySetInnerHTML={{ __html: GATE0_NO_FLASH }} />
       </head>
       <body>
         {children}
