@@ -24,7 +24,7 @@ exists because a hand edit once published a blank page while every other check
 said PASS.
 
 Republish to the SAME url or the project's history splits in two. State as of
-2026-08-28: **78 of 106 items, 3 blockers open, Verify gates 14/16.**
+2026-08-28: **80 of 107 items, 3 blockers open, Verify gates 14/16.**
 
 ## Where the catalogue stands
 
