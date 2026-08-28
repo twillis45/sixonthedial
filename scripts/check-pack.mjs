@@ -41,6 +41,42 @@ const said = new Set([...tierWords('said'), ...tierWords('titles')]);
 
 const distinct = (w) => new Set(w).size === w.length;
 
+/*
+ * A MULTISET, for the same reason `canSpell` in the build is one.
+ *
+ * This gate carried three rules that the build and vet-bases had already left
+ * behind, and all three rejected content that ships legally today:
+ *
+ *   • the base had to be six DISTINCT letters. vet-bases allows one doubled
+ *     letter — six distinct or five-plus-a-pair — because six-distinct threw
+ *     away 103 of 215 six-letter theme words. WOBBLE, SPIRIT, CAMERA and
+ *     ATTEND are all shipping and all would have been refused here.
+ *   • a ROW had to be six distinct letters too, which is wrong for the same
+ *     reason one step down: ATTEND carries two Ts, so TENT is legal and this
+ *     called it a repeat.
+ *   • spellability was checked with a Set, so a base's second copy of a letter
+ *     was invisible. That is the identical bug build-puzzles fixed at its
+ *     unlock ladder, where it shipped five broken boards before anyone saw it.
+ *
+ * A gate that refuses valid work is not a safe failure. It teaches whoever
+ * hits it that the gate is wrong and can be skipped, which is how the merge
+ * step became advisory the first time.
+ */
+const counts = (w) => {
+  const m = new Map();
+  for (const c of w) m.set(c, (m.get(c) ?? 0) + 1);
+  return m;
+};
+const formable = (w, pool) => {
+  const used = new Map();
+  for (const c of w) {
+    const n = (used.get(c) ?? 0) + 1;
+    if (n > (pool.get(c) ?? 0)) return false;
+    used.set(c, n);
+  }
+  return true;
+};
+
 /**
  * The answer band the build enforces, mirrored from vet-bases.mjs. `ALERTS`
  * reached a merge with five on-theme rows and six written clues before the
@@ -99,7 +135,8 @@ for (const b of pack.boards) {
   const set = new Set(b.base);
 
   if (b.base.length !== 6) errs.push(`base is ${b.base.length} letters, must be 6`);
-  if (!distinct(b.base)) errs.push('base repeats a letter');
+  if (new Set(b.base).size < 5)
+    errs.push('base has more than one doubled letter — four distinct letters collapses the wheel');
   if (!enable.has(b.base)) errs.push('base is not in ENABLE1');
   if (!popular.has(b.base)) errs.push('base is not a common word');
   if (isBlocked(b.base)) errs.push('base is blocked');
@@ -112,8 +149,7 @@ for (const b of pack.boards) {
   if (!b.clues[b.base]) errs.push('the base itself has no clue');
 
   for (const w of rows) {
-    if (!distinct(w)) errs.push(`${w}: repeats a letter`);
-    else if (![...w].every((c) => set.has(c))) errs.push(`${w}: not spellable from ${b.base}`);
+    if (!formable(w, counts(b.base))) errs.push(`${w}: not spellable from ${b.base}`);
     else if (!enable.has(w)) errs.push(`${w}: not in ENABLE1`);
     else if (!popular.has(w)) errs.push(`${w}: too rare`);
     else if (isBlocked(w)) errs.push(`${w}: blocked`);

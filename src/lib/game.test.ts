@@ -1335,6 +1335,28 @@ describe('theme shelves', () => {
     // An empty group is a promise of content that is not there.
     for (const s of themeShelves(file)) expect(s.themes.length).toBeGreaterThan(0);
   });
+
+  it('no shipping theme has fallen through to Elsewhere', () => {
+    /*
+     * A theme with boards but no SHELF_OF entry lands in Elsewhere silently.
+     * THE STOOP did exactly that the day it was authored: its vocabulary had
+     * shipped long before any board, so nothing had ever needed to shelve it.
+     *
+     * The shelf-count test above caught it, but only by accident of arithmetic
+     * — Elsewhere appearing made six, and six is over the ceiling. With one
+     * shelf fewer in use the same mistake would have shown a browse screen
+     * with a real pack filed under "Everything that has not found its shelf
+     * yet", and no test would have said a word.
+     *
+     * Elsewhere is a legitimate destination for a theme nobody has placed. It
+     * is not a legitimate destination for one nobody NOTICED.
+     */
+    const elsewhere = themeShelves(file).find((s) => s.name === 'Elsewhere');
+    expect(
+      elsewhere?.themes.map((t) => t.id) ?? [],
+      'themes with boards but no shelf'
+    ).toEqual([]);
+  });
 });
 
 describe('the daily never serves a general pack', () => {

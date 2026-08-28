@@ -415,6 +415,7 @@ const SHELF_OF: Record<string, ShelfId> = {
   barbershop: 'block', // The Shop
   spades: 'block', // The Card Table
   beautysupply: 'block',
+  stoop: 'block', // The Stoop — the pavement the rest of this shelf opens onto
   // The general packs the board approved, absorbed where they fit and shelved
   // together where they do not. A hardware store is on the block; a diner is a
   // table. Only the un-absorbable three get the fifth shelf, and FIVE is the

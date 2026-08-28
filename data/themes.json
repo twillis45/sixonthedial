@@ -2841,6 +2841,106 @@
     "eat",
     "tea"
    ]
+  },
+  {
+   "base": "posted",
+   "theme": "stoop",
+   "clues": {
+    "posted": "Where she has been since two, and everyone coming up the block gets named before they arrive",
+    "post": "The metal one at the corner, leaned on by three generations and still standing",
+    "step": "The third one up, which is hers, and you learn that without being told",
+    "pot": "The one on the sill with a plant in it that has outlived two tenants",
+    "set": "What the domino table gets before anybody has agreed to play",
+    "spot": "Saved with a folded jacket, and defended more seriously than the game"
+   },
+   "prefer": [
+    "post",
+    "step",
+    "pot",
+    "set",
+    "spot"
+   ],
+   "scene": "The top step, and the view it owns"
+  },
+  {
+   "base": "impala",
+   "theme": "stoop",
+   "clues": {
+    "impala": "Kept at the curb under a cover, washed far more often than it is driven",
+    "lamp": "What comes on at the corner about the time the little ones get called in",
+    "mail": "Held for the whole building by whoever is out front when it comes",
+    "pail": "Filled at the hydrant, carried two-handed, and half of it never arrives",
+    "palm": "Where the folded dollar goes when somebody's grandmother wins the hand",
+    "limp": "How the man from the third floor takes the stairs, and the rail was put in for him"
+   },
+   "prefer": [
+    "lamp",
+    "mail",
+    "pail",
+    "palm",
+    "limp"
+   ],
+   "scene": "The car at the curb, and whose it is"
+  },
+  {
+   "base": "honest",
+   "theme": "stoop",
+   "clues": {
+    "honest": "What the block is about your business, whether or not you asked it to be",
+    "stone": "The one in the wall every kid has sat on, worn smooth and slightly loose",
+    "hose": "Dragged out in July, and the argument is always about who pays for the water",
+    "shoe": "Kicked off at the door and left there, because nobody is going anywhere tonight",
+    "note": "Taped to the door for the one person who never answers her phone",
+    "nest": "What the birds built in the awning, and now nobody will touch it"
+   },
+   "prefer": [
+    "stone",
+    "hose",
+    "shoe",
+    "note",
+    "nest"
+   ],
+   "scene": "The long talk, and who is allowed to end it"
+  },
+  {
+   "base": "golden",
+   "theme": "stoop",
+   "clues": {
+    "golden": "What everybody calls the twenty minutes before the lights come on",
+    "gold": "What the trim on her front door has been repainted, three times, by her own hand",
+    "lend": "The ladder, the big pot and the phone charger all travel, and all come back eventually",
+    "dog": "Tied to the rail, and greeted by more people than his owner is",
+    "nod": "The whole greeting, if you have already spoken once today",
+    "done": "She gets up and folds the chair, and that is the announcement"
+   },
+   "prefer": [
+    "gold",
+    "lend",
+    "dog",
+    "nod",
+    "done"
+   ],
+   "scene": "The hour before the lights come on"
+  },
+  {
+   "base": "carted",
+   "theme": "stoop",
+   "clues": {
+    "carted": "How the whole setup came down three flights, in two trips, and nobody offered to help",
+    "crate": "Upturned, and it has been a seat, a table and a step ladder in one afternoon",
+    "trade": "What happens between the top step and the corner, and money rarely enters it",
+    "card": "Slapped down hard enough to make the table jump, which is the entire point",
+    "cat": "Belongs to nobody and is fed by four apartments",
+    "dare": "What the youngest one takes, off the top step, exactly once"
+   },
+   "prefer": [
+    "crate",
+    "trade",
+    "card",
+    "cat",
+    "dare"
+   ],
+   "scene": "The milk crate, and who it belongs to"
   }
  ]
 }
