@@ -120,6 +120,8 @@ export type PuzzleFile = {
   wheel: number;
   /** Indices of the kindest puzzles, easiest first — the warm-up ladder. */
   starters: number[];
+  /** The general-board ladder gate zero runs on. Test rig only. */
+  gate0Starters?: number[];
   puzzles: Puzzle[];
 };
 
@@ -299,9 +301,16 @@ export function puzzleForPlayer(
   today: Date,
   offset: number,
   /** Puzzle ids already finished — the daily skips them. */
-  cleared: ReadonlySet<string> = new Set()
+  cleared: ReadonlySet<string> = new Set(),
+  /*
+   * Gate zero swaps the warm-up ladder for a general one, so a stranger's Miss
+   * cannot be "this clue is outside my world" when the question is whether the
+   * MECHANIC reads. Defaults to the shipping ladder, so a player who passes
+   * nothing is on the shipping path — which check:gate0 asserts first.
+   */
+  ladderOverride?: readonly number[]
 ): { index: number; warmup: number | null } {
-  const ladder = file.starters ?? [];
+  const ladder = ladderOverride ?? file.starters ?? [];
 
   // The warm-up is a sequence, so an explicit offset means the player has
   // navigated away from it and wants the normal rotation.

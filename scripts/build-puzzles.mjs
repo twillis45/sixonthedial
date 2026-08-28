@@ -823,10 +823,38 @@ const starters =
         .slice(0, STARTERS)
         .map((x) => x.i);
 
+/*
+ * A SEPARATE LADDER FOR GATE ZERO, because the shipping one cannot answer the
+ * question gate zero asks.
+ *
+ * Sitting 2 ruled it: as configured the test could not tell its own failure
+ * modes apart. A stranger who misses might mean "the mechanic is unclear" or
+ * "this clue is outside my world", and those need opposite fixes. The shipping
+ * ladder is deliberately cultural — that is the product — so the TEST needs a
+ * general board, and only the test.
+ *
+ * ROAD TRIP/TRUNKS is chosen for one property: every clue lands for anybody who
+ * has been in a car. "The smallest bag, containing the only things anybody
+ * needs." No decoding. GARDEN/WRONGS follows.
+ *
+ * This changes the test rig and not the product: it is reachable only with a
+ * ?g0= parameter, and a player without one is on the shipping ladder above.
+ */
+const GATE0_BOARDS = ['trunks', 'wrongs'];
+const gate0Starters = GATE0_BOARDS
+  .map((base) => puzzles.findIndex((p) => p.base === base))
+  .filter((i) => i >= 0);
+if (gate0Starters.length !== GATE0_BOARDS.length) {
+  process.stdout.write(
+    `  WARNING: gate-zero ladder wanted ${GATE0_BOARDS.join(', ')} and found ` +
+      `${gate0Starters.length} of ${GATE0_BOARDS.length}\n`
+  );
+}
+
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(
   OUT,
-  JSON.stringify({ version: 2, wheel: WHEEL, starters, puzzles })
+  JSON.stringify({ version: 2, wheel: WHEEL, starters, gate0Starters, puzzles })
 );
 
 const bytes = fs.statSync(OUT).size;
@@ -850,6 +878,7 @@ console.log(
     }` +
     `  daily pool: ${dailyEligible} cultural boards` +
     `${generalThemed ? `, ${generalThemed} general boards reachable only from the picker` : ''}\n` +
+    `  gate-zero ladder: ${gate0Starters.map((i) => puzzles[i].base).join(', ')}\n` +
     `  warm-up ladder: ${starters
       .map((i) => `${puzzles[i].base} (${puzzles[i].difficulty.toFixed(2)})`)
       .join(', ')}`
