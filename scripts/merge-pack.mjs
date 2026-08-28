@@ -57,6 +57,55 @@ const letterKey = (w) => [...w].sort().join('');
 const wanted = new Set(pack.boards.map((b) => letterKey(b.base)));
 const id = pack.theme.id;
 
+/*
+ * REFUSE TO SILENTLY DELETE A SHIPPING BOARD.
+ *
+ * This script replaces a theme's boards wholesale, which is correct when the
+ * pack file is ahead of the catalogue and wrong the moment it is behind. Four
+ * pack files are currently behind — measured 2026-08-28: cookout is missing
+ * three shipping boards and still carries six that were dropped, and shop,
+ * beautysupply and roadtrip carry ten more between them. Running this on
+ * cookout today would have deleted three boards authored the same day and
+ * resurrected six that were removed on purpose, and the only evidence would
+ * have been a large diff nobody reads line by line.
+ *
+ * The header of this file already says a donor rule that stopped holding
+ * should make the script REFUSE rather than be edited. This is that, for the
+ * case the header did not cover.
+ *
+ * It gets its OWN flag rather than riding on --force. --force means "I am
+ * bypassing check-pack to look at a diff"; if it also waived data loss, one
+ * flag typed for the cheap reason would silently buy the expensive one.
+ */
+const lost = themes.puzzles.filter(
+  (p) => p.theme === id && !wanted.has(letterKey(p.base))
+);
+if (lost.length && !process.argv.includes('--allow-drops')) {
+  console.error(
+    `\nrefusing to merge ${packPath} — it would DELETE ${lost.length} ` +
+      `shipping board(s) that the pack file does not contain:\n`
+  );
+  for (const p of lost) console.error(`    ${p.base}  (${p.theme})`);
+  console.error(
+    `\nThe pack file is behind the catalogue. Add these boards to it, or\n` +
+      `pass --allow-drops if losing them is genuinely what you intend.\n`
+  );
+  process.exit(1);
+}
+
+/* Resurrection is the other direction, and it is visible in the diff rather
+   than silent — so it warns instead of refusing. */
+const shippingKeys = new Set(
+  themes.puzzles.filter((p) => p.theme === id).map((p) => letterKey(p.base))
+);
+const revived = pack.boards.filter((b) => !shippingKeys.has(letterKey(b.base)));
+if (revived.length) {
+  console.log(
+    `  note: ${revived.length} board(s) in the pack are not currently ` +
+      `shipping and will be (re)added: ${revived.map((b) => b.base).join(' ')}`
+  );
+}
+
 const before = themes.puzzles.length;
 const droppedDonors = themes.puzzles.filter(
   (p) => p.theme !== id && wanted.has(letterKey(p.base))
