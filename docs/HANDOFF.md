@@ -9,6 +9,23 @@ measured on the day, not carried forward.
 ten-stage spine in three tracks, and it is the faster read for "what is left".
 This file is the one that explains WHY, which a checklist cannot.
 
+## The artifact
+
+| Artifact | URL | Source |
+|---|---|---|
+| Six on the Dial Path to Production | https://claude.ai/code/artifact/0af681a8-e5ad-445f-af1a-7d7d8cdae7f6 | `docs/tracker.html` |
+
+**Edit `docs/tracker-template.html`, never `docs/tracker.html`.** The published
+page regenerates its own source from a base64 copy of the template when a
+viewer ticks a box, so a hand edit to the built file breaks that fixed point.
+`node scripts/build-tracker.js` rebuilds it and verifies the fixed point holds,
+that the page parses, and that items actually reach the DOM — the last one
+exists because a hand edit once published a blank page while every other check
+said PASS.
+
+Republish to the SAME url or the project's history splits in two. State as of
+2026-08-28: **78 of 106 items, 3 blockers open, Verify gates 14/16.**
+
 ## Where the catalogue stands
 
 **141 authored boards across 17 themes, 520 puzzles shipped. 366 tests pass in
