@@ -575,3 +575,38 @@ describe('the boards a first-timer meets', () => {
     for (const i of file.starters ?? []) expect(file.puzzles[i].theme).toBeTruthy();
   });
 });
+
+describe('the base rule the authoring spec states', () => {
+  /*
+   * AUTHORING.md is binding on anyone writing content, and it said "six
+   * DISTINCT letters" for months after vet-bases.mjs had relaxed the rule to
+   * at-most-one-doubled-letter. Nothing held the document to the code, so the
+   * document simply went wrong and stayed wrong, and it very nearly cost two
+   * of the easiest boards in the catalogue — WOBBLE and ATTEND are both legal
+   * and were both almost discarded on the strength of that line.
+   *
+   * A test cannot read prose. What it can do is pin the rule the prose is
+   * supposed to describe, so a future tightening or loosening of the vetter
+   * fails here and forces the document to be looked at in the same change.
+   *
+   * Two pairs stays refused: four distinct letters on a six-tile wheel
+   * collapses the answer space and reads as a cheaper puzzle.
+   */
+  it('every shipped base is six letters with at most one doubled', () => {
+    expect(file.puzzles.length).toBeGreaterThan(0);
+    const bad = file.puzzles
+      .filter((p) => p.base.length !== 6 || new Set(p.base).size < 5)
+      .map((p) => `${p.base} [${new Set(p.base).size} distinct]`);
+    expect(bad, `${bad.length} bases break the wheel rule`).toEqual([]);
+  });
+
+  it('the relaxation is actually used, or the doc is describing nothing', () => {
+    /*
+     * If this ever reaches zero the catalogue has quietly gone back to
+     * six-distinct, and the paragraph in AUTHORING.md explaining why the rule
+     * was loosened is then describing a rule nobody exercises.
+     */
+    const paired = file.puzzles.filter((p) => new Set(p.base).size === 5);
+    expect(paired.length).toBeGreaterThan(0);
+  });
+});

@@ -6,9 +6,24 @@ with mistakes rather than reasoned out in advance.
 
 ## What a puzzle is
 
-A base word of six DISTINCT letters, plus five other words spellable from those
-letters. Each of the six gets a one-line clue. The player sees the clues and
-spells the words on a letter wheel.
+A six-letter base with **at most one doubled letter** — six distinct letters,
+or five-plus-a-pair — plus five other words spellable from those letters.
+
+The rule here read "six DISTINCT letters" until 2026-08-28, and it was stale:
+`vet-bases.mjs` relaxed it because six-distinct threw away 103 of 215 six-letter
+theme words, disproportionately the iconic ones — English doubles letters exactly
+in the concrete nouns this game is made of, CHURCH and COFFEE and PARADE. That
+was the root cause of the finding that 0 of 126 prize words were their own theme
+word. Two pairs is still refused: four distinct letters on a six-tile wheel
+collapses the answer space.
+
+The stale line cost real time — WOBBLE and ATTEND, both legal and both among the
+easiest boards now shipping, were nearly discarded as illegal on the strength of
+this file. The vetter is the authority; when this document disagrees with it,
+this document is wrong.
+
+Each of the six gets a one-line clue. The player sees the clues and spells the
+words on a letter wheel.
 
 ## Never pick a base by hand
 
