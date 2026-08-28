@@ -39,8 +39,6 @@ const tierWords = (name) => new Set(String(entry[name] ?? '').split(/\s+/).filte
 const named = new Set([...tierWords('named'), ...tierWords('acts')]);
 const said = new Set([...tierWords('said'), ...tierWords('titles')]);
 
-const distinct = (w) => new Set(w).size === w.length;
-
 /*
  * A MULTISET, for the same reason `canSpell` in the build is one.
  *
@@ -132,7 +130,6 @@ const seenSets = new Map();
 for (const b of pack.boards) {
   const errs = [];
   const rows = Object.keys(b.clues).filter((w) => w !== b.base);
-  const set = new Set(b.base);
 
   if (b.base.length !== 6) errs.push(`base is ${b.base.length} letters, must be 6`);
   if (new Set(b.base).size < 5)
