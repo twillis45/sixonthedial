@@ -18,9 +18,58 @@
  *
  * Usage: node scripts/check-intro.mjs [http://localhost:4310]
  */
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { launch } from './lib/browser.mjs';
 
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const BASE = process.argv[2] || 'http://localhost:4310';
+
+/*
+ * THE WORD TO BANK IS DERIVED, NOT TYPED IN HERE.
+ *
+ * This check hardcoded 'CRY', a word on Barbecue/CRAFTY, which was board 1
+ * only because a difficulty sort put it there. The moment bae5523 CHOSE a
+ * first board instead — Sunday Dinner/WARMTH, whose wheel has no C, R or Y —
+ * this check began failing on every commit and stayed red for days while
+ * saying something alarming and untrue about the first-run teach.
+ *
+ * The board it tests is explicitly a product decision that is expected to
+ * change, so pinning a word from it is pinning the one thing guaranteed to
+ * move. Read the shipped ladder instead.
+ *
+ * It must be the OPENING word specifically: the wheel escalates, so only
+ * `startActive` letters are live at the start and most of the grid cannot be
+ * spelled yet. `unlockOrder` is stored in the order the ladder needs, so its
+ * first `startActive` letters are exactly the opening hand.
+ */
+const openingWord = () => {
+  const file = JSON.parse(
+    fs.readFileSync(path.join(ROOT, 'public', 'data', 'puzzles.json'), 'utf8')
+  );
+  const idx = file.starters?.[0];
+  if (idx == null) throw new Error('no warm-up ladder in puzzles.json');
+  const p = file.puzzles[idx];
+  const hand = (p.unlockOrder ?? []).slice(0, p.startActive ?? 0);
+  const canSpell = (w) => {
+    const pool = [...hand];
+    for (const ch of w) {
+      const at = pool.indexOf(ch);
+      if (at === -1) return false;
+      pool.splice(at, 1);
+    }
+    return true;
+  };
+  const word = p.grid.find(canSpell);
+  if (!word) {
+    throw new Error(
+      `board 1 (${p.base}) has no grid word spellable from its opening hand ` +
+        `"${hand.join('')}" — that is a broken board, not a broken check`
+    );
+  }
+  return word;
+};
 const LINE = 'Six letters. Six words. All from the wheel.';
 const settle = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -60,7 +109,9 @@ const run = async () => {
   ok(cold.intro, 'cold profile shows the first-run teach');
 
   // One word is the whole ask, so one word is what retires it.
-  for (const ch of 'CRY') await page.keyboard.press(ch);
+  const WORD = openingWord();
+  process.stdout.write(`   banking "${WORD.toUpperCase()}" on board 1\n`);
+  for (const ch of WORD.toUpperCase()) await page.keyboard.press(ch);
   await page.keyboard.press('Enter');
   await settle(1000);
 
