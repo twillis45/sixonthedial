@@ -182,7 +182,8 @@ var ITEMS=[
  {k:"b3b",tr:"b",s:3,d:1,t:"Service worker is network-first with cache: 'no-store'",n:"Stronger than it sounds: a bare fetch still consults the HTTP cache, and Pages sends max-age on HTML, so network-first would otherwise quietly degrade to whatever the browser kept."},
  {k:"b3c",tr:"b",s:3,d:1,t:"Daily reminder ships as a calendar file",n:"RFC 5545 &mdash; CRLF, folding at 75 octets, floating local time so it fires at the player's morning rather than a timezone's."},
  {k:"b3d",tr:"b",s:3,d:1,t:"Feedback intensity and accent under the player's control"},
- {k:"b3e",tr:"b",s:3,t:"Android TWA wrapper &mdash; build and upload the bundle",n:"No longer blocked on anything external. The app exists, Play App Signing holds the key, and assetlinks.json carries the real Classical-key SHA-256. What remains is building the wrapper with Bubblewrap and pushing an internal-testing bundle &mdash; work, not a wait."},
+ {k:"b3e",tr:"b",s:3,d:1,t:"Android TWA wrapper &mdash; built and signed",n:"app-release-bundle.aab, 1.15MB, jarsigner verified. Four identity fields agree end to end &mdash; assetlinks.json, gradle applicationId, twa-manifest and the origin in strings.xml &mdash; which caught a wizard that had silently written com.sixonthedial.twa against assetlinks&rsquo; .game and would have built green and shown an address bar. assetlinks now carries BOTH fingerprints, so a sideloaded build verifies too."},
+ {k:"b3j",tr:"b",s:3,t:"Upload the bundle to internal testing",n:"The artifact exists and production serves both fingerprints. What remains is a console upload and a tester list &mdash; then the single observation the whole domain effort was for: address bar, or no address bar.",tag:"todd"},
  {k:"b3f",tr:"b",s:3,d:1,t:"iOS &mdash; wrapper or a real client",n:"<em>REVIEW_2026-08-26_DECISIONS.md</em>. RULED: defer iOS, ship Android first. What exists is a static export with no native capability, which is the textbook shape 4.2 rejects, and a rejection attaches to the account. A widget, Live Activity or Game Center would be a real answer &mdash; that is a build, not a wrap."},
  {k:"b3g",tr:"b",s:3,t:"Crash reporting",n:"None today. A store build without it is blind to everything a player hits.",tag:"gap"},
 
@@ -227,7 +228,7 @@ var ITEMS=[
  {k:"s5d",tr:"s",s:5,d:1,t:"ENABLE1 wordlist license recorded"},
  {k:"s5e",tr:"s",s:5,d:1,t:"WordNet definitions license recorded"},
  {k:"s5f",tr:"s",s:5,d:1,t:"COPPA and the target age band",n:"<em>REVIEW_2026-08-26_DECISIONS.md</em>. RULED: Everyone / 4+ with no data collected &mdash; already true rather than promised, since COPPA exposure here lives in ads and analytics and neither exists. CONTINGENT on the privacy line: an ad, analytics or third-party crash SDK reverses it."},
- {k:"s5g",tr:"s",s:5,t:"Content rating &mdash; IARC via Play, Apple age rating"},
+ {k:"s5g",tr:"s",s:5,t:"Content rating &mdash; FILE the IARC questionnaire",n:"The ANSWER is settled: Everyone / 4+, no longer provisional now the corpus sweep has run and the tobacco clue is rewritten. What is not done is filing it &mdash; the questionnaire lives in the console and nobody has submitted it.",tag:"todd"},
  {k:"s5h",tr:"s",s:5,t:"Trademark clearance on the name and on theme text",n:"The knockout search is done. Full clearance is not.",tag:"partial"},
  {k:"s5i",tr:"s",s:5,t:"One real community reader per pack",n:"Store row 1.10, and the limit CULTURAL_BOARD.md states plainly: the bench is structured perspective, NOT community consultation. A reader is budgeted per pack before anything ships commercially, and it has not been done for a single pack.",tag:"blocker"},
 
@@ -239,7 +240,7 @@ var ITEMS=[
  {k:"s6a",tr:"s",s:6,t:"Apple Developer Program &mdash; $99/yr",n:"Enrollment can take days. It is the long pole nobody notices until it is the only thing left.",tag:"todd"},
  {k:"s6b",tr:"s",s:6,d:1,t:"Google Play Developer &mdash; $25 once",n:"DONE 2026-08-27. Organization account under the LLC. Organization was right twice: a personal account cannot be converted later without support, and the 12-testers-for-14-days rule applies only to personal accounts &mdash; organizations are exempt, saving two weeks at submission."},
  {k:"s6c",tr:"s",s:6,d:1,t:"Create the Play app and enrol in Play App Signing",n:"The account alone does NOT produce the fingerprint. It lives at Setup &rarr; App signing &rarr; App signing key certificate &rarr; SHA-256, which exists only once the app is created and Play App Signing holds a key. Critically it must be the PLAY-MANAGED signing certificate, not the upload certificate &mdash; they differ, and using the upload one is a documented TWA rejection cause. Sequencing note: the board put gate zero ahead of the listing, and this step needs the app shell to exist but not to be published.",tag:"blocker"},
- {k:"s6d",tr:"s",s:6,t:"Play target API level checked at build time",n:"Play enforces a rolling minimum; the deadline moves."},
+ {k:"s6d",tr:"s",s:6,d:1,t:"Play target API level checked at build time",n:"Measured on the built bundle rather than assumed: compileSdk 36, targetSdk 36, minSdk 21. Bubblewrap targets current, which is what Play&rsquo;s rolling minimum asks. Worth re-reading at each binary release, since the deadline moves and the binary ships rarely."},
 
  /* ================= MARKETING ================= */
 
