@@ -7,7 +7,8 @@
       "namespace": "android_app",
       "package_name": "com.sixonthedial.game",
       "sha256_cert_fingerprints": [
-        "05:A6:F4:72:AE:28:8B:4F:70:BB:EA:9F:B5:BC:47:8C:20:4E:03:BD:6E:F3:41:7B:56:B4:76:37:2E:9F:91:F6"
+        "05:A6:F4:72:AE:28:8B:4F:70:BB:EA:9F:B5:BC:47:8C:20:4E:03:BD:6E:F3:41:7B:56:B4:76:37:2E:9F:91:F6",
+        "0C:04:4B:29:B6:93:F6:C8:CE:6A:AC:D6:BD:13:EB:44:89:0C:59:94:75:59:C8:C5:6E:14:8B:4F:4E:01:2C:02"
       ]
     }
   }
