@@ -765,19 +765,63 @@ for (const base of bases) {
  * practice last. This is a stable partition, so the relative order inside each
  * group is untouched and no board moves that does not have to.
  */
-const GENERAL_THEMES = new Set(['roadtrip', 'garden', 'diner', 'hardware']);
+const GENERAL_THEMES = new Set([
+  'roadtrip', 'garden', 'diner', 'hardware',
+  // Added 2026-08-27 when they shipped. Without them the two newest packs sat
+  // in the DAILY rotation as though they were cultural, which is the opposite
+  // of the ruling above: the daily is the cultural surface, and general packs
+  // are reachable through the picker.
+  'tailgate', 'gym',
+]);
 const rank = (p) => (!p.theme ? 2 : GENERAL_THEMES.has(p.theme.id) ? 1 : 0);
 puzzles.sort((a, b) => rank(a) - rank(b));
 
 const dailyEligible = puzzles.filter((p) => rank(p) === 0).length;
 const generalThemed = puzzles.filter((p) => rank(p) === 1).length;
 
+/*
+ * THE FIRST TWO BOARDS ARE CHOSEN, NOT SORTED INTO.
+ *
+ * This was `the two easiest by difficulty`, which put Barbecue/CRAFTY first —
+ * and nobody decided that. Difficulty measures answer space, not whether a
+ * stranger can read the clue, and CRAFTY's is "Ash from the burn barrel to the
+ * pit, all night, by somebody's nephew". That asks you to already know a burn
+ * barrel feeds a pit. A first board should not need decoding.
+ *
+ * The fix is NOT to lead with a general board. The packs are the product, and
+ * introducing them gently would imply they are a liability. Sunday Dinner's
+ * WARMTH is unmistakably a Black household's Sunday — "still on, because she
+ * came straight from church and has not sat down" — and every clue lands for
+ * anybody who has cooked a big meal. Culturally specific and legible are not
+ * opposites; CRAFTY was simply both hard and specific, which conflated them.
+ *
+ * Second is The Nineties/NICKED, whose clues carry the answer's shape —
+ * "Boyz II Men, 1992 — ——— of the Road" — so the clue grammar teaches itself
+ * on board two.
+ *
+ * Named rather than ranked so this cannot silently drift back the next time a
+ * pack lands with an easier board. If a named board is ever missing the build
+ * says so and falls back to difficulty rather than shipping a broken ladder.
+ */
 const STARTERS = 2;
-const starters = puzzles
-  .map((p, i) => ({ i, d: p.difficulty }))
-  .sort((a, b) => a.d - b.d)
-  .slice(0, STARTERS)
-  .map((x) => x.i);
+const FIRST_BOARDS = ['warmth', 'nicked'];
+const named = FIRST_BOARDS
+  .map((base) => puzzles.findIndex((p) => p.base === base))
+  .filter((i) => i >= 0);
+if (named.length !== FIRST_BOARDS.length) {
+  process.stdout.write(
+    `  WARNING: warm-up ladder wanted ${FIRST_BOARDS.join(', ')} and found ` +
+      `${named.length} of ${FIRST_BOARDS.length}; falling back to difficulty\n`
+  );
+}
+const starters =
+  named.length === FIRST_BOARDS.length
+    ? named
+    : puzzles
+        .map((p, i) => ({ i, d: p.difficulty }))
+        .sort((a, b) => a.d - b.d)
+        .slice(0, STARTERS)
+        .map((x) => x.i);
 
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(

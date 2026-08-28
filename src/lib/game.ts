@@ -198,7 +198,18 @@ export function puzzleKeyFor(puzzle: { base: string }, cycle = 0): string {
  * the daily. Forgetting to update a list should never be able to quietly
  * demote the material the product is built on.
  */
-const GENERAL_THEMES = new Set<string>(['roadtrip', 'garden', 'diner', 'hardware']);
+/*
+ * DECLARED TWICE, AND THEY MUST AGREE. The build partitions the array with the
+ * same list in scripts/build-puzzles.mjs, and this file decides how far into
+ * that array the daily may reach. When they disagree the daily silently serves
+ * a general pack — which is exactly what happened when tailgate and gym
+ * shipped: added to the build's list, forgotten here, and the pool ran past its
+ * own boundary onto ROADTRIP/trunks. `check:daily-pool` in game.test.ts caught
+ * it. Change both, or change neither.
+ */
+const GENERAL_THEMES = new Set<string>([
+  'roadtrip', 'garden', 'diner', 'hardware', 'tailgate', 'gym',
+]);
 
 /** Is this theme part of the daily rotation? */
 export function isDailyEligible(themeId: string | null | undefined): boolean {
