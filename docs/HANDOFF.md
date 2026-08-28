@@ -2,7 +2,7 @@
 
 Read this first. It is written for a session that has none of the context.
 
-Last verified 2026-08-28 against `main` at da3956a. Every number below was
+Last verified 2026-08-28 against `main` at f842851. Every number below was
 measured on the day, not carried forward.
 
 **There is now a board.** `docs/tracker.html` puts every open item against the
@@ -11,8 +11,12 @@ This file is the one that explains WHY, which a checklist cannot.
 
 ## Where the catalogue stands
 
-**131 boards. 17 themes. 355 tests pass in 17 files.** Working tree clean, no
-open PRs or issues, production live at `sixonthedial.com`.
+**136 authored boards across 16 themes, 515 puzzles shipped. 365 tests pass in
+17 files.** Working tree clean, no open PRs or issues, production live at
+`sixonthedial.com`.
+
+Five of those boards were authored on 2026-08-28 and are **not reader-reviewed**
+— see "The easy end of the catalogue" below.
 
 Two general packs shipped on 2026-08-27, the first new packs since the corpus
 was rebuilt: **The Tailgate** (6 boards, 0.733) and **The Gym** (5 boards,
@@ -301,6 +305,62 @@ what you would otherwise do:
 three-quarters filler, and it includes a subscription tier two rulings have
 since refused.
 
+## The easy end of the catalogue, and why it is not the ladder
+
+Five boards were authored on 2026-08-28 specifically to widen the easy end,
+after the ask "five as easy as CRAFTY":
+
+    wobble  0.0593  THE CHAIR / The Shop      <- easiest board shipping
+    camera  0.0636  THE TABLE / The Cookout
+    bought  0.0690  THE TABLE / The Cookout
+    spirit  0.0756  THE TABLE / The Cookout
+    attend  0.0770  THE TABLE / Sunday Dinner
+
+**The number was not fully reachable and this is worth knowing before anyone
+asks again.** Across all 2,247 viable unclaimed bases, exactly FIVE can reach
+CRAFTY's 0.0629, and three of them carry no theme vocabulary at all — hitting
+the number exactly would have meant shipping TYRANT and CHUMPS as celebrated
+prize words. Difficulty is answer space; it does not care what the word is.
+
+**CRAFTY's clues were rewritten the same day.** Three of six rows were written
+from inside the practice — `cart` assumed a burn barrel feeds a pit, `fat`
+cited the whole-hog argument as its own reason, `fry` assumed skin is crisped
+and passed round. They now put the object or the action on screen. The
+eastern-NC barrel stays, because it is canon-verified and it is the
+specificity that makes the board ours.
+
+**None of this changes the warm-up ladder, deliberately.** All five are
+ladder-ELIGIBLE — 0/6 recall-gated, so they pass the guard — and every one is
+easier than WARMTH (0.090) and DEPICT (0.096). They are still not the ladder,
+for one reason: **they have not been read by a human.** The first board a
+stranger meets is the worst place in the product to put unreviewed cultural
+content, and swapping the ladder onto a lower difficulty number would be the
+exact error ruling 2 was raised to correct, running in the other direction.
+Revisit after the readers, not before.
+
+## Two traps found on 2026-08-28, one now guarded
+
+**Four pack files are BEHIND the catalogue** — `cookout.json` (missing three
+shipping boards, still carrying six that were dropped), `shop.json`,
+`beautysupply.json` and `roadtrip.json` (ten more between them). `merge-pack`
+replaces a theme's boards wholesale, so running it on cookout would have
+deleted three boards authored that morning and resurrected six removed on
+purpose, leaving only a large diff as evidence.
+
+`merge-pack` now REFUSES when a merge would delete a shipping board the pack
+file does not contain, behind its own `--allow-drops` flag rather than riding
+on `--force`. The pack files themselves are still behind; that is a real
+divergence and nobody has decided which direction is correct.
+
+**AUTHORING.md was wrong, not stale.** It opened with "six DISTINCT letters"
+long after `vet-bases.mjs` relaxed the rule to at-most-one-doubled-letter. It
+is binding on anyone writing content, so it was a wrong instruction rather
+than an out-of-date comment, and it nearly cost WOBBLE and ATTEND — both
+legal, both now in the six easiest boards shipping. Fixed, and two tests now
+pin the rule the prose describes, including one asserting the relaxation is
+actually exercised so a quiet return to six-distinct cannot leave the
+paragraph describing nothing.
+
 ## Gate zero exists, is frozen, and has never run
 
 `docs/gate0.html`, and it is the single highest-value thing a human can do.
@@ -346,7 +406,7 @@ brutal friction. Run it on the web.
 
 Between 2026-08-26 and 2026-08-28:
 
-- **Two packs**: The Tailgate and The Gym, catalogue 118 → 131.
+- **Two packs**: The Tailgate and The Gym, catalogue 118 → 131 (now 136).
 - **The whole Android chain**: account, verification, app, signing, both
   fingerprints, a built and signed bundle.
 - **A path-to-production board** — `docs/tracker.html`, self-publishing, done
