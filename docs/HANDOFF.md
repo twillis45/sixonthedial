@@ -368,12 +368,64 @@ red-proofing it by pinning the dial's rotation to `0deg` — a genuine
 catastrophic failure — produces **the same 6 of 7**. For days a real dial
 breakage would have been indistinguishable from the noise.
 
-**`check:a11y` is still red and I could not settle it.** It reports three WCAG
-failures on *"Play today to start a streak."* at 1.00–1.08:1. Measured three
-independent ways — composited computed styles 6.42:1, sampled pixels 5.85:1,
-and a replication of the checker's own load sequence 5.85:1 — the text passes
-AA comfortably. So the product is fine and the instrument is wrong, but the
-reason is not yet found, and it should not be "fixed" until it is.
+**`check:a11y` was reporting a failure that did not exist. FIXED, and the
+cause is worth carrying.** It reported three WCAG failures on *"Play today to
+start a streak."* at 1.00–1.08:1, in every theme, for as long as anyone had
+run it. The text measures 5.85–6.42:1 and passes AA comfortably.
+
+The guard collected every text box in one pass and screenshotted them in
+another. **The page moves between the two.** The Rail renders a placeholder
+line that is replaced once real progress arrives, which pushes everything
+below it down — measured, the last line in the rail sat at y=809 when
+collected and y=826 when photographed. A 17px drift, so the crop caught
+background and no glyphs at all, and two near-identical luminances report as
+1.00:1.
+
+Only the bottom-most element failed, because drift accumulates downward and
+everything above it moved less. That is why it looked element-specific and
+not like a broken instrument.
+
+The fix is NOT a longer wait — that is a guessed number that happens to work
+today. Each element is now re-resolved immediately before its own screenshot,
+so a box that has moved, vanished or left the viewport is skipped rather than
+sampled at a stale address. Proved both directions: clean run reports no
+failures, and `--red` still catches all 118 injected faults — with that same
+line now correctly reading 3.25:1 instead of garbage.
+
+**`check-a11y --red` is the only self-falsifying check in the repo and nothing
+runs it.** It is not in `package.json`, not in CI, and not covered by
+`check-guards`. It is the one command that would have caught this.
+
+### A guard that could have caught it, written correctly, and never run
+
+Measured 2026-08-28. `check-guards` mutation-tests **7 of the 16** guards:
+rail (5 mutations), tiles (3), motion (2), settings, drag, depth, color.
+
+**Nine have no meta-test at all** — a11y, ranks, marks, intro, gate0,
+assetlinks, listing, share, hydration. `check-a11y`, the instrument currently
+reporting a contrast failure that three independent measurements say is not
+real, is one of those nine. Nothing has ever verified it can fail correctly.
+
+The sharper half is `check-drag`. It **was** covered — there is a mutation for
+it in this very suite — and it still sat broken for days, printing "the dial
+spells the wrong word after it turns" on every run. The meta-guard existed, was
+correct, and caught nothing, because `check:guards` is not in CI and takes over
+twenty minutes, so nobody ran it.
+
+This repo has already catalogued *a check that cannot fail*. This is a
+different animal: **a guard that could have failed, and was never executed.**
+Coverage without execution is worth zero and looks identical to safety from the
+outside — arguably worse, because the meta-guard's existence is reassuring.
+
+Both of today's silently-red checks fit the pattern from opposite sides.
+`check:intro` runs in CI, and its failure was invisible inside a CI that had
+been red since `bae5523`. `check:drag` had a meta-guard nobody ran. Two
+mechanisms, one outcome: frightening and false statements about the product,
+unread for days.
+
+**What would actually change this** is not more guards. It is making the
+existing ones run — and noticing when a suite goes red and stays red, because a
+permanently red CI is indistinguishable from no CI.
 
 **`check:guards` takes longer than ten minutes and MUTATES SOURCE while it
 runs.** It is the meta-check: it breaks something, rebuilds, and asserts the

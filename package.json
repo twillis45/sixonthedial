@@ -14,6 +14,7 @@
     "check:rail": "node scripts/check-rail.mjs",
     "check:color": "node scripts/check-color.mjs",
     "check:a11y": "node scripts/check-a11y.mjs",
+    "check:a11y:red": "node scripts/check-a11y.mjs --red",
     "check:drag": "node scripts/check-drag.mjs",
     "check:settings": "node scripts/check-settings.mjs",
     "build:mockups": "node scripts/build-mockups.mjs",

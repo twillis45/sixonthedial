@@ -354,7 +354,11 @@ for (const surface of SURFACES) {
           || cs.backgroundImage !== 'none';
         const px = parseFloat(cs.fontSize);
         const bold = (parseInt(cs.fontWeight, 10) || 400) >= 700;
+        /* Tagged so the rect can be re-resolved at screenshot time. See the
+           comment on the sampling loop below. */
+        el.dataset.a11yIdx = String(out.length);
         out.push({
+          idx: out.length,
           x: Math.round(r.left), y: Math.round(r.top),
           w: Math.round(r.width), h: Math.round(r.height),
           text: s.slice(0, 34), dirty: !!dirty,
@@ -367,6 +371,33 @@ for (const surface of SURFACES) {
     for (const b of boxes) {
       if (b.dirty) { skipped += 1; continue; }
       let px;
+      /*
+       * RE-READ THE RECT. The sample has to be atomic.
+       *
+       * Boxes were collected in one pass and screenshotted in another, and the
+       * page keeps moving between the two: the Rail renders a placeholder line
+       * that is replaced once real progress arrives, which pushes everything
+       * below it down. Measured 2026-08-28 — the last line in the rail sat at
+       * y=809 when collected and y=826 when photographed, a 17px drift, so the
+       * crop caught background and no glyphs at all. Two near-identical
+       * luminances then report as 1.00:1, and the guard called perfectly legible
+       * text a WCAG failure in all three themes for as long as anyone had run it.
+       *
+       * Waiting longer would be a guessed number that happens to work today.
+       * Re-resolving each element immediately before its own screenshot removes
+       * the whole class: a box that has moved, vanished or left the viewport is
+       * skipped rather than sampled at a stale address.
+       */
+      const live = await page.evaluate((i) => {
+        const el = document.querySelector(`[data-a11y-idx="${i}"]`);
+        if (!el) return null;
+        const r = el.getBoundingClientRect();
+        if (r.width < 4 || r.height < 4) return null;
+        if (r.top < 0 || r.bottom > innerHeight || r.left < 0 || r.right > innerWidth) return null;
+        return { x: Math.round(r.left), y: Math.round(r.top), w: Math.round(r.width), h: Math.round(r.height) };
+      }, b.idx);
+      if (!live) { skipped += 1; continue; }
+      b.x = live.x; b.y = live.y; b.w = live.w; b.h = live.h;
       try { px = await pixelsOf(page, { x: b.x, y: b.y, width: b.w, height: b.h }); }
       catch { skipped += 1; continue; }
 
