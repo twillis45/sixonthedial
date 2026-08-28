@@ -1,0 +1,51 @@
+{
+  "packageId": "com.sixonthedial.game",
+  "host": "sixonthedial.com",
+  "name": "Six on the Dial — six-letter word game",
+  "launcherName": "The Dial",
+  "display": "fullscreen",
+  "themeColor": "#070809",
+  "themeColorDark": "#000000",
+  "navigationColor": "#000000",
+  "navigationColorDark": "#000000",
+  "navigationDividerColor": "#000000",
+  "navigationDividerColorDark": "#000000",
+  "backgroundColor": "#070809",
+  "enableNotifications": true,
+  "startUrl": "/",
+  "iconUrl": "https://sixonthedial.com/icon-512.png",
+  "maskableIconUrl": "https://sixonthedial.com/icon-maskable-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./upload.keystore",
+    "alias": "upload"
+  },
+  "appVersionName": "0.1.0",
+  "appVersionCode": 26082701,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://sixonthedial.com/manifest.webmanifest",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://sixonthedial.com/",
+  "minSdkVersion": 21,
+  "orientation": "portrait",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "protocolHandlers": [],
+  "fileHandlers": [],
+  "launchHandlerClientMode": "",
+  "displayOverride": [
+    "fullscreen",
+    "standalone",
+    "minimal-ui"
+  ],
+  "appVersion": "0.1.0"
+}

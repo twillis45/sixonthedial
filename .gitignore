@@ -76,6 +76,7 @@ data/wordnet.json
 *.keystore
 *.jks
 *.p12
+android/node_modules/
 android/keystore*
 android/**/local.properties
 android/.gradle/
