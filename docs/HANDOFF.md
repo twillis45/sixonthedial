@@ -427,6 +427,19 @@ unread for days.
 existing ones run — and noticing when a suite goes red and stays red, because a
 permanently red CI is indistinguishable from no CI.
 
+**`check:share` cannot run in a default shell, and it is the environment, not
+the check.** `.nvmrc` pins Node 22 and `engines` requires `^20.19.0 ||
+>=22.12.0`; the machine's default `node` is **16.16.0**. `check:share` runs
+through `npx tsx`, which needs the declared Node, so it dies on an ESM import
+error that reads like a code fault and is not one — it fails identically on a
+clean checkout. `next build` refuses outright for the same reason, which is the
+honest version of the same message.
+
+`nvm use` before working in this repo, or the first thing that touches Node
+will mislead you. **The status of `check:share` is therefore UNKNOWN, not
+green** — it has not been run, and nothing else covers the share card's X
+character limit.
+
 **`check:guards` takes longer than ten minutes and MUTATES SOURCE while it
 runs.** It is the meta-check: it breaks something, rebuilds, and asserts the
 guard notices. Kill it mid-run and the working tree keeps the injected fault —
