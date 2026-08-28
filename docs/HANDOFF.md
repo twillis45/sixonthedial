@@ -2,7 +2,7 @@
 
 Read this first. It is written for a session that has none of the context.
 
-Last verified 2026-08-28 against `main` at bae5523. Every number below was
+Last verified 2026-08-28 against `main` at da3956a. Every number below was
 measured on the day, not carried forward.
 
 **There is now a board.** `docs/tracker.html` puts every open item against the
@@ -307,10 +307,27 @@ a player with no parameter is on the shipping path.
 
 **Two things before it runs:**
 
-- **It must run on a GENERAL board.** Sitting 2 ruled this and it is still open.
-  As configured the test cannot tell its own failure modes apart: a Miss might
-  be "the mechanic is unclear" or "this clue is outside my world", and those
-  need opposite fixes.
+- **It must run on a GENERAL board, and this is HALF BUILT — finish it first.**
+  Sitting 2 ruled it: as configured the test cannot tell its own failure modes
+  apart, because a Miss might be "the mechanic is unclear" or "this clue is
+  outside my world" and those need opposite fixes.
+
+  Two of three parts are committed and both are inert. `build-puzzles.mjs` emits
+  **`gate0Starters`** — ROAD TRIP/TRUNKS then GARDEN/WRONGS, named rather than
+  sorted, chosen because every clue lands for anybody who has been in a car.
+  `game.ts`'s `puzzleForPlayer` takes an optional `ladderOverride` that
+  **defaults to the shipping ladder**, so nothing has changed for a real player.
+
+  **The remaining step, precisely:** `Game.tsx` does not pass it. The call site
+  is `puzzleForPlayer` at **Game.tsx:261**, inside the `Game` component, and the
+  `gate0` variant is read much further down via `useSyncExternalStore`. The read
+  has to move ABOVE the call, then pass
+  `gate0 !== 'a' || hasParam ? data.gate0Starters : undefined` — note it must
+  apply to **all four variants including A**, or A is not "as it ships" against
+  the same board as the others and the comparison is meaningless.
+
+  Then extend `check:gate0` to assert the ladder actually swapped, since nothing
+  currently does.
 - **Wipe the device between every stranger.** The teach card retires after the
   first banked word and that is persisted, so stranger two silently becomes the
   control. Skip it and every run after the first is contaminated toward D, and
