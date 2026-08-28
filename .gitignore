@@ -67,3 +67,17 @@ data/wordnet.json
 # Campaign clips — rebuilt by capture-video.mjs from the shipped build.
 /store/video/
 /store/marketing/manifest.json
+
+# ── Android / TWA signing material ────────────────────────────────────────
+# This repo is PUBLIC. An upload keystore in git history cannot be un-published,
+# and it is the one artifact that cannot be regenerated — losing it or leaking
+# it are both unrecoverable in different directions. Ignored before the Android
+# project exists, so there is no window where a keystore is trackable.
+*.keystore
+*.jks
+*.p12
+android/keystore*
+android/**/local.properties
+android/.gradle/
+android/build/
+android/app/build/
