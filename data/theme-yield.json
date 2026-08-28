@@ -2,7 +2,7 @@
  {
   "id": "tailgate",
   "vocab": 161,
-  "shipped": 0,
+  "shipped": 6,
   "supported": 188,
   "boards": [
    {
@@ -36,7 +36,8 @@
      "set:said",
      "eat:said",
      "late:voice"
-    ]
+    ],
+    "owner": "tailgate"
    },
    {
     "base": "hearts",
@@ -241,7 +242,8 @@
      "snap:named",
      "paint:named",
      "sit:said"
-    ]
+    ],
+    "owner": "tailgate"
    },
    {
     "base": "patois",
@@ -477,7 +479,8 @@
      "bed:named",
      "end:named",
      "lend:said"
-    ]
+    ],
+    "owner": "tailgate"
    },
    {
     "base": "burton",
@@ -920,7 +923,8 @@
      "sear:said",
      "share:said",
      "hoarse:voice"
-    ]
+    ],
+    "owner": "tailgate"
    },
    {
     "base": "beards",
@@ -1131,7 +1135,8 @@
      "pan:named",
      "snap:named",
      "park:said"
-    ]
+    ],
+    "owner": "tailgate"
    },
    {
     "base": "racket",
@@ -1198,7 +1203,8 @@
      "row:named",
      "horn:named",
      "throw:said"
-    ]
+    ],
+    "owner": "tailgate"
    },
    {
     "base": "tracks",
@@ -4150,7 +4156,8 @@
     "rows": [
      "park:named",
      "spark:said"
-    ]
+    ],
+    "owner": "tailgate"
    },
    {
     "base": "prelim",
@@ -4579,7 +4586,8 @@
      "tip:said",
      "sip:said",
      "spin:said"
-    ]
+    ],
+    "owner": "tailgate"
    },
    {
     "base": "splint",
@@ -6142,6 +6150,1057 @@
   ]
  },
  {
+  "id": "garden",
+  "vocab": 122,
+  "shipped": 12,
+  "supported": 92,
+  "boards": [
+   {
+    "base": "showed",
+    "ideas": 7,
+    "known": 6,
+    "weight": 16,
+    "rows": [
+     "hose:named",
+     "hoe:named",
+     "shed:named",
+     "sow:said",
+     "dose:said",
+     "sod:said",
+     "dew:voice"
+    ],
+    "owner": "garden"
+   },
+   {
+    "base": "hosted",
+    "ideas": 6,
+    "known": 6,
+    "weight": 15,
+    "rows": [
+     "hose:named",
+     "hoe:named",
+     "shed:named",
+     "set:said",
+     "dose:said",
+     "sod:said"
+    ],
+    "owner": "garden"
+   },
+   {
+    "base": "merits",
+    "ideas": 6,
+    "known": 6,
+    "weight": 14,
+    "rows": [
+     "stem:named",
+     "timer:named",
+     "trim:said",
+     "tie:said",
+     "set:said",
+     "mist:said"
+    ],
+    "owner": "garden"
+   },
+   {
+    "base": "hordes",
+    "ideas": 5,
+    "known": 5,
+    "weight": 13,
+    "rows": [
+     "hose:named",
+     "hoe:named",
+     "shed:named",
+     "dose:said",
+     "sod:said"
+    ]
+   },
+   {
+    "base": "mowers",
+    "ideas": 5,
+    "known": 5,
+    "weight": 13,
+    "rows": [
+     "row:named",
+     "mower:named",
+     "worm:named",
+     "sow:said",
+     "mow:said"
+    ]
+   },
+   {
+    "base": "posted",
+    "ideas": 5,
+    "known": 5,
+    "weight": 12,
+    "rows": [
+     "pot:named",
+     "pod:named",
+     "set:said",
+     "dose:said",
+     "sod:said"
+    ]
+   },
+   {
+    "base": "wormed",
+    "ideas": 5,
+    "known": 4,
+    "weight": 12,
+    "rows": [
+     "row:named",
+     "mower:named",
+     "worm:named",
+     "mow:said",
+     "dew:voice"
+    ]
+   },
+   {
+    "base": "arched",
+    "ideas": 4,
+    "known": 4,
+    "weight": 11,
+    "rows": [
+     "head:named",
+     "hare:named",
+     "cedar:named",
+     "reach:said"
+    ]
+   },
+   {
+    "base": "bashed",
+    "ideas": 4,
+    "known": 4,
+    "weight": 11,
+    "rows": [
+     "bed:named",
+     "shed:named",
+     "head:named",
+     "shade:said"
+    ],
+    "owner": "garden"
+   },
+   {
+    "base": "dasher",
+    "ideas": 4,
+    "known": 4,
+    "weight": 11,
+    "rows": [
+     "shed:named",
+     "head:named",
+     "hare:named",
+     "shade:said"
+    ]
+   },
+   {
+    "base": "motels",
+    "ideas": 4,
+    "known": 4,
+    "weight": 11,
+    "rows": [
+     "stem:named",
+     "mole:named",
+     "elm:named",
+     "set:said"
+    ]
+   },
+   {
+    "base": "phased",
+    "ideas": 4,
+    "known": 4,
+    "weight": 11,
+    "rows": [
+     "spade:named",
+     "shed:named",
+     "head:named",
+     "shade:said"
+    ],
+    "owner": "cookout"
+   },
+   {
+    "base": "pilots",
+    "ideas": 4,
+    "known": 4,
+    "weight": 11,
+    "rows": [
+     "soil:named",
+     "pot:named",
+     "plot:named",
+     "split:said"
+    ],
+    "owner": "garden"
+   },
+   {
+    "base": "preach",
+    "ideas": 4,
+    "known": 4,
+    "weight": 11,
+    "rows": [
+     "pear:named",
+     "hare:named",
+     "peach:named",
+     "reach:said"
+    ],
+    "owner": "beautysupply"
+   },
+   {
+    "base": "shower",
+    "ideas": 4,
+    "known": 4,
+    "weight": 11,
+    "rows": [
+     "row:named",
+     "hose:named",
+     "hoe:named",
+     "sow:said"
+    ],
+    "owner": "garden"
+   },
+   {
+    "base": "dowser",
+    "ideas": 5,
+    "known": 4,
+    "weight": 10,
+    "rows": [
+     "row:named",
+     "sow:said",
+     "dose:said",
+     "sod:said",
+     "dew:voice"
+    ]
+   },
+   {
+    "base": "gasket",
+    "ideas": 4,
+    "known": 4,
+    "weight": 10,
+    "rows": [
+     "sage:named",
+     "gate:named",
+     "stake:said",
+     "set:said"
+    ]
+   },
+   {
+    "base": "models",
+    "ideas": 4,
+    "known": 4,
+    "weight": 10,
+    "rows": [
+     "mole:named",
+     "elm:named",
+     "dose:said",
+     "sod:said"
+    ]
+   },
+   {
+    "base": "kismet",
+    "ideas": 4,
+    "known": 4,
+    "weight": 9,
+    "rows": [
+     "stem:named",
+     "tie:said",
+     "set:said",
+     "mist:said"
+    ]
+   },
+   {
+    "base": "modest",
+    "ideas": 4,
+    "known": 4,
+    "weight": 9,
+    "rows": [
+     "stem:named",
+     "set:said",
+     "dose:said",
+     "sod:said"
+    ]
+   },
+   {
+    "base": "gather",
+    "ideas": 4,
+    "known": 3,
+    "weight": 9,
+    "rows": [
+     "gate:named",
+     "hare:named",
+     "earth:said",
+     "heat:voice"
+    ],
+    "owner": "garden"
+   },
+   {
+    "base": "hatred",
+    "ideas": 4,
+    "known": 3,
+    "weight": 9,
+    "rows": [
+     "head:named",
+     "hare:named",
+     "earth:said",
+     "heat:voice"
+    ],
+    "owner": "juneteenth"
+   },
+   {
+    "base": "pounds",
+    "ideas": 4,
+    "known": 3,
+    "weight": 9,
+    "rows": [
+     "pond:named",
+     "pod:named",
+     "sod:said",
+     "sun:voice"
+    ]
+   },
+   {
+    "base": "washed",
+    "ideas": 4,
+    "known": 3,
+    "weight": 9,
+    "rows": [
+     "shed:named",
+     "head:named",
+     "shade:said",
+     "dew:voice"
+    ]
+   },
+   {
+    "base": "agents",
+    "ideas": 3,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "sage:named",
+     "gate:named",
+     "set:said"
+    ]
+   },
+   {
+    "base": "busted",
+    "ideas": 3,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "bed:named",
+     "bud:named",
+     "set:said"
+    ]
+   },
+   {
+    "base": "carpet",
+    "ideas": 3,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "pear:named",
+     "peat:named",
+     "trace:said"
+    ]
+   },
+   {
+    "base": "cashed",
+    "ideas": 3,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "shed:named",
+     "head:named",
+     "shade:said"
+    ]
+   },
+   {
+    "base": "charge",
+    "ideas": 3,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "hare:named",
+     "cage:named",
+     "reach:said"
+    ]
+   },
+   {
+    "base": "doping",
+    "ideas": 3,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "pond:named",
+     "pod:named",
+     "dig:said"
+    ]
+   },
+   {
+    "base": "hacker",
+    "ideas": 3,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "rake:named",
+     "hare:named",
+     "reach:said"
+    ]
+   },
+   {
+    "base": "hearts",
+    "ideas": 4,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "hare:named",
+     "earth:said",
+     "set:said",
+     "heat:voice"
+    ],
+    "owner": "roadtrip"
+   },
+   {
+    "base": "honest",
+    "ideas": 3,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "hose:named",
+     "hoe:named",
+     "set:said"
+    ]
+   },
+   {
+    "base": "martin",
+    "ideas": 4,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "mint:named",
+     "trim:said",
+     "train:said",
+     "rain:voice"
+    ],
+    "owner": "garden"
+   },
+   {
+    "base": "metals",
+    "ideas": 3,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "stem:named",
+     "elm:named",
+     "set:said"
+    ],
+    "owner": "tailgate"
+   },
+   {
+    "base": "muster",
+    "ideas": 3,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "stem:named",
+     "rust:named",
+     "set:said"
+    ]
+   },
+   {
+    "base": "pasted",
+    "ideas": 3,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "spade:named",
+     "peat:named",
+     "set:said"
+    ],
+    "owner": "spades"
+   },
+   {
+    "base": "pirate",
+    "ideas": 3,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "pear:named",
+     "peat:named",
+     "tie:said"
+    ]
+   },
+   {
+    "base": "planet",
+    "ideas": 3,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "petal:named",
+     "peat:named",
+     "plant:said"
+    ],
+    "owner": "sunday"
+   },
+   {
+    "base": "pointe",
+    "ideas": 3,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "pot:named",
+     "pine:named",
+     "tie:said"
+    ],
+    "owner": "beautysupply"
+   },
+   {
+    "base": "polite",
+    "ideas": 3,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "pot:named",
+     "plot:named",
+     "tie:said"
+    ]
+   },
+   {
+    "base": "unrest",
+    "ideas": 4,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "rust:named",
+     "turn:said",
+     "set:said",
+     "sun:voice"
+    ]
+   },
+   {
+    "base": "bodies",
+    "ideas": 3,
+    "known": 3,
+    "weight": 7,
+    "rows": [
+     "bed:named",
+     "dose:said",
+     "sod:said"
+    ]
+   },
+   {
+    "base": "crowds",
+    "ideas": 3,
+    "known": 3,
+    "weight": 7,
+    "rows": [
+     "row:named",
+     "sow:said",
+     "sod:said"
+    ]
+   },
+   {
+    "base": "dosage",
+    "ideas": 3,
+    "known": 3,
+    "weight": 7,
+    "rows": [
+     "sage:named",
+     "dose:said",
+     "sod:said"
+    ]
+   },
+   {
+    "base": "gifted",
+    "ideas": 3,
+    "known": 3,
+    "weight": 7,
+    "rows": [
+     "fig:named",
+     "dig:said",
+     "tie:said"
+    ],
+    "owner": "garden"
+   },
+   {
+    "base": "instep",
+    "ideas": 3,
+    "known": 3,
+    "weight": 7,
+    "rows": [
+     "pine:named",
+     "tie:said",
+     "set:said"
+    ],
+    "owner": "steppers"
+   },
+   {
+    "base": "invest",
+    "ideas": 3,
+    "known": 3,
+    "weight": 7,
+    "rows": [
+     "vine:named",
+     "tie:said",
+     "set:said"
+    ]
+   },
+   {
+    "base": "metric",
+    "ideas": 3,
+    "known": 3,
+    "weight": 7,
+    "rows": [
+     "timer:named",
+     "trim:said",
+     "tie:said"
+    ]
+   },
+   {
+    "base": "poised",
+    "ideas": 3,
+    "known": 3,
+    "weight": 7,
+    "rows": [
+     "pod:named",
+     "dose:said",
+     "sod:said"
+    ]
+   },
+   {
+    "base": "potsie",
+    "ideas": 3,
+    "known": 3,
+    "weight": 7,
+    "rows": [
+     "pot:named",
+     "tie:said",
+     "set:said"
+    ],
+    "owner": "texas"
+   },
+   {
+    "base": "skater",
+    "ideas": 3,
+    "known": 3,
+    "weight": 7,
+    "rows": [
+     "rake:named",
+     "stake:said",
+     "set:said"
+    ]
+   },
+   {
+    "base": "soaked",
+    "ideas": 3,
+    "known": 3,
+    "weight": 7,
+    "rows": [
+     "oak:named",
+     "dose:said",
+     "sod:said"
+    ]
+   },
+   {
+    "base": "soiled",
+    "ideas": 3,
+    "known": 3,
+    "weight": 7,
+    "rows": [
+     "soil:named",
+     "dose:said",
+     "sod:said"
+    ]
+   },
+   {
+    "base": "towers",
+    "ideas": 3,
+    "known": 3,
+    "weight": 7,
+    "rows": [
+     "row:named",
+     "sow:said",
+     "set:said"
+    ]
+   },
+   {
+    "base": "wrongs",
+    "ideas": 3,
+    "known": 3,
+    "weight": 7,
+    "rows": [
+     "row:named",
+     "sow:said",
+     "grow:said"
+    ],
+    "owner": "garden"
+   },
+   {
+    "base": "bertha",
+    "ideas": 3,
+    "known": 2,
+    "weight": 6,
+    "rows": [
+     "hare:named",
+     "earth:said",
+     "heat:voice"
+    ]
+   },
+   {
+    "base": "bounds",
+    "ideas": 3,
+    "known": 2,
+    "weight": 6,
+    "rows": [
+     "bud:named",
+     "sod:said",
+     "sun:voice"
+    ]
+   },
+   {
+    "base": "strung",
+    "ideas": 3,
+    "known": 2,
+    "weight": 6,
+    "rows": [
+     "rust:named",
+     "turn:said",
+     "sun:voice"
+    ]
+   },
+   {
+    "base": "absent",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "bean:named",
+     "set:said"
+    ],
+    "owner": "steppers"
+   },
+   {
+    "base": "arches",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "hare:named",
+     "reach:said"
+    ]
+   },
+   {
+    "base": "aspect",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "peat:named",
+     "set:said"
+    ],
+    "owner": "rnb90s"
+   },
+   {
+    "base": "baited",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "bed:named",
+     "tie:said"
+    ]
+   },
+   {
+    "base": "bolted",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "bed:named",
+     "bolt:said"
+    ],
+    "owner": "garden"
+   },
+   {
+    "base": "bowers",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "row:named",
+     "sow:said"
+    ],
+    "owner": "church"
+   },
+   {
+    "base": "bridge",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "bed:named",
+     "dig:said"
+    ]
+   },
+   {
+    "base": "buster",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "rust:named",
+     "set:said"
+    ]
+   },
+   {
+    "base": "canter",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "cane:named",
+     "trace:said"
+    ]
+   },
+   {
+    "base": "carted",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "cedar:named",
+     "trace:said"
+    ]
+   },
+   {
+    "base": "confer",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "fern:named",
+     "force:said"
+    ]
+   },
+   {
+    "base": "depths",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "shed:named",
+     "set:said"
+    ]
+   },
+   {
+    "base": "doubts",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "bud:named",
+     "sod:said"
+    ]
+   },
+   {
+    "base": "eating",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "gate:named",
+     "tie:said"
+    ]
+   },
+   {
+    "base": "fading",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "fig:named",
+     "dig:said"
+    ]
+   },
+   {
+    "base": "forest",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "frost:named",
+     "set:said"
+    ]
+   },
+   {
+    "base": "gimlet",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "elm:named",
+     "tie:said"
+    ]
+   },
+   {
+    "base": "growth",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "row:named",
+     "grow:said"
+    ]
+   },
+   {
+    "base": "import",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "pot:named",
+     "trim:said"
+    ]
+   },
+   {
+    "base": "inmate",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "mint:named",
+     "tie:said"
+    ],
+    "owner": "rnb90s"
+   },
+   {
+    "base": "levity",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "ivy:named",
+     "tie:said"
+    ]
+   },
+   {
+    "base": "mantis",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "mint:named",
+     "mist:said"
+    ]
+   },
+   {
+    "base": "musket",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "stem:named",
+     "set:said"
+    ]
+   },
+   {
+    "base": "native",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "vine:named",
+     "tie:said"
+    ]
+   },
+   {
+    "base": "pecans",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "cane:named",
+     "snap:said"
+    ]
+   },
+   {
+    "base": "pencil",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "pine:named",
+     "clip:said"
+    ]
+   },
+   {
+    "base": "poetic",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "pot:named",
+     "tie:said"
+    ]
+   },
+   {
+    "base": "poster",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "pot:named",
+     "set:said"
+    ]
+   },
+   {
+    "base": "racket",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "rake:named",
+     "trace:said"
+    ]
+   },
+   {
+    "base": "stance",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "cane:named",
+     "set:said"
+    ]
+   },
+   {
+    "base": "talkie",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "kale:named",
+     "tie:said"
+    ]
+   },
+   {
+    "base": "townie",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "twine:named",
+     "tie:said"
+    ]
+   },
+   {
+    "base": "wackos",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "oak:named",
+     "sow:said"
+    ]
+   }
+  ]
+ },
+ {
   "id": "texas",
   "vocab": 122,
   "shipped": 8,
@@ -7656,7 +8715,8 @@
      "pan:named",
      "nap:said",
      "sit:said"
-    ]
+    ],
+    "owner": "tailgate"
    },
    {
     "base": "pantry",
@@ -8236,7 +9296,8 @@
      "salt:acts",
      "slam:titles",
      "east:titles"
-    ]
+    ],
+    "owner": "tailgate"
    },
    {
     "base": "minute",
@@ -9029,7 +10090,8 @@
      "shoe:named",
      "hose:named",
      "share:said"
-    ]
+    ],
+    "owner": "tailgate"
    },
    {
     "base": "aspect",
@@ -9593,705 +10655,6 @@
     "rows": [
      "gate:named",
      "lean:said"
-    ]
-   }
-  ]
- },
- {
-  "id": "garden",
-  "vocab": 67,
-  "shipped": 10,
-  "supported": 62,
-  "boards": [
-   {
-    "base": "merits",
-    "ideas": 6,
-    "known": 6,
-    "weight": 14,
-    "rows": [
-     "stem:named",
-     "timer:named",
-     "trim:said",
-     "tie:said",
-     "set:said",
-     "mist:said"
-    ],
-    "owner": "garden"
-   },
-   {
-    "base": "hosted",
-    "ideas": 5,
-    "known": 5,
-    "weight": 13,
-    "rows": [
-     "hose:named",
-     "hoe:named",
-     "shed:named",
-     "set:said",
-     "dose:said"
-    ],
-    "owner": "garden"
-   },
-   {
-    "base": "showed",
-    "ideas": 5,
-    "known": 5,
-    "weight": 13,
-    "rows": [
-     "hose:named",
-     "hoe:named",
-     "shed:named",
-     "sow:said",
-     "dose:said"
-    ],
-    "owner": "garden"
-   },
-   {
-    "base": "bashed",
-    "ideas": 4,
-    "known": 4,
-    "weight": 11,
-    "rows": [
-     "bed:named",
-     "shed:named",
-     "head:named",
-     "shade:said"
-    ],
-    "owner": "garden"
-   },
-   {
-    "base": "dasher",
-    "ideas": 4,
-    "known": 4,
-    "weight": 11,
-    "rows": [
-     "shed:named",
-     "head:named",
-     "hare:named",
-     "shade:said"
-    ]
-   },
-   {
-    "base": "hordes",
-    "ideas": 4,
-    "known": 4,
-    "weight": 11,
-    "rows": [
-     "hose:named",
-     "hoe:named",
-     "shed:named",
-     "dose:said"
-    ]
-   },
-   {
-    "base": "phased",
-    "ideas": 4,
-    "known": 4,
-    "weight": 11,
-    "rows": [
-     "spade:named",
-     "shed:named",
-     "head:named",
-     "shade:said"
-    ],
-    "owner": "cookout"
-   },
-   {
-    "base": "shower",
-    "ideas": 4,
-    "known": 4,
-    "weight": 11,
-    "rows": [
-     "row:named",
-     "hose:named",
-     "hoe:named",
-     "sow:said"
-    ]
-   },
-   {
-    "base": "gasket",
-    "ideas": 4,
-    "known": 4,
-    "weight": 10,
-    "rows": [
-     "sage:named",
-     "gate:named",
-     "stake:said",
-     "set:said"
-    ]
-   },
-   {
-    "base": "kismet",
-    "ideas": 4,
-    "known": 4,
-    "weight": 9,
-    "rows": [
-     "stem:named",
-     "tie:said",
-     "set:said",
-     "mist:said"
-    ]
-   },
-   {
-    "base": "gather",
-    "ideas": 4,
-    "known": 3,
-    "weight": 9,
-    "rows": [
-     "gate:named",
-     "hare:named",
-     "earth:said",
-     "heat:voice"
-    ],
-    "owner": "garden"
-   },
-   {
-    "base": "hatred",
-    "ideas": 4,
-    "known": 3,
-    "weight": 9,
-    "rows": [
-     "head:named",
-     "hare:named",
-     "earth:said",
-     "heat:voice"
-    ],
-    "owner": "juneteenth"
-   },
-   {
-    "base": "agents",
-    "ideas": 3,
-    "known": 3,
-    "weight": 8,
-    "rows": [
-     "sage:named",
-     "gate:named",
-     "set:said"
-    ]
-   },
-   {
-    "base": "arched",
-    "ideas": 3,
-    "known": 3,
-    "weight": 8,
-    "rows": [
-     "head:named",
-     "hare:named",
-     "reach:said"
-    ]
-   },
-   {
-    "base": "busted",
-    "ideas": 3,
-    "known": 3,
-    "weight": 8,
-    "rows": [
-     "bed:named",
-     "bud:named",
-     "set:said"
-    ]
-   },
-   {
-    "base": "cashed",
-    "ideas": 3,
-    "known": 3,
-    "weight": 8,
-    "rows": [
-     "shed:named",
-     "head:named",
-     "shade:said"
-    ]
-   },
-   {
-    "base": "hacker",
-    "ideas": 3,
-    "known": 3,
-    "weight": 8,
-    "rows": [
-     "rake:named",
-     "hare:named",
-     "reach:said"
-    ]
-   },
-   {
-    "base": "hearts",
-    "ideas": 4,
-    "known": 3,
-    "weight": 8,
-    "rows": [
-     "hare:named",
-     "earth:said",
-     "set:said",
-     "heat:voice"
-    ],
-    "owner": "roadtrip"
-   },
-   {
-    "base": "honest",
-    "ideas": 3,
-    "known": 3,
-    "weight": 8,
-    "rows": [
-     "hose:named",
-     "hoe:named",
-     "set:said"
-    ]
-   },
-   {
-    "base": "martin",
-    "ideas": 4,
-    "known": 3,
-    "weight": 8,
-    "rows": [
-     "mint:named",
-     "trim:said",
-     "train:said",
-     "rain:voice"
-    ],
-    "owner": "garden"
-   },
-   {
-    "base": "pilots",
-    "ideas": 3,
-    "known": 3,
-    "weight": 8,
-    "rows": [
-     "soil:named",
-     "pot:named",
-     "split:said"
-    ],
-    "owner": "garden"
-   },
-   {
-    "base": "preach",
-    "ideas": 3,
-    "known": 3,
-    "weight": 8,
-    "rows": [
-     "pear:named",
-     "hare:named",
-     "reach:said"
-    ],
-    "owner": "beautysupply"
-   },
-   {
-    "base": "dowser",
-    "ideas": 3,
-    "known": 3,
-    "weight": 7,
-    "rows": [
-     "row:named",
-     "sow:said",
-     "dose:said"
-    ]
-   },
-   {
-    "base": "gifted",
-    "ideas": 3,
-    "known": 3,
-    "weight": 7,
-    "rows": [
-     "fig:named",
-     "dig:said",
-     "tie:said"
-    ],
-    "owner": "garden"
-   },
-   {
-    "base": "invest",
-    "ideas": 3,
-    "known": 3,
-    "weight": 7,
-    "rows": [
-     "vine:named",
-     "tie:said",
-     "set:said"
-    ]
-   },
-   {
-    "base": "metric",
-    "ideas": 3,
-    "known": 3,
-    "weight": 7,
-    "rows": [
-     "timer:named",
-     "trim:said",
-     "tie:said"
-    ]
-   },
-   {
-    "base": "modest",
-    "ideas": 3,
-    "known": 3,
-    "weight": 7,
-    "rows": [
-     "stem:named",
-     "set:said",
-     "dose:said"
-    ]
-   },
-   {
-    "base": "posted",
-    "ideas": 3,
-    "known": 3,
-    "weight": 7,
-    "rows": [
-     "pot:named",
-     "set:said",
-     "dose:said"
-    ]
-   },
-   {
-    "base": "potsie",
-    "ideas": 3,
-    "known": 3,
-    "weight": 7,
-    "rows": [
-     "pot:named",
-     "tie:said",
-     "set:said"
-    ],
-    "owner": "texas"
-   },
-   {
-    "base": "skater",
-    "ideas": 3,
-    "known": 3,
-    "weight": 7,
-    "rows": [
-     "rake:named",
-     "stake:said",
-     "set:said"
-    ]
-   },
-   {
-    "base": "towers",
-    "ideas": 3,
-    "known": 3,
-    "weight": 7,
-    "rows": [
-     "row:named",
-     "sow:said",
-     "set:said"
-    ]
-   },
-   {
-    "base": "wrongs",
-    "ideas": 3,
-    "known": 3,
-    "weight": 7,
-    "rows": [
-     "row:named",
-     "sow:said",
-     "grow:said"
-    ],
-    "owner": "garden"
-   },
-   {
-    "base": "bertha",
-    "ideas": 3,
-    "known": 2,
-    "weight": 6,
-    "rows": [
-     "hare:named",
-     "earth:said",
-     "heat:voice"
-    ]
-   },
-   {
-    "base": "absent",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "bean:named",
-     "set:said"
-    ],
-    "owner": "steppers"
-   },
-   {
-    "base": "arches",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "hare:named",
-     "reach:said"
-    ]
-   },
-   {
-    "base": "baited",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "bed:named",
-     "tie:said"
-    ]
-   },
-   {
-    "base": "bodies",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "bed:named",
-     "dose:said"
-    ]
-   },
-   {
-    "base": "bolted",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "bed:named",
-     "bolt:said"
-    ],
-    "owner": "garden"
-   },
-   {
-    "base": "bowers",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "row:named",
-     "sow:said"
-    ],
-    "owner": "church"
-   },
-   {
-    "base": "bridge",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "bed:named",
-     "dig:said"
-    ]
-   },
-   {
-    "base": "canter",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "cane:named",
-     "trace:said"
-    ]
-   },
-   {
-    "base": "carpet",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "pear:named",
-     "trace:said"
-    ]
-   },
-   {
-    "base": "depths",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "shed:named",
-     "set:said"
-    ]
-   },
-   {
-    "base": "dosage",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "sage:named",
-     "dose:said"
-    ]
-   },
-   {
-    "base": "eating",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "gate:named",
-     "tie:said"
-    ]
-   },
-   {
-    "base": "fading",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "fig:named",
-     "dig:said"
-    ]
-   },
-   {
-    "base": "growth",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "row:named",
-     "grow:said"
-    ]
-   },
-   {
-    "base": "import",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "pot:named",
-     "trim:said"
-    ]
-   },
-   {
-    "base": "inmate",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "mint:named",
-     "tie:said"
-    ],
-    "owner": "rnb90s"
-   },
-   {
-    "base": "mantis",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "mint:named",
-     "mist:said"
-    ]
-   },
-   {
-    "base": "metals",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "stem:named",
-     "set:said"
-    ]
-   },
-   {
-    "base": "native",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "vine:named",
-     "tie:said"
-    ]
-   },
-   {
-    "base": "pasted",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "spade:named",
-     "set:said"
-    ],
-    "owner": "spades"
-   },
-   {
-    "base": "pecans",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "cane:named",
-     "snap:said"
-    ]
-   },
-   {
-    "base": "pirate",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "pear:named",
-     "tie:said"
-    ]
-   },
-   {
-    "base": "planet",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "petal:named",
-     "plant:said"
-    ],
-    "owner": "sunday"
-   },
-   {
-    "base": "poetic",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "pot:named",
-     "tie:said"
-    ]
-   },
-   {
-    "base": "poster",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "pot:named",
-     "set:said"
-    ]
-   },
-   {
-    "base": "racket",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "rake:named",
-     "trace:said"
-    ]
-   },
-   {
-    "base": "soiled",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "soil:named",
-     "dose:said"
-    ]
-   },
-   {
-    "base": "stance",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "cane:named",
-     "set:said"
-    ]
-   },
-   {
-    "base": "townie",
-    "ideas": 2,
-    "known": 2,
-    "weight": 5,
-    "rows": [
-     "twine:named",
-     "tie:said"
     ]
    }
   ]
@@ -12058,6 +12421,421 @@
   ]
  },
  {
+  "id": "gym",
+  "vocab": 113,
+  "shipped": 0,
+  "supported": 38,
+  "boards": [
+   {
+    "base": "poster",
+    "ideas": 6,
+    "known": 4,
+    "weight": 12,
+    "rows": [
+     "reps:named",
+     "rope:named",
+     "spot:said",
+     "rest:said",
+     "sore:voice",
+     "step:voice"
+    ]
+   },
+   {
+    "base": "powers",
+    "ideas": 5,
+    "known": 3,
+    "weight": 10,
+    "rows": [
+     "reps:named",
+     "rope:named",
+     "row:said",
+     "sore:voice",
+     "power:voice"
+    ],
+    "owner": "church"
+   },
+   {
+    "base": "powder",
+    "ideas": 4,
+    "known": 3,
+    "weight": 8,
+    "rows": [
+     "rope:named",
+     "drop:said",
+     "row:said",
+     "power:voice"
+    ]
+   },
+   {
+    "base": "period",
+    "ideas": 3,
+    "known": 3,
+    "weight": 7,
+    "rows": [
+     "rope:named",
+     "drop:said",
+     "dip:said"
+    ]
+   },
+   {
+    "base": "satire",
+    "ideas": 3,
+    "known": 3,
+    "weight": 7,
+    "rows": [
+     "stair:named",
+     "rest:said",
+     "raise:said"
+    ],
+    "owner": "sunday"
+   },
+   {
+    "base": "corset",
+    "ideas": 3,
+    "known": 2,
+    "weight": 6,
+    "rows": [
+     "core:named",
+     "rest:said",
+     "sore:voice"
+    ]
+   },
+   {
+    "base": "crowed",
+    "ideas": 3,
+    "known": 2,
+    "weight": 6,
+    "rows": [
+     "core:named",
+     "row:said",
+     "crowd:voice"
+    ]
+   },
+   {
+    "base": "glance",
+    "ideas": 3,
+    "known": 2,
+    "weight": 6,
+    "rows": [
+     "cage:named",
+     "clean:said",
+     "lean:voice"
+    ]
+   },
+   {
+    "base": "others",
+    "ideas": 3,
+    "known": 2,
+    "weight": 6,
+    "rows": [
+     "shoe:named",
+     "rest:said",
+     "sore:voice"
+    ]
+   },
+   {
+    "base": "ponder",
+    "ideas": 3,
+    "known": 2,
+    "weight": 6,
+    "rows": [
+     "rope:named",
+     "drop:said",
+     "open:voice"
+    ]
+   },
+   {
+    "base": "priest",
+    "ideas": 3,
+    "known": 2,
+    "weight": 6,
+    "rows": [
+     "reps:named",
+     "rest:said",
+     "step:voice"
+    ],
+    "owner": "texas"
+   },
+   {
+    "base": "shower",
+    "ideas": 3,
+    "known": 2,
+    "weight": 6,
+    "rows": [
+     "shoe:named",
+     "row:said",
+     "sore:voice"
+    ],
+    "owner": "garden"
+   },
+   {
+    "base": "aching",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "chain:named",
+     "gain:said"
+    ]
+   },
+   {
+    "base": "armies",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "arms:named",
+     "raise:said"
+    ]
+   },
+   {
+    "base": "aspire",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "reps:named",
+     "raise:said"
+    ],
+    "owner": "church"
+   },
+   {
+    "base": "blower",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "elbow:named",
+     "row:said"
+    ]
+   },
+   {
+    "base": "breast",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "abs:named",
+     "rest:said"
+    ],
+    "owner": "cookout"
+   },
+   {
+    "base": "chutes",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "chest:named",
+     "cut:said"
+    ]
+   },
+   {
+    "base": "cutler",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "curl:named",
+     "cut:said"
+    ]
+   },
+   {
+    "base": "deport",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "rope:named",
+     "drop:said"
+    ]
+   },
+   {
+    "base": "format",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "mat:named",
+     "form:said"
+    ]
+   },
+   {
+    "base": "honest",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "shoe:named",
+     "tone:said"
+    ]
+   },
+   {
+    "base": "inform",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "iron:named",
+     "form:said"
+    ]
+   },
+   {
+    "base": "locker",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "core:named",
+     "lock:said"
+    ]
+   },
+   {
+    "base": "mating",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "mat:named",
+     "gain:said"
+    ]
+   },
+   {
+    "base": "merits",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "timer:named",
+     "rest:said"
+    ],
+    "owner": "garden"
+   },
+   {
+    "base": "pastor",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "strap:named",
+     "spot:said"
+    ]
+   },
+   {
+    "base": "prizes",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "reps:named",
+     "size:said"
+    ]
+   },
+   {
+    "base": "punish",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "hip:named",
+     "push:said"
+    ]
+   },
+   {
+    "base": "pusher",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "reps:named",
+     "push:said"
+    ]
+   },
+   {
+    "base": "rabies",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "abs:named",
+     "raise:said"
+    ]
+   },
+   {
+    "base": "rowing",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "iron:named",
+     "row:said"
+    ]
+   },
+   {
+    "base": "spider",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "reps:named",
+     "dip:said"
+    ]
+   },
+   {
+    "base": "stared",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "tread:named",
+     "rest:said"
+    ],
+    "owner": "juneteenth"
+   },
+   {
+    "base": "talcum",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "mat:named",
+     "cut:said"
+    ]
+   },
+   {
+    "base": "trains",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "stair:named",
+     "strain:said"
+    ]
+   },
+   {
+    "base": "warmth",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "mat:named",
+     "warm:said"
+    ],
+    "owner": "sunday"
+   },
+   {
+    "base": "writes",
+    "ideas": 2,
+    "known": 2,
+    "weight": 5,
+    "rows": [
+     "wrist:named",
+     "rest:said"
+    ]
+   }
+  ]
+ },
+ {
   "id": "barbershop",
   "vocab": 93,
   "shipped": 7,
@@ -12086,7 +12864,8 @@
      "tip:said",
      "sat:said",
      "pin:said"
-    ]
+    ],
+    "owner": "tailgate"
    },
    {
     "base": "aspect",

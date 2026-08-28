@@ -113,6 +113,12 @@
    "name": "The Tailgate",
    "category": "THE TABLE",
    "blurb": "Four hours before kickoff, a folding table in a parking lot, and somebody you have never met handing you a plate."
+  },
+  {
+   "id": "gym",
+   "name": "The Gym",
+   "category": "THE BLOCK",
+   "blurb": "The one on the corner with the handwritten sign, where somebody knows how long you have been coming."
   }
  ],
  "puzzles": [
@@ -2635,6 +2641,106 @@
     "toe"
    ],
    "scene": "August, and the lettuce has made its decision"
+  },
+  {
+   "base": "poster",
+   "theme": "gym",
+   "clues": {
+    "poster": "Curling at one corner since before you joined, and nobody will be the one to take it down",
+    "reps": "Counted out loud by the last three, and silently by everybody else",
+    "rest": "Ninety seconds that becomes four minutes once the phone comes out",
+    "rope": "Hung from the frame, and used the right way by maybe two people here",
+    "spot": "What you ask a stranger for, and what nobody has ever refused",
+    "step": "Boxed, stacked by the mirror, and dragged out for the one class on Tuesdays"
+   },
+   "prefer": [
+    "reps",
+    "rest",
+    "rope",
+    "spot",
+    "step"
+   ],
+   "scene": "The wall by the free weights"
+  },
+  {
+   "base": "master",
+   "theme": "gym",
+   "clues": {
+    "master": "What thirty years in one building makes somebody, whether or not anybody says it",
+    "arms": "The day of the week that never gets skipped, unlike the other one",
+    "rest": "Ninety seconds by the clock on the wall, timed exactly, every single set",
+    "mat": "His own, rolled under one arm, never the ones by the door",
+    "steam": "What comes off the towel he leaves folded on the bench between sets",
+    "team": "What he calls the four regulars on the platform, and nobody corrects him"
+   },
+   "prefer": [
+    "arms",
+    "rest",
+    "mat",
+    "steam",
+    "team"
+   ],
+   "scene": "The man who has been coming here since 1994"
+  },
+  {
+   "base": "period",
+   "theme": "gym",
+   "clues": {
+    "period": "Four weeks on the board, and the reason this month feels harder than last",
+    "drop": "What the last inch of the last one does, no matter the intention",
+    "rope": "Left on the high pulley by whoever finished before you, every single time",
+    "dip": "Between the bars, and the one everybody claims is easy until week four",
+    "ride": "Twenty minutes at the end that used to be the whole session",
+    "pride": "What week five costs, and what week six quietly gives back"
+   },
+   "prefer": [
+    "drop",
+    "rope",
+    "dip",
+    "ride",
+    "pride"
+   ],
+   "scene": "The block on the whiteboard, week four of six"
+  },
+  {
+   "base": "powder",
+   "theme": "gym",
+   "clues": {
+    "powder": "Two scoops in the bottom of a bottle that has smelled like this since March",
+    "drop": "What the bar does the last inch of the last one, no matter the intention",
+    "rope": "Clipped to the high pulley, and left there by whoever went before you",
+    "rod": "The pin through the stack, and the reason the whole machine waits on one person",
+    "row": "Seated, elbows in, and the one thing the sign on the wall says you are doing wrong",
+    "wore": "What the grip tape did on the left side only, which tells you something"
+   },
+   "prefer": [
+    "drop",
+    "rope",
+    "rod",
+    "row",
+    "wore"
+   ],
+   "scene": "The shaker bottle nobody rinses"
+  },
+  {
+   "base": "tramps",
+   "theme": "gym",
+   "clues": {
+    "tramps": "What the treadmill row sounds like from the office upstairs at six in the morning",
+    "strap": "Looped twice at the wrist by everybody pulling more than their grip allows",
+    "arms": "Two of the five days, and the two nobody has ever needed reminding about",
+    "mat": "Rolled, unrolled, and never quite put back where the sign shows",
+    "ramp": "Up the last two weeks of a cycle, and the part people rush",
+    "star": "Drawn on the whiteboard beside whoever hit something that morning"
+   },
+   "prefer": [
+    "strap",
+    "arms",
+    "mat",
+    "ramp",
+    "star"
+   ],
+   "scene": "The rack by the door, in whatever order it was left"
   }
  ]
 }

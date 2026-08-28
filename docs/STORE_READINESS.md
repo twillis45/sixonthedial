@@ -21,6 +21,37 @@ address rather than the registered agent's — and neither belongs in a
 world-readable git history. They are in the LLC folder in Dropbox. Do not add
 them here for convenience later; the convenience is the whole failure mode.
 
+**RESOLVED 2026-08-27 — nothing is owed. The lookup completed.**
+
+Maryland Business Express, Department ID `W26948752`:
+
+| field | value |
+|---|---|
+| Principal Office | 306 W REDWOOD ST, STE 201, BALTIMORE MD 21201 |
+| Resident Agent | NORTHWEST REGISTERED AGENTS SERVICE, INC — *same address* |
+| Status | ACTIVE · in good standing |
+| Formation | 02/26/2026, MD · DOMESTIC LLC |
+
+Three things this settles. **Nothing is owed** — the record already shows the
+current Northwest address, which is the first row of the decision table below.
+**The Articles DID use Northwest's address** — Principal Office and Resident
+Agent are identical, which is the fact the inference below could not check.
+And **the home-address exposure does not exist**: the public state record shows
+the agent's address, not a member's, so the third row's privacy concern is moot
+on the state side.
+
+What remains is a MISMATCH, not an error: the state shows Baltimore, the CP 575
+shows a home address. That matters because payment and store platforms verify
+against IRS records, not state ones. Closing it is Form 8822-B, mail-only,
+~4-6 weeks — a deliberate choice to make the four records agree (state, IRS,
+Stripe, D-U-N-S), not a defect to repair.
+
+The original inference is left below, unedited, because it was stated as a
+conclusion when it was a guess, and the correction is worth more than the
+tidy version.
+
+---
+
 **The registered agent's address changed; whether anything is owed is UNVERIFIED.**
 Northwest bought a new Maryland building and filed the agent-address change with
 the state on 2026-04-22. Their notice adds that "if you've opted to use our

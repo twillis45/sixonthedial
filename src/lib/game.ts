@@ -400,7 +400,8 @@ const SHELF_OF: Record<string, ShelfId> = {
   // table. Only the un-absorbable three get the fifth shelf, and FIVE is the
   // ceiling — Grandmother exercises her veto on a sixth.
   hardware: 'block',
-  tailgate: 'table', // a fire and the food eaten around it, in a parking lot
+  tailgate: 'table',
+  gym: 'block', // the corner gym is a block institution, same as the hardware store // a fire and the food eaten around it, in a parking lot
   diner: 'table',
   roadtrip: 'longway',
   garden: 'longway',

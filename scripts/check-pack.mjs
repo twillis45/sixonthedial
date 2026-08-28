@@ -50,6 +50,24 @@ const distinct = (w) => new Set(w).size === w.length;
 const byLetterKey = new Map();
 for (const w of read('data/enable1.txt').split('\n').map((x) => x.trim())) {
   if (w.length < 3 || w.length > 6) continue;
+  /*
+   * BLOCKED WORDS ARE NOT ANSWERS, and this file used to count them.
+   *
+   * The comment above says this band is mirrored from vet-bases, and it was
+   * mirrored imperfectly: vet-bases filters its word list through isBlocked
+   * and this did not. So the two tools disagreed about what an answer IS, by
+   * exactly the blocklist.
+   *
+   * MASTER is where it surfaced. vet-bases counts 110 and admits it to the
+   * pool; check-pack counted 111 and rejected it — the single word between
+   * them being `arse`, which no player can ever reach because the game filters
+   * it. The pool was handing an author a base the build would refuse, which is
+   * the authoring-against-the-wrong-tool failure this repo has already paid
+   * for once.
+   *
+   * vet-bases is right: a word a player cannot reach is not an answer.
+   */
+  if (isBlocked(w)) continue;
   const k = [...w].sort().join('');
   byLetterKey.set(k, (byLetterKey.get(k) ?? 0) + 1);
 }
