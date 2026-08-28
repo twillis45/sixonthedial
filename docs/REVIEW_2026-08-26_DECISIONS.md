@@ -508,3 +508,45 @@ for paid is on the record as the starting position.
   download and live under either free option.
 - `lib/entitlement.ts` is unnecessary under paid download. Twelve tests and an
   afternoon; recorded as possibly-sunk rather than quietly kept.
+
+
+---
+
+## Ruling 2, closed by the operator — 2026-08-28
+
+Referred out, and answered in two sittings because the first one only did half
+the job.
+
+**Board 1 — WARMTH / Sunday Dinner.** Decided in `bae5523`. The referral's
+premise ("cultural because the difficulty sort put it there") stopped being
+true then: the ladder is now named in `FIRST_BOARDS`, not sorted, and the build
+warns rather than silently re-sorting if a named board goes missing.
+
+**Board 2 — DEPICT / The Cookout.** Decided now. `nicked` was never examined; it
+was simply the thing already in the slot. Three of its six rows are gated on
+recall — a 1992 Wu-Tang single, Usher 1998, Boyz II Men 1992 — where 113 of the
+131 themed boards have none and only nine are worse. That is CRAFTY's failure
+one slot later, and it is the same failure the board already named: culturally
+specific and unreadable are separable, and both boards were both.
+
+**The principle, restated so it survives this file.** Leading with the packs is
+not the question and never was. Easing people out of them would imply they are
+a liability — the trap Karen S.'s seat named. The question is only whether a
+first board can be READ, and the answer is a board that is unmistakably ours
+*and* reasons from its scene rather than from a fact somebody either has or
+does not.
+
+**What is now guarded, and what is not.** `content.test.ts` asserts no ladder
+board carries a recall-gated clue, against the built file, existence before
+quality. It is red-proofed both ways, including the difficulty fallback, which
+lands on exactly the `crafty`+`nicked` pair this replaced.
+
+It does not assert readability. CRAFTY carries no recall marker and was still a
+locked door: "ash from the burn barrel to the pit" assumes a burn barrel feeds
+a pit. **Domain-gating is the other locked door and no check will ever see it** —
+it is a cultural-reader job, and one more reason the readers are the ceiling.
+
+**Gate zero cannot settle this and was never going to.** It runs on a general
+board precisely to remove the cultural variable, so it answers *is the mechanic
+legible* and is silent on whether the pack ladder lands. Waiting for it here
+would have been waiting for an answer to a different question.

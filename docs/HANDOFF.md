@@ -179,7 +179,12 @@ Play, with `connect-src 'self'` as the structural backstop.
   `next build`.** Merge a pack without running it and you ship a catalogue no
   player ever sees. Same for `npm run definitions` and
   `node scripts/build-catalogue.mjs`, which CI checks for staleness.
-- **The warm-up ladder is NAMED, not sorted.** `FIRST_BOARDS` in build-puzzles.
+- **The warm-up ladder is NAMED, not sorted, and both slots are now decided.**
+  `FIRST_BOARDS` in build-puzzles is `warmth` then `depict` — Sunday Dinner then
+  The Cookout. Board 2 moved off `nicked` on 2026-08-28: three of its six rows
+  were recall-gated trivia, which is CRAFTY's failure one slot later. See
+  REVIEW_2026-08-26_DECISIONS.md, ruling 2. `content.test.ts` holds it, and it
+  guards the machine-visible half only — domain-gating still needs a reader.
   It used to be "two easiest by difficulty", which is how a first-timer came to
   meet a clue about burn barrels that nobody chose for them.
 
