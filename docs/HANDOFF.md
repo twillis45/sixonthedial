@@ -305,29 +305,30 @@ rule is frozen at 60% Read / max 20% Quit over twelve strangers, and
 `check:gate0` asserts each variant shows exactly what it claims — including that
 a player with no parameter is on the shipping path.
 
-**Two things before it runs:**
+**One thing before it runs, and one fact about it:**
 
-- **It must run on a GENERAL board, and this is HALF BUILT — finish it first.**
-  Sitting 2 ruled it: as configured the test cannot tell its own failure modes
-  apart, because a Miss might be "the mechanic is unclear" or "this clue is
-  outside my world" and those need opposite fixes.
+- **It runs on a GENERAL board, and that is now wired end to end.**
+  Sitting 2 ruled it: as configured the test could not tell its own failure
+  modes apart, because a Miss might be "the mechanic is unclear" or "this clue
+  is outside my world" and those need opposite fixes.
 
-  Two of three parts are committed and both are inert. `build-puzzles.mjs` emits
-  **`gate0Starters`** — ROAD TRIP/TRUNKS then GARDEN/WRONGS, named rather than
-  sorted, chosen because every clue lands for anybody who has been in a car.
-  `game.ts`'s `puzzleForPlayer` takes an optional `ladderOverride` that
-  **defaults to the shipping ladder**, so nothing has changed for a real player.
+  All three parts are in. `build-puzzles.mjs` emits **`gate0Starters`** — ROAD
+  TRIP/TRUNKS then GARDEN/WRONGS, named rather than sorted, chosen because
+  every clue lands for anybody who has been in a car. `puzzleForPlayer` takes
+  the override, and `Game.tsx` passes it whenever the `g0` parameter is
+  present — **presence, not variant**, so A meets the same board as B/C/D and
+  a typo'd `?g0=B` is still a run.
 
-  **The remaining step, precisely:** `Game.tsx` does not pass it. The call site
-  is `puzzleForPlayer` at **Game.tsx:261**, inside the `Game` component, and the
-  `gate0` variant is read much further down via `useSyncExternalStore`. The read
-  has to move ABOVE the call, then pass
-  `gate0 !== 'a' || hasParam ? data.gate0Starters : undefined` — note it must
-  apply to **all four variants including A**, or A is not "as it ships" against
-  the same board as the others and the comparison is meaningless.
+  One thing came out of wiring it that is worth knowing before the run. The
+  site is a static export, so the query string does not exist at export time:
+  the prerendered HTML carried the shipping board and the swap landed about a
+  second AFTER hydration — measured, wheel AHMRTW becoming KNRSTU with the
+  page sitting there. A board changing under a stranger inside the first
+  second is the exact window this test measures. A head script now holds the
+  paint for `?g0=` URLs only; a player with no parameter never enters that
+  branch. `check:gate0` reads the board on the **first visible frame**, which
+  is what a fixed wait failed to catch, and it is red-proofed both ways.
 
-  Then extend `check:gate0` to assert the ladder actually swapped, since nothing
-  currently does.
 - **Wipe the device between every stranger.** The teach card retires after the
   first banked word and that is persisted, so stranger two silently becomes the
   control. Skip it and every run after the first is contaminated toward D, and
@@ -384,7 +385,7 @@ asserting it is green.** Absence and success look identical to a naive query.
 ## What to do next, in order
 
 1. **Upload the bundle** to internal testing and look for the address bar.
-2. **Run gate zero** — move it to a general board first, wipe between strangers.
+2. **Run gate zero** — it is on the general board and green; wipe between strangers.
 3. **Commission the cultural readers.** One per pack, and it is the ceiling on
    everything: no amount of engineering moves Wing 9.
 4. **Settle the model**, then price it. Both wait on gate zero.
