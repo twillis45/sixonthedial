@@ -804,7 +804,26 @@ const generalThemed = puzzles.filter((p) => rank(p) === 1).length;
  * says so and falls back to difficulty rather than shipping a broken ladder.
  */
 const STARTERS = 2;
-const FIRST_BOARDS = ['warmth', 'nicked'];
+/*
+ * Board 2 is DEPICT, not NICKED, and that is a ruling not a preference.
+ *
+ * Sitting 2's ruling 2 was referred to the operator and only half executed:
+ * board 1 moved crafty -> warmth, board 2 was carried forward unexamined.
+ * NICKED has three of six rows gated on recall rather than reading — Wu-Tang's
+ * 1992 debut single, Usher 1998, Boyz II Men 1992. Measured against the 131
+ * themed boards, only nine are worse.
+ *
+ * A recall-gated clue is not "hard". It is unanswerable by thinking: you have
+ * the fact or you brute-force the dial. On board two a player has banked six
+ * words, and brute-forcing is the exact habit the opening must not teach.
+ *
+ * This is CRAFTY's error one slot later — culturally specific AND unreadable,
+ * the two properties bae5523 established are separable. DEPICT / The Cookout
+ * is as unmistakably ours and every row reasons from the scene: the group
+ * photo, the Monday diet, the bowl whose lid does not match, the third bag of
+ * ice. Its answers are also common words, which board two still needs.
+ */
+const FIRST_BOARDS = ['warmth', 'depict'];
 const named = FIRST_BOARDS
   .map((base) => puzzles.findIndex((p) => p.base === base))
   .filter((i) => i >= 0);

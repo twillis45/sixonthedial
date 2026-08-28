@@ -46,7 +46,7 @@ const file = JSON.parse(
     path.join(process.cwd(), 'public', 'data', 'puzzles.json'),
     'utf8'
   )
-) as { puzzles: Puzzle[] };
+) as { puzzles: Puzzle[]; starters?: number[] };
 
 /** Every word the player can ever see or score, from every field. */
 function shippedWords(p: Puzzle): string[] {
@@ -529,5 +529,49 @@ describe('progress survives the browser', () => {
       const r = importProgress(junk);
       expect(r.ok, `"${junk.slice(0, 20)}" must not import`).toBe(false);
     }
+  });
+});
+
+describe('the boards a first-timer meets', () => {
+  /*
+   * Sitting 2, ruling 2: a first board must be CHOSEN. It was, twice — and the
+   * second time only because nothing checked the first.
+   *
+   * The ladder is named rather than difficulty-sorted so it cannot drift back,
+   * but "named" only fixes WHICH board, not whether that board can be read. A
+   * pack landing with an easier board no longer moves the ladder; an editor
+   * rewriting a ladder board's clues into trivia still would, silently.
+   *
+   * So the property is asserted on the clues themselves. RECALL-GATED means the
+   * answer cannot be reasoned to from the scene the clue describes — you either
+   * hold the fact or you brute-force the dial. That is what put NICKED out:
+   * three of six rows, against a catalogue where 113 of 131 boards have none.
+   *
+   * This does NOT assert a ladder board is readable — CRAFTY was rejected for
+   * assuming a burn barrel feeds a pit, and carries no recall marker at all.
+   * Domain-gating is the other locked door and only a human reader sees it.
+   * This catches the half that is machine-visible, and claims only that half.
+   */
+  const recallGated = (clue: string) =>
+    /———|_{3,}/.test(clue) || /\b(1[6-9]|20)\d\d\b/.test(clue);
+
+  it('has a ladder at all, before anything is said about its quality', () => {
+    expect(Array.isArray(file.starters)).toBe(true);
+    expect(file.starters?.length ?? 0).toBeGreaterThan(0);
+    for (const i of file.starters ?? []) expect(file.puzzles[i]).toBeDefined();
+  });
+
+  it('never opens on a clue that can only be recalled', () => {
+    for (const i of file.starters ?? []) {
+      const p = file.puzzles[i];
+      const gated = p.grid.filter((w: string) => recallGated(p.clues[w]));
+      expect(
+        gated.map((w: string) => `${p.base}/${w}: ${p.clues[w]}`)
+      ).toEqual([]);
+    }
+  });
+
+  it('opens on authored, themed boards — the packs are the product', () => {
+    for (const i of file.starters ?? []) expect(file.puzzles[i].theme).toBeTruthy();
   });
 });
