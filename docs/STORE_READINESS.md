@@ -221,7 +221,11 @@ Positioning cannot be written for a product nobody has understood. Everything
 here is about establishing that a stranger gets it.
 
 - Gate zero: twelve strangers, four first-runs, kill rule frozen at 60% Read.
-- The share text audited as the growth engine — **done**, `check:share`.
+- The share text audited as the growth engine — **done 2026-08-28**, and by
+  `share-convention.test.ts` rather than `check:share`. Correcting the citation
+  because it mattered: `check:share` only ever held the X character limit, so
+  this line claimed an audit that had not happened. The real one found the card
+  spoiling its own boards.
 - Press kit assembled on the domain from assets that already exist.
 
 **Exit condition:** gate zero has run and passed, or it has failed and the
@@ -265,7 +269,10 @@ says so.
   and no price ships on taste.
 - Weekly: two numbers from the console, and every review read. With no crash
   reporting by ruling 4 and no analytics by design, **reviews are the only
-  user-research channel this product will ever have.**
+  user-research channel this product will ever have.** The cadence, the log
+  table and the act-or-ignore thresholds are written down in
+  `docs/OBSERVING.md` — a dashboard nobody owns is the failure mode, so it is
+  a file rather than an intention.
 
 **Exit condition:** either the numbers justify continuing, or they do not and
 the wind-down is deliberate rather than a slow fade. What transfers is recorded
