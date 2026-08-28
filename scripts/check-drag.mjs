@@ -45,18 +45,84 @@ const TYPES = { '.html':'text/html', '.js':'text/javascript', '.css':'text/css',
   '.webmanifest':'application/manifest+json', '.ico':'image/x-icon', '.woff2':'font/woff2' };
 
 /*
- * Board 113 — `crafty / cart / tray / cry / fat / fry`. Named here with its
- * grid because the reason two runs today proved nothing is that the board was
- * assumed rather than read: a six-letter word that is not a ROW banks as bonus
- * and turns nothing.
+ * THE BOARD IS READ, NOT NAMED.
+ *
+ * This block used to hardcode board 113 — `crafty / cart / tray / cry / fat /
+ * fry` — with a comment explaining that naming it was the fix, because an
+ * assumed board had already made two runs prove nothing. The comment was right
+ * about the failure and wrong about the remedy: bae5523 CHOSE a different
+ * first board, and from that commit every tile this check reached for was
+ * missing. It reported "the dial spells the wrong word after it turns" on
+ * every run, which is a frightening sentence about a core interaction, and it
+ * was never true.
+ *
+ * A six-letter word that is not a ROW banks as bonus and turns nothing, so the
+ * words still have to be real rows of the real board — that part stands. They
+ * just have to be derived from the shipped ladder rather than typed in here.
+ *
+ * The wheel escalates: active letters are `unlockOrder.slice(0, startActive +
+ * rowsDone)`, so the plan has to be simulated forward rather than picked. The
+ * two "after 1" drags are rows themselves and bank as they are dragged, which
+ * is what carries the dial from 60° to 180° — so the plan needs five of the
+ * six rows, in an order where each is spellable when it is reached.
  */
-const OPENING_ROW = 'CRAFTY';
-const DRAGS = [
-  { after: 1, letters: ['C', 'R', 'Y'] },
-  { after: 1, letters: ['F', 'A', 'T'] },
-  { after: 3, letters: ['T', 'R', 'A', 'Y'] },
-  { after: 3, letters: ['C', 'A', 'R', 'T'] },
-];
+const plan = () => {
+  const file = JSON.parse(
+    fs.readFileSync(path.join(ROOT, 'public', 'data', 'puzzles.json'), 'utf8')
+  );
+  const idx = file.starters?.[0];
+  if (idx == null) throw new Error('no warm-up ladder in puzzles.json');
+  const p = file.puzzles[idx];
+  const activeAt = (k) =>
+    p.unlockOrder.slice(0, Math.min(p.unlockOrder.length, p.startActive + k));
+  const canSpell = (w, letters) => {
+    const pool = [...letters];
+    for (const ch of w) {
+      const at = pool.indexOf(ch);
+      if (at === -1) return false;
+      pool.splice(at, 1);
+    }
+    return true;
+  };
+  /* A drag visits one TILE per letter, so a word with a repeated letter would
+     have the pointer cross the same tile twice and spell something else. Those
+     are fine to type and not fine to drag. */
+  const dragSafe = (w) => new Set(w).size === w.length;
+
+  const order = [];
+  const used = new Set();
+  for (let k = 0; k < p.grid.length; k++) {
+    const next = p.grid.find((w) => !used.has(w) && canSpell(w, activeAt(k)));
+    if (!next) break;
+    used.add(next);
+    order.push(next);
+  }
+  const drags = order.slice(1).filter(dragSafe);
+  if (!order.length || drags.length < 4) {
+    throw new Error(
+      `board 1 (${p.base}) cannot supply an opening word plus four draggable ` +
+        `rows — got [${order.join(' ')}]. That is a board problem, not a check problem.`
+    );
+  }
+  return {
+    base: p.base,
+    opening: order[0].toUpperCase(),
+    drags: [
+      { after: 1, letters: [...drags[0].toUpperCase()] },
+      { after: 1, letters: [...drags[1].toUpperCase()] },
+      { after: 3, letters: [...drags[2].toUpperCase()] },
+      { after: 3, letters: [...drags[3].toUpperCase()] },
+    ],
+  };
+};
+
+const PLAN = plan();
+const OPENING_ROW = PLAN.opening;
+const DRAGS = PLAN.drags;
+process.stdout.write(
+  `   board 1 is ${PLAN.base.toUpperCase()}: open ${OPENING_ROW}, then drag ` +
+    `${DRAGS.map((d) => d.letters.join('')).join(', ')}\n`
+);
 
 const server = http.createServer((req, res) => {
   let p = decodeURIComponent(req.url.split('?')[0]);
