@@ -473,6 +473,14 @@ asserting it is green.** Absence and success look identical to a naive query.
 
 1. **Upload the bundle** to internal testing and look for the address bar.
 2. **Run gate zero** — it is on the general board and green; wipe between strangers.
+
+**Before the bundle upload, run `npm run check:assetlinks`.** It fetches the
+file the way Android does — no redirects followed, content-type asserted,
+fingerprints diffed against the repo — and treats an unreachable host as a
+failure rather than a pass. `assetlinks.test.ts` only ever checked the LOCAL
+file's shape, and Android never reads that one. A redirect, a `text/plain`,
+or a deploy stale by one fingerprint all surface as an address bar and all get
+misdiagnosed as an app fault; one session was already lost to exactly that.
 3. **Commission the cultural readers.** One per pack, and it is the ceiling on
    everything: no amount of engineering moves Wing 9.
 4. **Settle the model**, then price it. Both wait on gate zero.
