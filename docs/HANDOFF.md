@@ -31,16 +31,23 @@ Republish to the SAME url or the project's history splits in two. State as of
 **141 authored boards across 17 themes, 520 puzzles shipped. 373 tests pass in
 18 files.**
 
-> ### NOTHING FROM 2026-08-28 IS LIVE
+> ### SHIPPED 2026-08-28, and CI is green again
 >
-> **24 commits are unpushed, and `main` auto-deploys to sixonthedial.com**
-> (`.github/workflows/pages.yml`, on push to main). Pushing is therefore a
-> CONTENT RELEASE to a live product, not a sync: it ships ten new boards, the
-> whole Stoop pack, sixteen rewritten clues, and a change to the second board
-> every new player meets. That is a decision, so it was left for the operator.
+> Pushed at `4d6e488`. **Verified against production, not against the deploy's
+> own success message:** 518 puzzles live and matching local, warm-up ladder
+> serving `warmth, depict`, gate-zero ladder `trunks, wrongs`, all ten new
+> boards present, and CRAFTY's rewritten clues served.
 >
-> Everything is green at HEAD — 373 tests, build, `check:gate0`,
-> `check:assetlinks`, lint unchanged from the session baseline. Working tree clean, no open PRs or issues, production live at
+> **CI had been red since `bae5523` and nobody noticed.** `check-intro` typed
+> `CRY` to bank a word — a word on CRAFTY, which stopped being board 1 the day
+> that commit chose WARMTH instead. It failed on every push for days while
+> saying something alarming and untrue about the first-run teach. It now
+> derives the opening word from the shipped ladder. The second failure, a stale
+> `docs/catalogue.html`, was this session's and is fixed.
+>
+> The lesson is the repo's own, one layer up: a check pinned to content that is
+> *designed to change* will go red and stay red, and a permanently red CI is
+> indistinguishable from no CI. Working tree clean, no open PRs or issues, production live at
 `sixonthedial.com`.
 
 Ten of those boards were authored on 2026-08-28 and are **not reader-reviewed**
