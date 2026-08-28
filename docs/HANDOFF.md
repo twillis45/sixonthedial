@@ -24,12 +24,23 @@ exists because a hand edit once published a blank page while every other check
 said PASS.
 
 Republish to the SAME url or the project's history splits in two. State as of
-2026-08-28: **80 of 107 items, 3 blockers open, Verify gates 14/16.**
+2026-08-28: **83 of 107 items (84 with the b4h tick), 3 blockers, Verify 14/16.**
 
 ## Where the catalogue stands
 
-**141 authored boards across 17 themes, 520 puzzles shipped. 366 tests pass in
-17 files.** Working tree clean, no open PRs or issues, production live at
+**141 authored boards across 17 themes, 520 puzzles shipped. 373 tests pass in
+18 files.**
+
+> ### NOTHING FROM 2026-08-28 IS LIVE
+>
+> **24 commits are unpushed, and `main` auto-deploys to sixonthedial.com**
+> (`.github/workflows/pages.yml`, on push to main). Pushing is therefore a
+> CONTENT RELEASE to a live product, not a sync: it ships ten new boards, the
+> whole Stoop pack, sixteen rewritten clues, and a change to the second board
+> every new player meets. That is a decision, so it was left for the operator.
+>
+> Everything is green at HEAD — 373 tests, build, `check:gate0`,
+> `check:assetlinks`, lint unchanged from the session baseline. Working tree clean, no open PRs or issues, production live at
 `sixonthedial.com`.
 
 Ten of those boards were authored on 2026-08-28 and are **not reader-reviewed**
