@@ -345,6 +345,44 @@ what you would otherwise do:
 three-quarters filler, and it includes a subscription tier two rulings have
 since refused.
 
+## The check suite is bigger than CI, and part of it was lying
+
+Measured 2026-08-28, by running every `check:*` script rather than trusting
+the green CI badge.
+
+**CI runs 7 of the 17 check scripts.** `npm test`, check-pack on staged packs,
+the puzzle-build match, the catalogue match, `check:rail`, `check:intro`,
+`check:hydration`. The other ten exist, are wired into `package.json`, and are
+executed by nobody unless somebody types them.
+
+**Two of them were pinned to a board the product deliberately changed**, and
+both went red at `bae5523` — the commit that CHOSE Sunday Dinner/WARMTH as
+board 1 instead of letting a difficulty sort pick Barbecue/CRAFTY:
+
+- `check:intro` typed `CRY` to bank a word. No C, R or Y on WARMTH's wheel.
+- `check:drag` reached for CRAFTY's tiles and found none, then printed *"the
+  dial spells the wrong word after it turns: 6 of 7"* on every run.
+
+Both now read the shipped ladder. The second one matters more than it looks:
+red-proofing it by pinning the dial's rotation to `0deg` — a genuine
+catastrophic failure — produces **the same 6 of 7**. For days a real dial
+breakage would have been indistinguishable from the noise.
+
+**`check:a11y` is still red and I could not settle it.** It reports three WCAG
+failures on *"Play today to start a streak."* at 1.00–1.08:1. Measured three
+independent ways — composited computed styles 6.42:1, sampled pixels 5.85:1,
+and a replication of the checker's own load sequence 5.85:1 — the text passes
+AA comfortably. So the product is fine and the instrument is wrong, but the
+reason is not yet found, and it should not be "fixed" until it is.
+
+**`check:guards` takes longer than ten minutes and MUTATES SOURCE while it
+runs.** It is the meta-check: it breaks something, rebuilds, and asserts the
+guard notices. Kill it mid-run and the working tree keeps the injected fault —
+which happened here, leaving `Rail.tsx` with a `gap-16` that is not real code.
+It carries a stale-lock warning for exactly this and it fired. Run it in the
+background, never under a timeout, and check `git status` before believing any
+run that was interrupted.
+
 ## The easy end of the catalogue, and why it is not the ladder
 
 Five boards were authored on 2026-08-28 specifically to widen the easy end,
