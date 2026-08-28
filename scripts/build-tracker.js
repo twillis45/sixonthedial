@@ -63,7 +63,33 @@ for (const ph of ["__STATE__", "__SRC__"]) {
 }
 
 const B64 = Buffer.from(tpl, "utf8").toString("base64");
-const initial = NAME === "tracker" ? { done: {}, track: "b" } : { tally: {} };
+/*
+ * CARRY THE PUBLISHED STATE FORWARD.
+ *
+ * This was a hardcoded empty state, so every rebuild silently reset whatever
+ * viewers had ticked on the live page — and on 2026-08-28 it tried to: a
+ * publish was refused because the page had saved `b4h` from inside itself and
+ * this file was about to overwrite it with `{}`. The refusal caught it. Only
+ * the refusal caught it, and it would not have fired if the publish had gone
+ * out before the tick.
+ *
+ * The page is the authority on its own state, so read it back off the last
+ * build and hand it to the next one. Falls back to empty when there is no
+ * previous build to read.
+ */
+const priorState = (() => {
+  const fallback = NAME === "tracker" ? { done: {}, track: "b" } : { tally: {} };
+  try {
+    const prev = fs.readFileSync(OUT, "utf8");
+    const m = prev.match(/<script id="state" type="application\/json">([\s\S]*?)<\/script>/);
+    if (!m) return fallback;
+    const parsed = JSON.parse(m[1].replace(/\\u003c/g, "<"));
+    const n = Object.keys(parsed.done ?? parsed.tally ?? {}).length;
+    if (n) console.log(`      carrying ${n} tick(s) forward from the previous build`);
+    return parsed;
+  } catch { return fallback; }
+})();
+const initial = priorState;
 const TICK = NAME === "tracker" ? { done: { b1e: 1 }, track: "b" } : { tally: { a: [1] } };
 const render = state =>
   tpl.replace("__STATE__", JSON.stringify(state).replace(/</g, "\\u003c")).replace("__SRC__", B64);
