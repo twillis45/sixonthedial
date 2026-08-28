@@ -27,6 +27,7 @@
     "marks": "node scripts/build-marks.mjs",
     "check:intro": "node scripts/check-intro.mjs",
     "check:gate0": "node scripts/check-gate0.mjs",
+    "check:assetlinks": "node scripts/check-assetlinks.mjs",
     "check:listing": "node scripts/check-listing.mjs",
     "check:share": "npx tsx scripts/check-share.mjs",
     "check:hydration": "node scripts/check-hydration.mjs",
