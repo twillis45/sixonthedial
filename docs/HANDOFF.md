@@ -11,12 +11,17 @@ This file is the one that explains WHY, which a checklist cannot.
 
 ## Where the catalogue stands
 
-**136 authored boards across 16 themes, 515 puzzles shipped. 365 tests pass in
+**141 authored boards across 17 themes, 520 puzzles shipped. 366 tests pass in
 17 files.** Working tree clean, no open PRs or issues, production live at
 `sixonthedial.com`.
 
-Five of those boards were authored on 2026-08-28 and are **not reader-reviewed**
-— see "The easy end of the catalogue" below.
+Ten of those boards were authored on 2026-08-28 and are **not reader-reviewed**
+— the five easy ones below, plus the whole of The Stoop.
+
+**The Stoop shipped that day too** — the theme pack-radar had flagged [ready]
+since its first run, with a 107-word vocabulary and zero boards. Five boards,
+on-theme 0.680, shelved on The Block. It was second in PACK_PIPELINE's order of
+work and is now struck off.
 
 Two general packs shipped on 2026-08-27, the first new packs since the corpus
 was rebuilt: **The Tailgate** (6 boards, 0.733) and **The Gym** (5 boards,

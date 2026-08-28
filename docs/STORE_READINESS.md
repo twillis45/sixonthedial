@@ -41,10 +41,18 @@ the agent's address, not a member's, so the third row's privacy concern is moot
 on the state side.
 
 What remains is a MISMATCH, not an error: the state shows Baltimore, the CP 575
-shows a home address. That matters because payment and store platforms verify
-against IRS records, not state ones. Closing it is Form 8822-B, mail-only,
-~4-6 weeks — a deliberate choice to make the four records agree (state, IRS,
-Stripe, D-U-N-S), not a defect to repair.
+shows a home address. Closing it is Form 8822-B, mail-only, ~4-6 weeks — a
+deliberate choice to make the records agree (state, IRS, Stripe, Play), not a
+defect to repair.
+
+**Correction, 2026-08-28.** The first version of this paragraph said the
+mismatch "matters because payment and store platforms verify against IRS
+records, not state ones," and predicted address questions during verification.
+Both verifications have since run and neither asked: Stripe activated on the
+Baltimore address, and row 3.2 records Play completing identity, organization
+and phone verification inside the signup day — with the IRS record still
+showing the home address. The disagreement is real; the consequence asserted
+for it was not measured, and was wrong.
 
 The original inference is left below, unedited, because it was stated as a
 conclusion when it was a guess, and the correction is worth more than the

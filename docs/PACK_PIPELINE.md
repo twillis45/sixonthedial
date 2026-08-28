@@ -205,7 +205,7 @@ a pack alone.
 | theme | shelf | density | boards free | gate | status |
 |---|---|---|---|---|---|
 | **tailgate** | The Table | **453** | 14 at 3+ | PASS | **authoring now** |
-| **stoop** | The Block | 159 | — | PASS | vocabulary shipped, **0 boards** — cheapest win left |
+| **stoop** | The Block | 159 | — | PASS | **5 boards, shipped 2026-08-28**, on-theme 0.680. Reader outstanding |
 | gym | Elsewhere | 206 | — | PASS | measured, queued. No shelf fits it well |
 | fishfry | The Table | 123 | — | PASS | measured, queued. CULTURAL — bench + reader first |
 | gogo | The Soundtrack | 70 | — | PASS | measured, queued. CULTURAL — bench + reader first |
@@ -240,8 +240,11 @@ carry no such gate, which is why the first new pack is a general one.
 ## Order of work
 
 1. **tailgate** — authoring now. General, fits The Table, timed to the season.
-2. **stoop** — vocabulary already shipped and scores 159 with zero boards. It
-   is a theme sitting in `themes.json` doing nothing.
+2. ~~**stoop**~~ — DONE 2026-08-28. Five boards, on-theme 0.680, shelved on
+   The Block. Two things it taught, both recorded because they were latent
+   rather than introduced: `check-pack` was refusing bases and rows the build
+   accepts, and a theme with boards but no `SHELF_OF` entry falls silently
+   into Elsewhere. Both now guarded.
 3. **gamenight** (The Block) and **dinnerparty** (The Table) — both sourced,
    both on shelves that exist, neither cultural. The strongest next two.
 4. **camping** (The Long Way) — that shelf currently holds two packs and has
