@@ -15,6 +15,43 @@ which is not a thing to repeat under filing pressure.
 | **Domain** | sixonthedial.com |
 | **Android package** | com.sixonthedial.game |
 
+### D-U-N-S — a record already exists, and its address is wrong
+
+Checked 2026-08-29 against the D&B public business directory. **Do not file a
+new request before resolving this.**
+
+A record exists under the exact legal name:
+
+| field | D&B record | this repo's entity block |
+|---|---|---|
+| Name | NO GUESSWORK SYSTEMS LLC | No Guesswork Systems LLC |
+| Address | **5000 Thayer Ctr, Oakland, MD 21550-1139** | 306 W Redwood St STE 201, Baltimore MD 21201 |
+| Industry | Business Support Services, NAICS 5614 | a game publisher |
+| D-U-N-S | masked — `***********` | — |
+
+**Why the address matters more than it looks.** Apple and Google verify the
+name and address you type against the D-U-N-S record. A record saying Oakland
+while the application says Baltimore fails verification, and the failure
+arrives after the wait rather than before it.
+
+**Three things to establish, in this order:**
+
+1. **Is this record even ours?** The name matches exactly and Maryland ID
+   `W26948752` is the authoritative check. It may equally be a formation
+   service's address picked up by D&B, or a different company.
+2. **Reveal the number without paying.** The directory masks it and offers a
+   credit report; the free route is *Claim it via D-U-N-S Profile Manager*
+   on the company profile page. Claiming is free; the credit report is not.
+3. **Correct the address on the record before applying anywhere**, or the
+   store verification will not match.
+
+**Timing, corrected.** An earlier note in this session said a D-U-N-S takes
+"several business days". Verified on dnb.com 2026-08-29: **free requests take
+up to 30 BUSINESS DAYS**; expedited is 8 business days and costs money. D&B
+offers dedicated *"I'm a Google Developer"* and *"I'm an Apple developer"*
+paths in its request flow. One number serves both stores — this is the longest
+pole in the store track and it is not close.
+
 **Deliberately absent, and this repo is PUBLIC:** the EIN and the member's home
 address. Both are on file with the IRS — the CP 575 lists the LLC at a home
 address rather than the registered agent's — and neither belongs in a
