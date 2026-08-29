@@ -34,6 +34,14 @@ name and address you type against the D-U-N-S record. A record saying Oakland
 while the application says Baltimore fails verification, and the failure
 arrives after the wait rather than before it.
 
+**STATUS 2026-08-29: the address change is STARTED, not confirmed.** Recorded
+as in-flight deliberately — this row's neighbour above is a monument to writing
+down an intention as a completed fact. It is done when the public record shows
+Baltimore, not when the form was submitted. **Re-check the profile before
+applying to either store**, because the stores match what they read against
+what you type, and a change still propagating reads exactly like a change that
+never happened.
+
 **Three things to establish, in this order:**
 
 1. **Is this record even ours?** The name matches exactly and Maryland ID
