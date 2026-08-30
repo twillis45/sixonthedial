@@ -399,11 +399,19 @@ from the disk heuristic — last commit, files present — not from anything pas
 a gate. The board carried one vague flag: *"1 gate unanswered from before the
 model shipped."*
 
-**Stage 5 has now been backfilled and recorded** (`not-yet` — see below), which
-sharpened the flag to *"At stage 8, but the stage 5 gate is unanswered"* and
-surfaced a real `stageDisagreement`: **recorded 5, disk 8, ahead=disk.** The
-doctrine's own wording for that state is the right one — *record the gate, or
-override the stage, but do not let the board claim it.*
+**Three gates are now recorded, and two are RULED (operator, 2026-08-30):**
+
+| Stage | Status |
+|---|---|
+| 5 — Security & data review | **passed** — clean, nothing outstanding |
+| 9 — Promotion | **passed-with-conditions** — three conditions carry forward |
+| 1 — Idea → Problem statement | **not-yet** — the wedge did not survive its scan |
+
+A clean pass at stage 9 was declined because it would have discarded the
+conditions. They persist past the stage that produced them, which is the point
+of that status: **gate zero has never run; no community reader has read any
+pack; the first-timer seat is unconfirmed.** The board now carries them as a
+standing `conditional` flag rather than as prose nobody re-reads.
 
 ### Skills that never fired, and their `at` has passed
 
