@@ -427,18 +427,35 @@ unread for days.
 existing ones run — and noticing when a suite goes red and stays red, because a
 permanently red CI is indistinguishable from no CI.
 
-**`check:share` cannot run in a default shell, and it is the environment, not
-the check.** `.nvmrc` pins Node 22 and `engines` requires `^20.19.0 ||
->=22.12.0`; the machine's default `node` is **16.16.0**. `check:share` runs
-through `npx tsx`, which needs the declared Node, so it dies on an ESM import
-error that reads like a code fault and is not one — it fails identically on a
-clean checkout. `next build` refuses outright for the same reason, which is the
-honest version of the same message.
+**`check:share` is ported into the suite — it could not run, and it was
+measuring the wrong corpus.** It imports a `.ts` file, so it goes through
+`npx tsx`, which needs the Node this repo declares (`.nvmrc` says 22) while the
+machine default is **16.16.0**. It died on an ESM error that reads like a code
+fault and is not one; `next build` refuses outright for the same reason, which
+is the honest version of the same message. **`nvm use` before working here**,
+or the first thing touching Node will mislead you.
 
-`nvm use` before working in this repo, or the first thing that touches Node
-will mislead you. **The status of `check:share` is therefore UNKNOWN, not
-green** — it has not been run, and nothing else covers the share card's X
-character limit.
+Its status was UNKNOWN rather than green, and CI never ran it either, so the
+one hard limit on the surface the whole growth thesis rests on was unguarded.
+
+The second fault had nothing to do with Node and was worse: it walked
+`data/packs/*.json`, the STAGED pack files. Four are behind the catalogue, so
+it measured six dropped cookout boards and missed wobble, camera, bought,
+spirit, attend and the entire Stoop pack. A guard on content has to read what
+ships. The assertion now lives in `share-convention.test.ts`, reads the built
+`puzzles.json`, and runs in CI. Red-proofed.
+
+**HEADROOM IS 2 CHARACTERS.** 846 cards measured, worst at 278 of X's 280:
+
+    278/280  Barbecue/crafty/fat        <- written 2026-08-28, blind
+    278/280  The Nineties/baring/rain
+    274/280  The Stoop/posted/posted
+
+The way this breaks is not a bad clue. It is a GOOD one written three
+characters longer than the record, and it breaks for long-streak players
+first — the people most likely to paste a card. **The overflow rule sitting 2
+left to the operator — "which evidence line drops" — is now nearly due rather
+than theoretical.**
 
 **`check:guards` takes longer than ten minutes and MUTATES SOURCE while it
 runs.** It is the meta-check: it breaks something, rebuilds, and asserts the
