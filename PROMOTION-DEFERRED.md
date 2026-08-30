@@ -37,19 +37,22 @@ This is the promotion risk. Not authorization, not secrets — comprehension.
 
 - [ ] **Gate zero — twelve strangers, four first-runs.** No date.
       *Risk accepted:* the surface went public before anyone verified a
-      stranger can work out what to do. Bounded by the fact that it is web-only
-      with no spend behind it, no store listing, and reversible in one deploy —
-      so the cost of being wrong is currently reputational and small. **That
-      bound disappears the moment the Play listing goes live**, which is why
-      this blocks the store track rather than the web one.
+      stranger can work out what to do. Bounded only by the fact that no money
+      has changed hands YET — not by the product being free. **It is not free.**
+      Sitting 3 records the operator instruction as *"it has to be paid"*, and
+      the Play form is set to Paid deliberately, because free→paid cannot be
+      undone after publish while paid→free can. The bound is a timing accident,
+      not a property of the product, and it disappears the moment the listing
+      goes live.
 
 - [ ] **One real community reader per pack.** No date.
       *Risk accepted:* 21 boards shipped 2026-08-28 have never been read by
       anyone from the communities they describe. This is the promote-surface
       principle applied to content rather than code — the catalogue's quality is
       evidence from its author, and a real reader is the second user. Bounded
-      the same way: free, web-only, no money has changed hands. Not bounded at
-      all once a pack is sold.
+      only by no money having changed hands yet. **This is a paid product**, so
+      the acceptable window is short: unreviewed cultural content is a very
+      different exposure once someone has paid for it.
 
 - [ ] **Content-level secret scan of git history.** No date.
       *Risk accepted:* filename patterns were swept across all branches and no
@@ -70,6 +73,13 @@ This is the promotion risk. Not authorization, not secrets — comprehension.
   accounts, no server.
 
 ## Platform
+
+**CORRECTION 2026-08-30.** An earlier version of this file twice bounded a
+risk with the phrase "free, web-only". That was wrong. The product is paid by
+operator ruling; only the current web build is unpaywalled, and that is a
+distribution state rather than a model. Both bounds are restated above, and the
+original wording is named here rather than quietly replaced — a risk accepted
+on a false premise was not accepted.
 
 Web ships on our schedule. **Android does not.** Play review is a multi-day
 pipeline with rejection risk, and the account is Personal rather than an
