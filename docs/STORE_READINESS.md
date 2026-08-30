@@ -15,6 +15,37 @@ which is not a thing to repeat under filing pressure.
 | **Domain** | sixonthedial.com |
 | **Android package** | com.sixonthedial.game |
 
+### The name — store collision, checked 2026-08-30
+
+**Backfilled.** `path-to-production` step 3b puts **store collision first**, not
+the domain, because it is a POLICY problem before a marketing one: Play's
+repetitive-content rule targets apps that "merely provide the same experience as
+other apps already on Google Play", and a near-identical name is the first thing
+a reviewer sees. The precedent is `fart-web`, one step from shipping as "Fart
+Machine" beside an incumbent called "Fart Sounds Machine".
+
+Only the trademark and domain legs had been recorded. This is the missing leg.
+
+| Check | Method | Result |
+|---|---|---|
+| Google Play, exact | store search, `"six on the dial"` | **No results.** Clean |
+| Apple App Store, exact | iTunes Search API, `entity=software&country=us` | **No match.** Returns unrelated majors (LinkedIn, Phone, Gemini) |
+| Apple, near misses | same API: `on the dial`, `six dial`, `word dial`, `dial words` | **No app uses "Dial" as a name element.** Hits are generic word games — Word Link, Word Cookies, WordWhizzle, Words With Friends, Word Farm Cross |
+| USPTO | wordmark knockout, `six` + `dial` | Clean — recorded previously in DOMAIN_MIGRATION.md |
+| Domain | Cloudflare Registrar | `sixonthedial.com` held, plus `6onthedial.com` and defensives, because people hear "six" and type either spelling |
+
+**Search-term collision:** none. The product name shares no terms with the
+category language people actually search (`word game with no ads`, `daily word
+games like wordle`, `word game with letters in a circle` — Google Suggest,
+2026-08-30). That is a mild negative for discoverability and a positive for
+distinctiveness; it is a recorded observation, not a defect.
+
+**What was rejected is thin in the record.** The digit variant `6onthedial` was
+considered and held defensively rather than chosen. No other candidate names are
+written down. A name recorded without its rejected alternatives cannot be
+defended later, and the same collision gets rediscovered by the next person who
+likes the same name — so this is a gap, noted rather than invented.
+
 ### D-U-N-S — a record already exists, and its address is wrong
 
 Checked 2026-08-29 against the D&B public business directory. **Do not file a
