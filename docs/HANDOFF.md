@@ -345,6 +345,50 @@ what you would otherwise do:
 three-quarters filler, and it includes a subscription tier two rulings have
 since refused.
 
+## The wedge did not survive its first demand scan
+
+**Run 2026-08-30, late — a stage-1 skill run at stage 8.**
+`ngw-os/docs/research/2026-08-30-ngw-wordy-demand-scan.md`.
+
+1,674 store reviews across 8 apps on both stores; nine subreddits via the
+arctic-shift archive; Google Suggest for language. Ahrefs volumes unavailable
+on this account.
+
+| Claim from COMPETITIVE.md | Verdict |
+|---|---|
+| Respectful, ad-free daily | **SOLVED** — real, and already fixed for $12–30/yr |
+| **Cited themed hand-written clues** | **NO CORROBORATION** — 0 sources, 2 instruments |
+| Being finite | **CONTRADICTED** |
+| Black American cultural content | **UNTESTED** — needs a non-Reddit instrument |
+
+**Read the middle row carefully. That is the differentiator this product is
+built on, and neither instrument found anyone asking for it.** Not "demand does
+not exist" — two instruments looked and found nothing, which is a different and
+weaker statement, and the honest one.
+
+Ad fatigue is confirmed and enormous, and it is the least defensible half:
+the top-voted Reddit replies name the working fix, an NYT subscription at
+$12–30/year, beneath a saturated free ad-free clone tier. Finite is
+contradicted outright — users use *"endless"* as praise, and the genuine
+fatigue is **compulsion loops** (timers, competition clocks), not content
+volume. This product already avoids those; the finite catalogue is not what
+earns that.
+
+**The byproduct is worth more than the verdict.** Users stated a price anchor
+unprompted: **$1–3/month, or $12–30/year.** `b1j` (business model) and `m9q`
+(pricing) have had no demand-side evidence at all until now.
+
+**Two consequences.** Gate zero matters MORE — it is the only free instrument
+left that can tell whether a stranger values this. And the cultural readers
+move from a quality gate to an **evidence** gate: they are the only route to
+the untested claim that exists today.
+
+Coverage holes, named rather than smoothed: **Puzzmo and Squabble returned zero
+Apple reviews** and they are the closest competitors, so there is no user voice
+from either; Play pagination echoed page one, so the sample is 724 unique not
+3,750; and no TikTok/Instagram pass ran, which is the instrument the cultural
+claim actually needs.
+
 ## The gate record was empty, and the stage was never earned
 
 Read from the Command Center on 2026-08-30, not from memory:
