@@ -174,3 +174,84 @@ describe('the share card holds the convention, not just the character limit', ()
     expect(worst.len, `longest line is ${worst.len} chars, on ${worst.base}`).toBeLessThanOrEqual(90);
   });
 });
+
+describe("the share card fits X, measured on what actually ships", () => {
+  /*
+   * Ported from scripts/check-share.mjs on 2026-08-30, and it had two faults
+   * that had nothing to do with the arithmetic.
+   *
+   * IT COULD NOT RUN. It imports ../src/lib/game.ts, so it goes through
+   * `npx tsx`, which needs the Node the repo declares (.nvmrc says 22) and
+   * dies on the machine default of 16 with an ESM error that reads like a code
+   * fault. Its status was therefore UNKNOWN rather than green, and CI never
+   * ran it either — leaving the one hard limit on the one surface the growth
+   * thesis depends on completely unguarded.
+   *
+   * IT MEASURED THE WRONG CORPUS. It walked data/packs/*.json, the STAGED
+   * pack files. Four of those are behind the catalogue: it was measuring six
+   * cookout boards that were dropped, and missing wobble, camera, bought,
+   * spirit, attend and the whole Stoop pack. A guard on content has to read
+   * what ships.
+   *
+   * Here it reads the built puzzles.json — the file the app serves, with
+   * clues already redacted the way a player sees them, which is also the
+   * length that actually travels.
+   */
+  const X_LIMIT = 280;
+  const URL_WEIGHT = 23;
+
+  /* X's weighting, not String.length: every emoji counts twice and a URL
+     counts 23 however long it is. Measuring the literal URL once said the card
+     was over budget when it was not, and "shorten the domain" would have
+     bought nothing. */
+  const weigh = (card: string) => {
+    const withoutUrl = card.replace(/https?:\/\/\S+/g, "");
+    const emoji = (withoutUrl.match(/[\u{1F7E6}-\u{1F7EB}\u2B1B]/gu) ?? []).length;
+    return [...withoutUrl].length + emoji + (/https?:\/\//.test(card) ? URL_WEIGHT : 0);
+  };
+
+  /* A full clear is both the worst case and the case worth sharing. */
+  const FULL_CLEAR = [
+    { length: 6, solved: true, isBase: true },
+    { length: 5, solved: true, isBase: false },
+    { length: 5, solved: true, isBase: false },
+    { length: 4, solved: true, isBase: false },
+    { length: 4, solved: true, isBase: false },
+    { length: 3, solved: true, isBase: false },
+  ];
+
+  const cardFor = (theme: string, clue: string, over: Record<string, unknown> = {}) =>
+    shareText({
+      theme, clue, rank: "Complete", score: 26, bonusFound: 4,
+      streak: 30, dayNumber: 205, escalating: true,
+      tiles: FULL_CLEAR, url: "https://sixonthedial.com", ...over,
+    });
+
+  const every = themed.flatMap((p) =>
+    Object.entries(p.clues).map(([row, clue]) => ({
+      where: `${p.theme!.name}/${p.base}/${row}`,
+      theme: p.theme!.name, clue, w: weigh(cardFor(p.theme!.name, clue)),
+    }))
+  );
+
+  it("measures the shipped corpus, not the staged packs", () => {
+    expect(every.length).toBeGreaterThan(500);
+  });
+
+  it("every clue that ships fits X on a full clear", () => {
+    const over = every.filter((c) => c.w > X_LIMIT).map((c) => `${c.w}/${X_LIMIT} — ${c.where}`);
+    expect(over, `${over.length} card(s) exceed X's ${X_LIMIT}`).toEqual([]);
+  });
+
+  it("keeps headroom, so the ceiling cannot be reached silently", () => {
+    /*
+     * The worst card is reported rather than merely passed, because the way
+     * this breaks is not a bad clue — it is a GOOD one written eight
+     * characters longer than the current record, on a board nobody re-reads.
+     * It also breaks for long-streak players first, who are exactly the people
+     * most likely to paste a card.
+     */
+    const worst = every.reduce((a, b) => (b.w > a.w ? b : a));
+    expect(worst.w, `worst card is ${worst.w}/${X_LIMIT} — ${worst.where}`).toBeLessThanOrEqual(X_LIMIT);
+  });
+});
