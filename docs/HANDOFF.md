@@ -13,9 +13,9 @@ This file is the one that explains WHY, which a checklist cannot.
 
 | Artifact | URL | Source |
 |---|---|---|
-| Six on the Dial Path to Production | https://claude.ai/code/artifact/0af681a8-e5ad-445f-af1a-7d7d8cdae7f6 | `docs/tracker.html` |
+| Six on the Dial Path to Production | https://claude.ai/code/artifact/0af681a8-e5ad-445f-af1a-7d7d8cdae7f6 | `docs/artifact/tracker.html` |
 
-**Edit `docs/tracker-template.html`, never `docs/tracker.html`.** The published
+**Edit `docs/artifact/tracker-template.html`, never `docs/artifact/tracker.html`.** The published
 page regenerates its own source from a base64 copy of the template when a
 viewer ticks a box, so a hand edit to the built file breaks that fixed point.
 `node scripts/build-tracker.js` rebuilds it and verifies the fixed point holds,
@@ -344,6 +344,42 @@ what you would otherwise do:
 4.1 and must not be reused: it was set against 218 boards, which was a catalogue
 three-quarters filler, and it includes a subscription tier two rulings have
 since refused.
+
+## The gate record was empty, and the stage was never earned
+
+Read from the Command Center on 2026-08-30, not from memory:
+`curl -s http://127.0.0.1:4321/api/path-to-production`.
+
+**`ngw-wordy` sat at stage 8 with ZERO gates ever recorded.** The stage came
+from the disk heuristic — last commit, files present — not from anything passing
+a gate. The board carried one vague flag: *"1 gate unanswered from before the
+model shipped."*
+
+**Stage 5 has now been backfilled and recorded** (`not-yet` — see below), which
+sharpened the flag to *"At stage 8, but the stage 5 gate is unanswered"* and
+surfaced a real `stageDisagreement`: **recorded 5, disk 8, ahead=disk.** The
+doctrine's own wording for that state is the right one — *record the gate, or
+override the stage, but do not let the board claim it.*
+
+### Skills that never fired, and their `at` has passed
+
+| Skill | Stage | State |
+|---|---|---|
+| route-sweep | 5 | **RUN 2026-08-30** — `check:routes`, enumerating, red-proofed |
+| security-review | 5 | **RUN 2026-08-30** — `docs/SECURITY_REVIEW.md` |
+| demand-scan | 1 | **NOT RUN** — the wedge was tested against supply only |
+| promote-surface | 9 | **NOT RUN** — and the surface went public without it |
+| motion-design | 2 | NOT RUN as a skill; `check:motion` exists |
+| reference-scan | 2 | partial — Mobbin/BRAND_KIT only |
+| deploy-to-render | 6 | target chosen and recorded (Pages); skill not run |
+
+Every one of these is late rather than pending. A late scan is worth running; a
+late scan reported as on-time is not, which is why each is recorded as a
+deviation rather than quietly ticked.
+
+**Only the owner rules a gate.** Stage 5 is recorded `not-yet` with a
+recommendation of PASS and no findings. Reading `docs/SECURITY_REVIEW.md` and
+ruling it is a five-minute job that moves the board honestly.
 
 ## The check suite is bigger than CI, and part of it was lying
 

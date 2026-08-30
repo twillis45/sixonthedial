@@ -13,8 +13,8 @@ const ROOT = path.join(__dirname, "..");
 /* One builder, several self-publishing pages. Pass a name; default is the
    tracker, which is what every existing caller expects. */
 const NAME = process.argv[2] || "tracker";
-const TPL = path.join(ROOT, "docs", `${NAME}-template.html`);
-const OUT = path.join(ROOT, "docs", `${NAME}.html`);
+const TPL = path.join(ROOT, "docs", "artifact", `${NAME}-template.html`);
+const OUT = path.join(ROOT, "docs", "artifact", `${NAME}.html`);
 
 const tpl = fs.readFileSync(TPL, "utf8");
 for (const ph of ["__STATE__", "__SRC__"]) {
