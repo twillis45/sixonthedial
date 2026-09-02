@@ -130,6 +130,30 @@ and phone verification inside the signup day — with the IRS record still
 showing the home address. The disagreement is real; the consequence asserted
 for it was not measured, and was wrong.
 
+**Correction to the correction, 2026-08-31.** Half of that evidence does not
+hold. Row 3.2 was itself false — the Play account is **Personal**, not an
+organization, which the console showed on 2026-08-29. So what completed inside
+the signup day was **personal identity verification of Todd Willis at the home
+address**. It had no reason to care about the LLC's IRS record, because it was
+never checking the LLC.
+
+**The Stripe leg still stands** — that was a genuine business verification on
+the Baltimore address with the IRS showing home, and it is the only measured
+evidence here.
+
+**And the untested case is still ahead.** Opening an *Organization* Play account
+runs organization verification for the first time. It matches against D&B and
+the state rather than the IRS, so the mismatch should still not bite — but
+"nothing asks" is now a one-source claim, not two, and it should not be leaned
+on harder than that.
+
+**Which address the IRS record should carry.** Baltimore, if the goal is records
+that agree and one less copy of a home address. The trade is not privacy but
+MAIL: the IRS sends time-sensitive notices where a missed one accrues penalties,
+and Baltimore is a registered agent. Confirm Northwest forwards IRS mail
+promptly before filing 8822-B. If that is not certain, home is the safer address
+for the IRS specifically — it is the one record here that is **not public**.
+
 The original inference is left below, unedited, because it was stated as a
 conclusion when it was a guess, and the correction is worth more than the
 tidy version.
