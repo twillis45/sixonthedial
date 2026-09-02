@@ -422,7 +422,7 @@ standing `conditional` flag rather than as prose nobody re-reads.
 | demand-scan | 1 | **NOT RUN** — the wedge was tested against supply only |
 | promote-surface | 9 | **NOT RUN** — and the surface went public without it |
 | motion-design | 2 | NOT RUN as a skill; `check:motion` exists |
-| reference-scan | 2 | partial — Mobbin/BRAND_KIT only |
+| reference-scan | 2 | **RAN — three passes**, indexed 2026-08-31 in `docs/REFERENCE_SCANS.md`. Earlier called "partial"; that was wrong |
 | deploy-to-render | 6 | target chosen and recorded (Pages); skill not run |
 
 Every one of these is late rather than pending. A late scan is worth running; a
