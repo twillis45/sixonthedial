@@ -194,6 +194,21 @@ function sinceBackup(key: string): string {
 }
 
 
+/*
+ * Whether the player has asked for motion to be reduced.
+ *
+ * Read at the moment of use rather than stored, because it is only consulted
+ * inside an event handler where a stale value would be worse than a cheap
+ * media query — and because reading it in a render body is the React #418
+ * bug this file has already paid for once.
+ */
+function reducedMotion(): boolean {
+  return (
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+}
+
 const GATE0_NEVER_CHANGES = () => () => {};
 
 export default function Game({ data }: { data: PuzzleFile }) {
@@ -851,6 +866,17 @@ export default function Game({ data }: { data: PuzzleFile }) {
       // hidden iOS switch element twice.
       if (!selRef.current.includes(i)) feedback.tap();
       touchIdle();
+      /*
+       * The rejected state clears HERE, on the next input, not on a timer.
+       *
+       * Board ruling 2026-08-31, stage 2, binding condition 1. Under
+       * prefers-reduced-motion the rejection is a held state rather than a
+       * pulse, so nothing else would ever clear it — and the game-feel seat's
+       * objection is that a state outliving its mistake stops being feedback
+       * and becomes debris. Clearing on the next tap is also what removes any
+       * need to tell the player how to dismiss it.
+       */
+      setShaking(false);
       setSel((prev) => (prev.includes(i) ? prev : [...prev, i]));
     },
     [setSel, touchIdle]
@@ -1035,7 +1061,16 @@ export default function Game({ data }: { data: PuzzleFile }) {
         );
         feedback.reject();
         setShaking(true);
-        setTimeout(() => setShaking(false), 360);
+        /*
+         * The timeout is for the ANIMATED path only.
+         *
+         * With motion allowed, the shake is a 340ms event and clearing after
+         * it is correct. Under reduced motion the rejection is a held state
+         * (see globals.css, rm-reject) and a timer would defeat the whole
+         * ruling — it would put a duration back on a cue chosen precisely
+         * because it has none. There it clears on the next input instead.
+         */
+        if (!reducedMotion()) setTimeout(() => setShaking(false), 360);
         say('Not a word', 'bad');
         break;
     }

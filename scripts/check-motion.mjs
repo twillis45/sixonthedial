@@ -119,7 +119,12 @@ const probe = async (reduce) => {
         };
         walk(rules);
       }
-      seen[cls] = { name, ms, moves };
+      /* A held state is a signal with no duration. Board ruling 2026-08-31
+         made .anim-shake exactly that under reduced motion, so "0ms" stopped
+         meaning "silenced" and started meaning "held". Record the shadow so
+         the two can be told apart. */
+      const held = cs.boxShadow && cs.boxShadow !== 'none';
+      seen[cls] = { name, ms, moves, held };
       el.remove();
     }
     return seen;
@@ -184,9 +189,10 @@ console.log('reduced motion ON — the signal must survive, without moving\n');
 for (const { cls, says } of SIGNALS) {
   const r = on[cls];
   const why = [];
-  if (r.ms < 40) why.push(`silenced (${r.ms}ms) — "${says}" has no other channel`);
+  if (r.ms < 40 && !r.held) why.push(`silenced (${r.ms}ms, no held state) — "${says}" has no other channel`);
   if (r.moves) why.push(`still moves (${r.name}) — translation is the thing the setting asks to remove`);
   if (why.length) { failed++; console.log(`✗  .${cls.padEnd(12)} ${why.join('; ')}`); }
+  else if (r.ms < 40 && r.held) console.log(`✔  .${cls.padEnd(12)} held state, no duration, no movement — "${says}"`);
   else console.log(`✔  .${cls.padEnd(12)} ${r.name} ${r.ms}ms, no movement — "${says}"`);
 }
 
@@ -195,6 +201,39 @@ for (const { cls } of SIGNALS) {
   const r = off[cls];
   if (r.ms < 40) { failed++; console.log(`✗  .${cls.padEnd(12)} only ${r.ms}ms — the reduced rule is leaking into everyone`); }
   else console.log(`✔  .${cls.padEnd(12)} ${r.name} ${r.ms}ms`);
+}
+
+/*
+ * THE RATIO — the assertion this guard was missing for months.
+ *
+ * It has always checked that a rejection still EXISTS under reduced motion,
+ * and check:guards mutation-tests exactly that. Neither could see the thing
+ * the rule is actually about: failure feedback must be FASTER than success
+ * feedback, because success is a reward and can luxuriate while rejection is
+ * a lesson that has to land before the player blames the app.
+ *
+ * On 2026-08-30 the reduced-motion branch was measured at success 160ms /
+ * rejection 420ms — inverted, 2.6x, in the path nobody plays during
+ * development — and every check in this repo was green. Presence was guarded.
+ * The relationship was not.
+ *
+ * A held rejection passes trivially, and that is the point: a state with no
+ * duration cannot be slower than success. Board ruling, stage 2, 2026-08-31.
+ */
+console.log('\nthe ratio — failure must land before success does\n');
+for (const mode of [['reduced motion', on], ['full motion', off]]) {
+  const [label, set] = mode;
+  const rej = set['anim-shake'], win = set['anim-land'];
+  if (rej.ms < 40 && rej.held) {
+    console.log(`✔  ${label.padEnd(14)} rejection is a held state — no duration to invert`);
+    continue;
+  }
+  if (rej.ms > win.ms) {
+    failed++;
+    console.log(`✗  ${label.padEnd(14)} rejection ${rej.ms}ms is SLOWER than success ${win.ms}ms — the lesson lands after the reward`);
+  } else {
+    console.log(`✔  ${label.padEnd(14)} rejection ${rej.ms}ms < success ${win.ms}ms`);
+  }
 }
 
 console.log('\nthe dial — the detent and its counter-rotation\n');

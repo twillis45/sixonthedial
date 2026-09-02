@@ -1548,8 +1548,30 @@ body {
    * because a single flash at this duration can be missed as a render glitch,
    * and it is the one signal here a player must not miss.
    */
+  /*
+   * REJECTION IS A HELD STATE HERE, NOT A TIMED CUE.
+   *
+   * Board ruling 2026-08-31, stage 2. This was `rm-reject 420ms` — two danger
+   * pulses — against a success beat (rm-appear) of 160ms, which INVERTED the
+   * rule that failure feedback must be faster than success. Options that
+   * retuned the duration all argued about how much movement to keep under a
+   * setting whose entire meaning is "do not move things".
+   *
+   * A held state has no duration, so it cannot invert the ratio against
+   * success. It removes the defect rather than rebalancing it, and it is what
+   * every one of 20 apps scanned on 2026-08-31 does — see
+   * docs/REFERENCE_SCANS.md.
+   *
+   * The weight is deliberately low: a 2px edge, no fill, no alarm. Binding
+   * condition 2 from the anti-dark-pattern seat — a word game rejects far more
+   * often than the signup forms that precedent came from, and a persistent
+   * alarm-red after every miss would punish harder than the pulse it replaced.
+   *
+   * It clears on the next input, in Game.tsx's `pick`. Nothing here times it.
+   */
   .anim-shake {
-    animation: rm-reject 420ms ease-in-out both !important;
+    animation: none !important;
+    box-shadow: 0 0 0 2px var(--color-danger) !important;
   }
 
   /* Points floating off a solved row: state it, do not fly it. */
