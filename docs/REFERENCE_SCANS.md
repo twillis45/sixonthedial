@@ -58,15 +58,53 @@ not have, and fear of losing a streak is what makes people stop opening an app.
 lightness (2 → 14 dark, up to +43 light), so a surface read cooler the higher it
 sat. Elevation now means one thing: lightness.
 
-## What has NOT been scanned, and would be worth one
+## Rejection without motion — scanned 2026-08-31
+**Source:** Mobbin (screens, ios, deep) · 20 results examined, not skimmed
 
-**Reduced-motion rejection feedback.** `docs/MOTION_STUDY.md` (2026-08-30) found
-the success/failure timing ratio inverts under `prefers-reduced-motion` —
-success 160ms, rejection 420ms — and left three options for a ruling. **How
-other apps signal rejection without movement is a genuine open question**, it is
-a general app pattern rather than a word-game mechanic, and it is therefore one
-Mobbin can actually answer.
+**The question:** `docs/MOTION_STUDY.md` found the success/failure timing ratio
+inverts under `prefers-reduced-motion` — success 160ms, rejection 420ms — and
+left three options for a ruling. How does the field signal *rejected* when it
+cannot move anything?
 
-One intent, narrow, feeding a decision that is currently unmade. That is the
-next scan worth running, and the first one on this list that would not be
-looking for permission after the fact.
+**Pattern found, and it is unanimous across all 20: rejection is a PERSISTENT
+STATE, not a timed event.** A coloured outline on the offending element, plus an
+inline message naming what is wrong, held until the input changes. Not one of
+the twenty uses a timed cue. There is no duration to get right because nothing
+is animating.
+
+Three variants inside that:
+
+- **Outline + inline message** — the default, in the large majority.
+  [eBay](https://mobbin.com/screens/10ab7db4-3381-490b-90ab-dde99e30c2dc) ·
+  [Tesla Robotaxi](https://mobbin.com/screens/9e3452d9-6a79-40a2-9313-67f24cbbcf61) ·
+  [Depop](https://mobbin.com/screens/c63b35d5-9f0b-43da-9c09-91fcc98b5ec6) ·
+  [Zopa Bank](https://mobbin.com/screens/dcb456e0-0a61-4505-8c11-5c91a803da22)
+- **Persistent banner**, separate from the field, for errors that are not
+  field-local.
+  [Posh](https://mobbin.com/screens/450e9571-11d6-4e9b-bc7e-5b0373470d9e) ·
+  [inDrive](https://mobbin.com/screens/853b177e-0f35-4bbc-aa25-b96a60431ada)
+- **Live rule checklist** — continuous ✓/✗ feedback rather than a rejection
+  event at all.
+  [IMDb](https://mobbin.com/screens/09c297ec-13b9-4280-a384-638e0909cb40)
+
+**Our decision: it opens a FOURTH option the motion study did not consider.**
+The three recorded there all argue about *how long* the reduced-motion rejection
+should last. The field's answer is that it should not have a length: hold the
+rejected state — a danger edge on the tray, or the word left in place tinted —
+until the next input clears it.
+
+**Why that is worth more than tuning 420ms to 260ms.** A persisted state cannot
+invert the success/failure ratio, because it has no duration to compare against
+success. It removes the defect rather than rebalancing it, and it is what a
+reduced-motion user is most likely to be expecting from every other app on their
+phone.
+
+**Limit, stated:** every screen here is a FORM-INPUT rejection — a bad email, a
+missing field, an invalid date. A word game rejecting a word is not identical:
+it is faster, more frequent, and carries no correction the player must make
+before continuing. The transferable part is the mechanism (persist, do not
+pulse), not the visual weight. A permanent red outline after every wrong guess
+would be punishing in a way a signup form never has to worry about.
+
+**Not ruled.** This informs the open motion decision; the operator rules it.
+

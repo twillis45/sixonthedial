@@ -59,6 +59,17 @@ relationship is the thing the rule is about.
 3. **Accept it, in writing.** Reduced-motion users may genuinely need the extra
    dwell, and a documented exception is legitimate. Not an omission — a ruling.
 
+4. **Do not time it at all — persist the state.** Added 2026-08-31 after a
+   Mobbin scan of 20 rejection screens (`docs/REFERENCE_SCANS.md`). **The
+   field's convention is unanimous: rejection without motion is a PERSISTENT
+   STATE, not a timed event** — an outline and a message held until the input
+   changes. Not one of the twenty used a timed cue. A persisted state cannot
+   invert the ratio, because it has no duration to compare against success: it
+   removes the defect rather than rebalancing it. The limit is that all twenty
+   were form inputs, where the user must correct something before continuing;
+   a word game rejects faster and more often, so the mechanism transfers but
+   the visual weight should not.
+
 This is a design decision, not a defect to patch silently. Recorded for the
 operator.
 
