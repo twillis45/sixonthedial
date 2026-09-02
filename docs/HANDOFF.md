@@ -403,9 +403,17 @@ model shipped."*
 
 | Stage | Status |
 |---|---|
-| 5 — Security & data review | **passed** — clean, nothing outstanding |
-| 9 — Promotion | **passed-with-conditions** — three conditions carry forward |
+| 0 — Adoption | **skipped** — not an inbound project, recorded not blank |
 | 1 — Idea → Problem statement | **not-yet** — the wedge did not survive its scan |
+| 2 — Scope & design | **not-yet** — one open ruling, the reduced-motion rejection |
+| 4 — Verify | **not-yet** — a defensible pass; guards green, critique clean |
+| 5 — Security & data review | **passed** — clean, nothing outstanding |
+| 6 — Deploy | **not-yet** — a defensible pass; target chosen and recorded |
+| 9 — Promotion | **passed-with-conditions** — three conditions carry forward |
+
+Seven gates, one for every stage that has required skills. **The record was
+empty when this started** — the stage came from the disk heuristic, not from
+anything passing a gate.
 
 A clean pass at stage 9 was declined because it would have discarded the
 conditions. They persist past the stage that produced them, which is the point
