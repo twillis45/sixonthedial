@@ -24,12 +24,26 @@ exists because a hand edit once published a blank page while every other check
 said PASS.
 
 Republish to the SAME url or the project's history splits in two. State as of
-2026-08-28: **83 of 107 items (84 with the b4h tick), 3 blockers, Verify 14/16.**
+**2026-09-03: 88 of 114 items (89 with the b4h tick), 26 open, 3 blockers,
+11 decisions on the operator, Verify gates 14/16.**
 
 ## Where the catalogue stands
 
-**141 authored boards across 17 themes, 520 puzzles shipped. 373 tests pass in
-18 files.**
+**MEASURED 2026-09-03, not asserted.** HEAD `2efa1a3`, `main` in sync with
+origin, working tree clean. **376 tests in 18 files. 19 check scripts.** CI,
+Pages and Catalogue radar all green on HEAD. 141 authored boards across 17
+themes, 520 puzzles shipped.
+
+**Gate record — seven gates, one per stage that has required skills:**
+
+| 0 | 1 | 2 | 4 | 5 | 6 | 9 |
+|---|---|---|---|---|---|---|
+| skipped | not-yet | passed-with-conditions | passed | passed | not-yet | passed-with-conditions |
+
+Stages 2 and 9 carry standing conditions that gate later stages. **Stage 1 and
+stage 6 are the only unruled gates**, and stage 1 is the one carrying weight:
+the wedge returned zero corroborating demand across two instruments, for a
+product that is paid.
 
 > ### SHIPPED 2026-08-28, and CI is green again
 >
