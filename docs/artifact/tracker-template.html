@@ -99,6 +99,15 @@ h1{font-family:"Archivo",system-ui,sans-serif;font-weight:700;
 .stage-c{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
 .stage.clear .stage-c{color:var(--ok)}
 
+#mktg{margin-top:52px}
+#mktg .mkhd h2{font-family:"Archivo",sans-serif;font-size:20px;font-weight:700;letter-spacing:-.015em;margin:0 0 8px}
+#mktg .mkhd p{margin:0 0 10px;font-size:14px;line-height:1.6;color:var(--ink-2);max-width:78ch}
+#mktg .stage:first-of-type{margin-top:22px}
+#mktg .item[hidden]{display:none}
+.pexit{padding:13px 18px;margin:0;max-width:none;border-top:1px solid var(--rule);background:var(--surface-2)}
+.pexit em,.pexit strong{max-width:none}
+.pexit strong{font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3)}
 .items{list-style:none;margin:0;padding:0}
 .item{display:flex;gap:13px;padding:14px 18px;border-bottom:1px solid var(--rule)}
 .item:last-child{border-bottom:0}
@@ -136,7 +145,54 @@ footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin
 </style>
 </head>
 <body>
-<div class="wrap"><div id="app"></div></div>
+<div class="wrap"><div id="app"></div>
+<section id="mktg" aria-label="Marketing and promotion">
+  <div class="mkhd">
+    <h2>Marketing &amp; promotion</h2>
+    <p>Four phases running <em>alongside</em> the spine, not after it &mdash; positioning is a stage-2 input. Each phase carries an exit condition and <strong>items</strong>: the exit condition is what the phase waits on, the items are what has actually happened. A phase that has produced an asset is not a phase that has passed.</p>
+    <p>A row marked <strong>not run</strong> is never hidden by &ldquo;Hide the done&rdquo; and is not the same as completing it, however it is ticked &mdash; only a gate record retires an obligation. <strong>Producing the asset a test needs is not running the test</strong>, which is why phase 2 is the most-skipped phase in the doctrine. Every recorded row names the gate record it came from and its date.</p>
+  </div>
+    <div class="stage"><div class="stage-hd"><span class="stage-n">P1</span><span class="stage-t">Positioning &mdash; at stage 2</span><span class="fold phase-fold" hidden></span><span class="stage-c">2/5</span></div>
+    <ul class="items">
+      <li class="item done" data-rec="pass"><button class="box" role="checkbox" aria-checked="true" disabled aria-label="Recorded &mdash; passed"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">Basis stated, and one claim deliberately not made</p><p class="note"><em>docs/COMPETITIVE.md</em>: the six-letter anagram family, the cited themed clues, and being finite. The letter wheel is explicitly <strong>not</strong> claimed &mdash; Wordscapes owns it. Recorded at stage 1, 2026-08-30.</p></div></li>
+      <li class="item done" data-rec="pass"><button class="box" role="checkbox" aria-checked="true" disabled aria-label="Recorded &mdash; passed"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">Corrected 2026-08-30 &mdash; the product is not free</p><p class="note">An earlier record reasoned from the product being free. Sitting 3 records the operator instruction &ldquo;it has to be paid&rdquo; and the Play form is set to Paid. On the true premise the demand finding is materially more serious, because a paid product must justify its price against the incumbent.</p></div></li>
+      <li class="item" data-rec="notrun" data-k="mp1a"><button class="box" role="checkbox" aria-checked="false" data-mk="mp1a" aria-label="Not run &mdash; open work"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">The wedge as written did not survive the demand scan<span class="tag gap">not run</span></p><p class="note"><code>demand-scan</code> RUN LATE 2026-08-30 (a stage-1 skill, run with the product already at stage 8 and public). Respectful / ad-free is <strong>SOLVED</strong> by a cheap incumbent &mdash; NYT Games at the users&rsquo; own stated $12&ndash;30/year. Hand-written themed clues have <strong>NO CORROBORATION</strong>: 0 independent sources across 1,674 store reviews and nine subreddits, and that is the differentiator the product is built on. Being finite is <strong>CONTRADICTED</strong> &mdash; users praise endlessness, and the genuine fatigue is compulsion loops. Black American cultural specificity is <strong>UNTESTED</strong>. Record: <em>2026-08-30-ngw-wordy-demand-scan.md</em>.</p></div></li>
+      <li class="item" data-rec="notrun" data-k="mp1b"><button class="box" role="checkbox" aria-checked="false" data-mk="mp1b" aria-label="Not run &mdash; open work"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">Claim 4 has no instrument, and the two that ran cannot test it<span class="tag gap">not run</span></p><p class="note">TikTok / Instagram / Twitter is the only instrument that can test cultural specificity and was NOT RUN. Reddit is structurally unable &mdash; arctic-shift refuses unscoped search. Ahrefs volumes are unavailable on this account. Recorded as an open question, not as a negative result.</p></div></li>
+      <li class="item" data-rec="notrun" data-k="mp1c"><button class="box" role="checkbox" aria-checked="false" data-mk="mp1c" aria-label="Not run &mdash; open work"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">Stage 1 is UNRULED &mdash; the positioning has not been replaced<span class="tag todd">not run</span></p><p class="note">The gate record's own <code>ruledBy</code> is <em>&ldquo;UNRULED &mdash; awaiting Todd Willis.&rdquo;</em> The wedge did not survive, no ruling has replaced it, and nothing on this page should read as if one had.</p></div></li>
+    </ul>
+    <p class="note pexit"><strong>Exit condition</strong><br>The thesis names the acquisition unit, the single thing a stranger must understand from it, and what would falsify it. On this project the thesis was written and then <em>disproved</em>, and no replacement has been ruled.</p>
+    </div>
+    <div class="stage"><div class="stage-hd"><span class="stage-n">P2</span><span class="stage-t">Comprehension proof &mdash; at stages 3&ndash;4</span><span class="fold phase-fold" hidden></span><span class="stage-c">3/6</span></div>
+    <ul class="items">
+      <li class="item done" data-rec="pass"><button class="box" role="checkbox" aria-checked="true" disabled aria-label="Recorded &mdash; passed"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">The mechanical half of promote-surface gate 3 passed</p><p class="note">A cold-profile walk of the live site. It proves the app does not <strong>break</strong> for a stranger, and nothing about whether one <strong>understands</strong> it. Recorded at stage 9, 2026-08-30.</p></div></li>
+      <li class="item done" data-rec="pass"><button class="box" role="checkbox" aria-checked="true" disabled aria-label="Recorded &mdash; passed"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">The stranger protocol carries a constraint the test would otherwise silently break</p><p class="note">Wipe the device between every stranger. The teach card retires after the first banked word and that is persisted, so stranger two silently becomes the control. Recorded with the gate-zero condition, 2026-08-30.</p></div></li>
+      <li class="item done" data-rec="pass"><button class="box" role="checkbox" aria-checked="true" disabled aria-label="Recorded &mdash; passed"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">60 marketing stills, each asserting its own look</p><p class="note">Two frames &times; six looks &times; five states, and the run fails rather than reporting green when a still is not the theme and accent it claims. It caught ten stills shot on the wrong accent that would otherwise have reached a landing page. <strong>The asset existing is not the phase passing</strong> &mdash; this proves the stills are what they say they are, not that anyone understands them.</p></div></li>
+      <li class="item" data-rec="notrun" data-k="mp2a"><button class="box" role="checkbox" aria-checked="false" data-mk="mp2a" aria-label="Not run &mdash; open work"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">GATE ZERO HAS NEVER RUN<span class="tag blocker">not run</span></p><p class="note">Twelve strangers, four first-runs, kill rule frozen <em>before</em> the test at 60% Read / max 20% Quit. It is the comprehension half of promote-surface gate 3 and, in the record's own words, <strong>the actual promotion risk here</strong>. <strong>Producing the asset a test needs is not running the test</strong>, and this is the phase where that mistake is normally made. Stage 9 condition, 2026-08-30.</p></div></li>
+      <li class="item" data-rec="notrun" data-k="mp2b"><button class="box" role="checkbox" aria-checked="false" data-mk="mp2b" aria-label="Not run &mdash; open work"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">No community reader has read any pack<span class="tag blocker">not run</span></p><p class="note">21 boards shipped 2026-08-28 unreviewed. <em>CULTURAL_BOARD.md</em> says the bench is structured perspective, <strong>not</strong> community consultation, and one real reader per pack is budgeted before commercial ship. The 2026-08-30 demand scan promoted this from a quality gate to an <strong>evidence</strong> gate &mdash; it is the only route that exists to the one wedge claim still standing.</p></div></li>
+      <li class="item" data-rec="notrun" data-k="mp2c"><button class="box" role="checkbox" aria-checked="false" data-mk="mp2c" aria-label="Not run &mdash; open work"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">The first-timer seat at the stage 9 board is unconfirmed<span class="tag gap">not run</span></p><p class="note">The skill makes it mandatory at that stage. The record flags it rather than claiming it, which is the correct treatment and still an open item.</p></div></li>
+    </ul>
+    <p class="note pexit"><strong>Exit condition</strong><br>Strangers state the proposition unaided, at a rate agreed <em>before</em> the test. That rate is already frozen: 60% Read, max 20% Quit.</p>
+    </div>
+    <div class="stage"><div class="stage-hd"><span class="stage-n">P3</span><span class="stage-t">Economics proof &mdash; at stages 4&ndash;5, before any paid spend</span><span class="fold phase-fold" hidden></span><span class="stage-c">1/4</span></div>
+    <ul class="items">
+      <li class="item done" data-rec="pass"><button class="box" role="checkbox" aria-checked="true" disabled aria-label="Recorded &mdash; passed"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">A price anchor exists, and it came from users rather than from us</p><p class="note">The 2026-08-30 demand scan produced the incumbent's price at the users' own stated $12&ndash;30/year, and a $1&ndash;3/month anchor which is direct evidence for the two pricing items that previously had none.</p></div></li>
+      <li class="item" data-rec="notrun" data-k="mp3a"><button class="box" role="checkbox" aria-checked="false" data-mk="mp3a" aria-label="Not run &mdash; open work"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">No kill threshold was pre-registered at stage 1, and one cannot be invented now<span class="tag gap">not run</span></p><p class="note">The record's own words: <em>&ldquo;deciding a threshold after seeing results is not a test&rdquo;</em>, so <code>killThreshold</code> is recorded as NONE and <code>killVerdict</code> as not applicable. There is nothing for an economics case to be judged against. Recorded as a gap rather than back-filled with a number.</p></div></li>
+      <li class="item" data-rec="notrun" data-k="mp3b"><button class="box" role="checkbox" aria-checked="false" data-mk="mp3b" aria-label="Not run &mdash; open work"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">The paid product has never been priced against the incumbent it must beat<span class="tag gap">not run</span></p><p class="note">The record states the problem exactly: the product asks someone to <strong>pay</strong> for a differentiator no instrument found anyone asking for, in a category where an incumbent at $12&ndash;30/year already solves the one corroborated complaint. No answer to that has been recorded.</p></div></li>
+      <li class="item" data-rec="notrun" data-k="mp3c"><button class="box" role="checkbox" aria-checked="false" data-mk="mp3c" aria-label="Not run &mdash; open work"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">No required-revenue figure exists for any geography<span class="tag gap">not run</span></p><p class="note">Nothing in the gate record computes acquisition cost, revenue per install, or the figure one would have to exceed. Recorded as an absence rather than filled with an estimate.</p></div></li>
+    </ul>
+    <p class="note pexit"><strong>Exit condition</strong><br>One named segment where achievable revenue exceeds the required figure, sourced rather than assumed. A NO-GO here is a real result and stops the track.</p>
+    </div>
+    <div class="stage"><div class="stage-hd"><span class="stage-n">P4</span><span class="stage-t">Spend and iterate &mdash; at stages 6&ndash;9</span><span class="fold phase-fold" hidden></span><span class="stage-c">2/4</span></div>
+    <ul class="items">
+      <li class="item done" data-rec="pass"><button class="box" role="checkbox" aria-checked="true" disabled aria-label="Recorded &mdash; passed"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">Marketing here is blind BY DESIGN, and that is the privacy position working</p><p class="note"><code>connect-src 'self'</code> and zero analytics: no UTM lands anywhere, no share is counted, no visit is logged, and GitHub Pages keeps no logs. The only instruments that will ever exist are the store consoles and reviews. Recorded at stage 9, 2026-08-30, as PARTIAL &mdash; instrumentation does not and will not exist.</p></div></li>
+      <li class="item done" data-rec="pass"><button class="box" role="checkbox" aria-checked="true" disabled aria-label="Recorded &mdash; passed"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">Privacy claims and marketing claims are the same claims</p><p class="note">The description says no ads, no account, nothing leaves the device; the nutrition labels say Data Not Collected; the CSP makes it structural. One person reads all three minutes apart and they agree, because they are generated from the same facts. Any future marketing tool that wants a pixel reopens ruling 2 and does not get to sneak in as a tag.</p></div></li>
+      <li class="item" data-rec="notrun" data-k="mp4a"><button class="box" role="checkbox" aria-checked="false" data-mk="mp4a" aria-label="Not run &mdash; open work"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">Per-asset attribution is impossible by construction, and no replacement has been named<span class="tag gap">not run</span></p><p class="note">The doctrine's phase-4 instrument is per-asset measurement, and this product has ruled it out on purpose. What takes its place &mdash; store-console cohorts, review text, something else &mdash; has never been written down, so today there is no way to tell which creative to cut.</p></div></li>
+      <li class="item" data-rec="notrun" data-k="mp4b"><button class="box" role="checkbox" aria-checked="false" data-mk="mp4b" aria-label="Not run &mdash; open work"><svg viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg></button><div class="body"><p class="title">No paid spend, and no store listing to spend against<span class="tag gap">not run</span></p><p class="note">The web game is live at sixonthedial.com; the stores are not started. Phase 3 has not cleared and cannot clear on the present record, so this phase is correctly at zero.</p></div></li>
+    </ul>
+    <p class="note pexit"><strong>Exit condition</strong><br>Continuous, not terminal: paid-cohort revenue net of platform fee exceeds achieved acquisition cost. When it stops being true, spend stops.</p>
+    </div>
+</section>
+</div>
 <div class="savechip" id="chip" role="status" aria-live="polite"></div>
 <script id="state" type="application/json">__STATE__</script>
 <script>
@@ -367,13 +423,14 @@ function render(){
    +'<span>Companion to STORE_READINESS.md</span></footer>';
   document.getElementById('app').innerHTML=h;
   wire();
+  renderMktg();
 }
 function bar(n,l,frac,cls){
   return '<div class="bar '+cls+'"><span class="n">'+txt(n)+'</span><span class="l">'+l+'</span>'
        +'<div class="track"><div class="fill" style="width:'+Math.round(Math.max(0,Math.min(1,frac||0))*100)+'%"></div></div></div>';
 }
 function wire(){
-  Array.prototype.forEach.call(document.querySelectorAll('.box'),function(b){
+  Array.prototype.forEach.call(document.querySelectorAll('#app .box'),function(b){
     b.addEventListener('click',function(){
       var k=b.dataset.k, it=ITEMS.filter(function(i){return i.k===k;})[0];
       STATE.done[k]=isDone(it)?0:1;
@@ -397,6 +454,50 @@ function wire(){
   var tg=document.getElementById('togdone');
   if(tg) tg.addEventListener('click',function(){ STATE.showDone=!STATE.showDone; render(); schedule(true); });
 }
+
+
+/* ---------- the marketing track ----------
+ * The four phases are STATIC markup in the document, not built here: a track
+ * that exists only inside a JS array is invisible to anything reading the file
+ * and disappears whole if this script throws. This only keeps the ticks and the
+ * view in sync.
+ *
+ * A row recorded NOT RUN is open work wearing a recorded label, so it gets a
+ * live box — but it is NEVER hidden, however it is ticked. A tick there is the
+ * reader's working note; only a gate record retires an obligation, and a page
+ * able to hide its own unmet obligations is the failure this track exists to
+ * prevent.
+ */
+function renderMktg(){
+  var sec=document.getElementById('mktg'); if(!sec) return;
+  Array.prototype.forEach.call(sec.querySelectorAll('.stage'),function(card){
+    var rows=card.querySelectorAll('li.item'), d=0, hid=0;
+    Array.prototype.forEach.call(rows,function(li){
+      var kind=li.getAttribute('data-rec');
+      var k=li.getAttribute('data-k');
+      var on = kind==='pass' ? true : !!STATE.done[k];
+      if(on) d++;
+      li.classList.toggle('done', on && kind==='pass');
+      var box=li.querySelector('.box');
+      if(box){
+        box.setAttribute('aria-checked', String(on));
+        if(STATE.readOnly && k) box.setAttribute('disabled','');
+      }
+      var hide = !STATE.showDone && on && kind==='pass';
+      li.hidden=hide; if(hide) hid++;
+    });
+    card.querySelector('.stage-c').textContent=d+'/'+rows.length;
+    card.classList.toggle('clear', d===rows.length);
+    var f=card.querySelector('.phase-fold');
+    f.textContent=hid+' done'; f.hidden=!hid;
+  });
+}
+document.getElementById('mktg').addEventListener('click',function(e){
+  var b=e.target.closest('.box'); if(!b) return;
+  var k=b.dataset.mk; if(!k||b.disabled) return;
+  STATE.done[k]=STATE.done[k]?0:1;
+  renderMktg(); schedule();
+});
 
 /* ---------- persistence: localStorage always, artifact publish when available ---------- */
 var chip=document.getElementById('chip'),api=null,timer=null;
