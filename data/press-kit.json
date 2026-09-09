@@ -1,0 +1,53 @@
+{
+  "_comment": "The press kit's asset manifest, read by three places that must agree: src/app/press/page.tsx renders it, scripts/build-press.mjs copies the named files out of store/marketing into public/press/, and scripts/check-press.mjs asserts every one of them reached the export. A file named here and missing from store/marketing fails the build rather than shipping a broken image on the one page journalists load.",
+  "shots": [
+    {
+      "id": "1-board",
+      "flat": "flat-apple-6.7__1-board.png",
+      "framed": "mockup-apple-6.7__1-board.png",
+      "title": "The board",
+      "alt": "A Six on the Dial board: six letters on a circular dial below six empty rows, each row carrying a written clue.",
+      "caption": "Six letters on the dial. Six rows to fill, and a written clue on every one."
+    },
+    {
+      "id": "2-solving",
+      "flat": "flat-play-phone__2-solving.png",
+      "framed": "mockup-play-phone__2-solving.png",
+      "title": "Mid-solve",
+      "alt": "The same board part-solved, with several rows filled in and the rest still open.",
+      "caption": "Every answer is spelled from the same six letters, and nothing else."
+    },
+    {
+      "id": "3-themes",
+      "flat": "flat-apple-6.7__3-themes.png",
+      "framed": "mockup-apple-6.7__3-themes.png",
+      "title": "The packs",
+      "alt": "The themed pack catalogue, listing packs by name with a short line of description under each.",
+      "caption": "Themed packs sit alongside the daily board. The clues in them are researched and cited."
+    },
+    {
+      "id": "4-progress",
+      "flat": "flat-apple-6.7__4-progress.png",
+      "framed": "mockup-apple-6.7__4-progress.png",
+      "title": "Progress",
+      "alt": "The rank and progress sheet, showing the player's rank mark and boards cleared.",
+      "caption": "Rank and progress, kept on the device and nowhere else."
+    },
+    {
+      "id": "5-rules",
+      "flat": "flat-play-phone__5-rules.png",
+      "framed": "mockup-play-phone__5-rules.png",
+      "title": "The rules",
+      "alt": "The rules sheet, explaining the six-letter constraint and how hints work.",
+      "caption": "The whole rule set fits on one sheet."
+    },
+    {
+      "id": "6-light",
+      "flat": "flat-play-phone__6-light.png",
+      "framed": "mockup-play-phone__6-light.png",
+      "title": "Light theme",
+      "alt": "The same board rendered in the light theme.",
+      "caption": "Dark and light, both drawn to the same contrast floor."
+    }
+  ]
+}

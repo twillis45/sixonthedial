@@ -117,10 +117,44 @@ const MUTATIONS = [
   {
     name: 'reduced motion silences the rejection',
     file: 'src/app/globals.css',
-    from: '  .anim-shake {\n    animation: rm-reject 420ms ease-in-out both !important;\n  }',
+    /*
+     * RE-ANCHORED 2026-09-09. The old anchor was the 420ms `rm-reject` pulse,
+     * which the stage-2 board ruling of 2026-08-31 deleted — so this mutation
+     * silently stopped applying and reported SKIPPED, which check-guards prints
+     * and does not fail on. A guard whose mutation no longer exists is worth
+     * exactly as much as a guard that cannot fail, and it went that way as a
+     * side effect of the ruling being IMPLEMENTED rather than of anything
+     * breaking. Anchors have to move with the code they attack.
+     */
+    from:
+      '  .anim-shake {\n' +
+      '    animation: none !important;\n' +
+      '    box-shadow: 0 0 0 2px var(--color-danger) !important;\n' +
+      '  }',
     to: '  .anim-shake-disabled-for-audit { color: inherit; }',
     guard: 'check-motion',
     why: 'a reduced-motion player on a desktop gets NO feedback for a wrong word',
+  },
+  {
+    /*
+     * The other half of the ruling, and the half that had no guard at all.
+     *
+     * Silencing the rejection was already attacked above. The defect the board
+     * actually ruled on was subtler and shipped green for months: the rejection
+     * EXISTED under reduced motion and was 2.6x SLOWER than success (420ms of
+     * pulse against a 160ms fade), inverting the rule that failure feedback
+     * lands before success. check-motion was taught to assert the ratio in both
+     * regimes in the same commit, and red-proofed by hand — by hand is not a
+     * guard. This is that proof, kept.
+     */
+    name: 'reduced-motion rejection goes back to a timed pulse',
+    file: 'src/app/globals.css',
+    from:
+      '    animation: none !important;\n' +
+      '    box-shadow: 0 0 0 2px var(--color-danger) !important;',
+    to: '    animation: rm-reject 420ms ease-in-out both !important;',
+    guard: 'check-motion',
+    why: 'rejection becomes 2.6x slower than success in the one path nobody plays during development',
   },
   {
     name: 'ambient pools go back to steel',
@@ -372,11 +406,41 @@ for (const m of MUTATIONS) {
 run('npm run build');
 
 const real = results.filter((r) => !r.skipped && !r.compiler);
+const skipped = results.filter((r) => r.skipped);
 console.log(
   `\n${real.length - missed}/${real.length} defects caught by the guard that owns them.`
 );
+
+/*
+ * A DRIFTED ANCHOR FAILS. It used to print `?` and be quietly dropped from the
+ * tally, and this file's own note at the rank-ladder mutation records what that
+ * cost: "this one spent a day printing SKIPPED on a drifted anchor, which looks
+ * identical to both" — to a guard that is broken and to a defect that was
+ * designed out.
+ *
+ * It happened again, and worse, because it happened to the mutation for a
+ * finding the board had just ruled on: implementing the ruling rewrote the CSS
+ * the anchor named, so the harness went from testing check-motion to testing
+ * nothing, on the exact day that guard mattered most — and said so in a
+ * character most eyes read as a bullet. A mutation that no longer applies tests
+ * nothing at all, which is strictly worse than one that misses: a miss at least
+ * names a gap.
+ *
+ * The fix when this fires is to RE-ANCHOR the mutation onto the code as it
+ * stands now, or, if the defect is genuinely unreachable, to rewrite it the way
+ * the rank-ladder entry was rewritten — with the reason in the entry. Deleting
+ * it is the one wrong answer.
+ */
+if (skipped.length) {
+  console.log(
+    `\n✗ ${skipped.length} mutation(s) never applied — the anchor moved and the harness tested nothing:`
+  );
+  for (const s of skipped) console.log(`    ${s.name}  (${s.file})`);
+  console.log('  Re-anchor them onto the current code. See the note above this check.');
+}
+
 if (missed) {
   console.log(`✗ ${missed} would ship silently — the guard for each is decoration.`);
-  process.exit(1);
 }
+if (missed || skipped.length) process.exit(1);
 console.log('✔ every guard fails when the thing it protects is broken');
