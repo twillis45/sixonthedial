@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import PageScroll from '@/components/PageScroll';
 import { absoluteUrl } from '@/lib/site';
 import { withBase } from '@/lib/basePath';
 import themes from '../../../data/themes.json';
@@ -55,6 +56,7 @@ const puzzles = catalogue.puzzles.length;
  */
 export default function PressPage() {
   return (
+    <PageScroll>
     <main className="mx-auto min-h-svh w-full max-w-[760px] px-5 py-10 md:py-16">
       <Link
         href="/"
@@ -118,7 +120,7 @@ export default function PressPage() {
       <h2 className="mt-12 text-title font-semibold tracking-[-0.01em] text-text-primary">
         Fact sheet
       </h2>
-      <dl className="mt-4 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-carbon-border bg-carbon-border sm:grid-cols-[minmax(0,11rem)_1fr]">
+      <dl className="mt-4 overflow-hidden rounded-2xl border border-carbon-border bg-carbon-panel">
         <Fact term="Name">Six on the Dial</Fact>
         <Fact term="Maker">No Guesswork Systems LLC — Todd Willis, sole developer</Fact>
         <Fact term="Platform">
@@ -325,21 +327,32 @@ export default function PressPage() {
         .
       </p>
     </main>
+    </PageScroll>
   );
 }
 
-/** One row of the fact sheet. Grid gap-px over a border-coloured ground draws
-    the rules, so a row can wrap on a phone without a table's fixed columns. */
+/*
+ * One row of the fact sheet: label above value on a phone, beside it from `sm`.
+ *
+ * The rule goes on the PAIR, not between the label and its own value. A first
+ * attempt drew the sheet as a two-column grid with `gap-px` over a
+ * border-coloured ground, which is a tidy way to draw a table and wrong here:
+ * at one column it put a hairline between "NAME" and "Six on the Dial", so
+ * every row read as a heading followed by an unrelated row.
+ *
+ * A wrapping div inside <dl> is valid HTML and keeps dt/dd paired for a screen
+ * reader, which the flat version could only imply by source order.
+ */
 function Fact({ term, children }: { term: string; children: React.ReactNode }) {
   return (
-    <>
-      <dt className="bg-carbon-panel px-4 pt-4 text-kicker font-semibold uppercase tracking-[0.1em] text-text-muted sm:py-4">
+    <div className="grid grid-cols-1 gap-x-5 border-t border-carbon-border px-4 py-4 first:border-t-0 sm:grid-cols-[minmax(0,10rem)_1fr]">
+      <dt className="text-kicker font-semibold uppercase tracking-[0.1em] text-text-muted sm:pt-0.5">
         {term}
       </dt>
-      <dd className="bg-carbon-panel px-4 pb-4 text-body leading-relaxed text-text-secondary sm:py-4">
+      <dd className="mt-1.5 text-body leading-relaxed text-text-secondary sm:mt-0">
         {children}
       </dd>
-    </>
+    </div>
   );
 }
 
