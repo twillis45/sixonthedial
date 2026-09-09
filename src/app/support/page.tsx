@@ -89,7 +89,9 @@ export default function SupportPage() {
         <strong>Themes and clues:</strong> original, written for this game.
       </p>
       <p>
-        See also <a href="/privacy">Privacy</a> and <a href="/terms">Terms</a>.
+        See also <a href="/privacy">Privacy</a>, <a href="/terms">Terms</a> and,
+        if you are writing about the game, the{' '}
+        <a href="/press">press kit</a>.
       </p>
     </Legal>
   );

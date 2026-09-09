@@ -6,7 +6,7 @@ import { absoluteUrl } from '@/lib/site';
 export const dynamic = 'force-static';
 
 /**
- * Four routes, listed by hand.
+ * Five routes, listed by hand.
  *
  * There is nothing to enumerate from: puzzles are not routes, they are a JSON
  * file the single page reads, so a "generated" sitemap here would be the same
@@ -33,6 +33,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: absoluteUrl('/support/'),
       lastModified,
       changeFrequency: 'yearly',
+      priority: 0.5,
+    },
+    {
+      // The press kit. Higher than the legal pages because it is the one page
+      // here written to be FOUND — a journalist searching the product name
+      // should land on the fact sheet rather than on the terms.
+      url: absoluteUrl('/press/'),
+      lastModified,
+      changeFrequency: 'monthly',
       priority: 0.5,
     },
     {

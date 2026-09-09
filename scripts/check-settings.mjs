@@ -109,6 +109,24 @@ const browser = await launch({
 const page = await browser.newPage();
 page.setDefaultNavigationTimeout(60_000);
 await page.setViewport({ width: 1280, height: 900 });
+
+/*
+ * ASK FOR THE REGIME YOU ARE ASSERTING ABOUT.
+ *
+ * `accentColour` above reads the DARK-mode value of `--color-success` out of
+ * globals.css and compares the browser's computed value against it — but
+ * nothing here ever asked for dark. It passed on a machine whose OS was in dark
+ * mode and failed on one that was not, reporting four accents as "says it
+ * changed and did not" when every one of them had changed correctly into the
+ * light palette. The check was right about the mechanism and wrong about which
+ * theme it was looking at, which is the most convincing way for a check to lie.
+ *
+ * This is the same defect scripts/lib/browser.mjs exists to prevent one layer
+ * down: a check that only passes on one particular laptop is a check CI can
+ * never run, and this one could not run here.
+ */
+await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: 'dark' }]);
+
 await page.goto(`${base}/`, { waitUntil: 'domcontentloaded' });
 await new Promise((r) => setTimeout(r, 900));
 

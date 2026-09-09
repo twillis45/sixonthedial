@@ -64,6 +64,11 @@ data/wordnet.json
 /store/marketing/*.png
 !/store/marketing/mockup-*.png
 !/store/marketing/flat-*.png
+# Press-kit images, staged into public/ by scripts/build-press.mjs at build
+# time. The originals are committed in store/marketing/ (the flat-* and
+# mockup-* exceptions above); a second copy here would be 5 MB of git holding
+# two versions of the same file that can drift apart.
+/public/press/
 # Campaign clips — rebuilt by capture-video.mjs from the shipped build.
 /store/video/
 /store/marketing/manifest.json
