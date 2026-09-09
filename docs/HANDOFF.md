@@ -75,7 +75,7 @@ things a fresh session should know before it trusts a green board:
   product fault. Both are the same class of defect as the one
   `scripts/lib/browser.mjs` was written to end.
 - **`check:guards` is RED, on purpose, and should stay red until `b4s` is
-  fixed.** One mutation of fifteen — an unbounded bonus-chip list — is not
+  fixed.** One mutation of sixteen — an unbounded bonus-chip list — is not
   caught by the guard that owns it. It is not in CI (CI runs tests, the
   catalogue check, rail, intro and hydration; it does not run lint, which has 5
   pre-existing errors). Do not "fix" the harness by deleting the mutation.
