@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import PageScroll from '@/components/PageScroll';
 
 export const metadata: Metadata = {
   // Next already emits `noindex` for not-found, which is the part that matters:
@@ -18,6 +19,10 @@ export const metadata: Metadata = {
  */
 export default function NotFound() {
   return (
+    /* Short enough to fit today, wrapped anyway: it stops fitting at 200% text,
+       and the enumerating check treats "no scroller" as the failure rather than
+       "did not overflow on the day somebody looked". */
+    <PageScroll>
     <main className="mx-auto flex min-h-svh w-full max-w-[680px] flex-col justify-center px-5 py-10">
       <p className="text-meta text-text-muted">404</p>
       <h1 className="mt-2 text-title font-semibold tracking-[-0.01em] text-text-primary">
@@ -33,5 +38,6 @@ export default function NotFound() {
         ← Back to the game
       </Link>
     </main>
+    </PageScroll>
   );
 }

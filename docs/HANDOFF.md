@@ -24,20 +24,37 @@ exists because a hand edit once published a blank page while every other check
 said PASS.
 
 Republish to the SAME url or the project's history splits in two. State as of
-**2026-09-09: 93 of 117 items (94 with the b4h tick), 24 open, 3 blockers,
-10 decisions on the operator, Verify gates 16/19.**
+**2026-09-09: 95 of 119 items (96 with the b4h tick), 24 open, 3 blockers,
+10 decisions on the operator, Verify gates 17/20.**
 
 Three items closed on 2026-09-09 — `b2n` (the reduced-motion ruling, which was
 ruled and implemented on 2026-08-31 and had simply never been ticked), `m2q`
 (the press kit, now live at `/press`) and `m6p` (the outreach list, drafted in
-`docs/OUTREACH.md`, nothing sent). Three added: `b4q` and `b4r` for two checks
-that were lying, and **`b4s`, which is open and is a hole in the safety net** —
-see below.
+`docs/OUTREACH.md`, nothing sent). Five added: `b4q` and `b4r` for two checks
+that were lying, `b4t` for a new one, **`b4s`, which is open and is a hole in
+the safety net**, and `b3k` — which is the one to read first.
+
+> ### `b3k`: the privacy policy could not be scrolled, and it was live
+>
+> `body { position: fixed; inset: 0; overflow: hidden }` is right for the game
+> and was applied to every route. On a 390×844 phone `/privacy` is 1546px of
+> content of which 844 could be read, and nothing moved it. `/terms`,
+> `/support` and the 404 the same. **Both stores open the privacy URL during
+> review**, so this was a submission risk sitting behind store row 1.1, which
+> reads DONE — the policy was published and unreadable, which are not the same
+> thing.
+>
+> Nothing caught it because **every runtime check in this repo drives `/`**,
+> the one route where the fixed body is correct. That is the transferable part.
+> Fixed with a scroll container inside the fixed body (`PageScroll.tsx`) rather
+> than by unsetting the body rule, and `npm run check:pages` now walks the
+> export and asserts every non-game route reaches its own last line at two
+> phone viewports.
 
 ## Where the catalogue stands
 
 **MEASURED 2026-09-09, not asserted.** HEAD `eb50ae4` plus this session's work.
-**376 tests in 18 files. 20 check scripts.** 141 authored boards across 17
+**376 tests in 18 files. 21 check scripts.** 141 authored boards across 17
 themes, **518** puzzles shipped — counted from
 `public/data/puzzles.json`, which is what the app serves. An older line in this
 file said 520, which is the number in the `npm run puzzles` command
@@ -47,7 +64,7 @@ fell out has not been chased.
 
 **What was actually run on 2026-09-09, and what it said.** 376 tests green.
 Every browser check green — motion, a11y, routes, drag, intro, marks, ranks,
-depth, tiles, color, rail, settings, hydration, gate0, listing, press. Two
+depth, tiles, color, rail, settings, hydration, gate0, listing, press, pages. Two
 things a fresh session should know before it trusts a green board:
 
 - **`check:settings` and `check:intro`/`check:hydration` could not run here at
@@ -58,10 +75,15 @@ things a fresh session should know before it trusts a green board:
   product fault. Both are the same class of defect as the one
   `scripts/lib/browser.mjs` was written to end.
 - **`check:guards` is RED, on purpose, and should stay red until `b4s` is
-  fixed.** One mutation of fourteen — an unbounded bonus-chip list — is not
+  fixed.** One mutation of fifteen — an unbounded bonus-chip list — is not
   caught by the guard that owns it. It is not in CI (CI runs tests, the
   catalogue check, rail, intro and hydration; it does not run lint, which has 5
   pre-existing errors). Do not "fix" the harness by deleting the mutation.
+
+**CI does not run `check:pages`, `check:press`, `check:settings`, `check:a11y`,
+`check:motion` or `check:guards`.** That is not a recommendation to add all six
+— the mutation harness is minutes per run — but `check:pages` and `check:press`
+are seconds each and guard two things a store reviewer opens.
 
 **Gate record — seven gates, one per stage that has required skills:**
 

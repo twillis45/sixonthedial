@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import PageScroll from './PageScroll';
 
 /**
  * Shared chrome for the legal and support pages.
@@ -18,6 +19,7 @@ export default function Legal({
   children: React.ReactNode;
 }) {
   return (
+    <PageScroll>
     <main className="mx-auto min-h-svh w-full max-w-[680px] px-5 py-10 md:py-16">
       <Link
         href="/"
@@ -40,5 +42,6 @@ export default function Legal({
         {children}
       </div>
     </main>
+    </PageScroll>
   );
 }

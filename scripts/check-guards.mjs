@@ -213,6 +213,20 @@ const MUTATIONS = [
     why: 'the control says Tide and the page stays green — a setting that does not take',
   },
   {
+    /*
+     * Not an invented defect: this is the state the site was ACTUALLY in until
+     * 2026-09-09, on /privacy, /terms, /support and the 404 — a viewport-sized
+     * clip with no scroller, because the game's fixed body applies to every
+     * route. It survived because every runtime check drives `/`.
+     */
+    name: 'the legal pages lose their scroller again',
+    file: 'src/components/PageScroll.tsx',
+    from: 'className="absolute inset-0 overflow-y-auto overscroll-contain"',
+    to: 'className="absolute inset-0 overscroll-contain"',
+    guard: 'check-pages',
+    why: 'the privacy policy both stores open during review is unreadable past the first screen',
+  },
+  {
     name: 'dial glyph wrapper removed',
     file: 'src/components/LetterWheel.tsx',
     from: 'className="dial-glyph"',
