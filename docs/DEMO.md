@@ -37,27 +37,34 @@ cultural pack.
 **Sunday Dinner · THE TABLE** — *"The oven door, and the things kept behind it"*
 Dial: **A H M R T W**
 
-| Row | Answer | Clue |
-|---|---|---|
-| 3 | **HAM** | In there since one, foil tented, waiting for everything slower than it |
-| 3 | **HAT** | Still on, because she came straight from church and has not sat down |
-| 4 | **WARM** | Not hot. The distinction is the entire skill and it is never explained |
-| 4 | **THAW** | Started Friday night, in the fridge, because Sunday was always the plan |
-| 4 | **WHAM** | The oven door, closed with a hip, both hands full |
-| 6 | **WARMTH** | What the lowest setting is for, and it holds four dishes at once |
+**Play it in this order. The order is not a preference — it is the board.**
+Letters unlock as rows land (`startActive` is 3, `unlockOrder` is h, a, m, w, t,
+r), so only H, A and M are live when you start and each solved row frees the
+next letter. An earlier version of this page listed the answers shortest-first,
+which sends you at HAT second — reaching for a T that is still locked, in front
+of a person, with nothing on screen explaining why nothing happened.
 
-**Play it in that order.** Opening on a three-letter row means they see a word
-bank inside ten seconds, and leaving WARMTH until last means the board lands on
-its own title.
+| # | Answer | Clue | Frees |
+|---|---|---|---|
+| 1 | **HAM** | In there since one, foil tented, waiting for everything slower than it | W |
+| 2 | **WHAM** | The oven door, closed with a hip, both hands full | T |
+| 3 | **THAW** | Started Friday night, in the fridge, because Sunday was always the plan | R |
+| 4 | **HAT** | Still on, because she came straight from church and has not sat down | — |
+| 5 | **WARM** | Not hot. The distinction is the entire skill and it is never explained | — |
+| 6 | **WARMTH** | What the lowest setting is for, and it holds four dishes at once | — |
+
+Opening on a three-letter row means they see a word bank inside ten seconds, and
+leaving WARMTH until last means the board lands on its own title.
 
 The six beats, in order:
 
 1. **Read the scene line and the top clue out loud.** This is the product. The
    letters are the category; the writing is the reason to choose this one.
-2. **Tap H–A–M.** It banks, the teach line retires, the rank moves off Novice.
-3. **Do the next row by dragging across the letters instead of tapping.** Both
-   are first-class and neither is the "real" way — worth showing, because every
-   competitor trains people to expect only one.
+2. **Tap H–A–M.** It banks, the teach card retires, and the rank moves straight
+   off Novice on one word.
+3. **Type WHAM, then trace THAW across the dial with a finger instead of
+   tapping.** Both are first-class and neither is the "real" way — worth showing,
+   because every competitor trains people to expect only one.
 4. **Hit Shuffle once.** The shape changes and the answers do not. It is a
    thinking aid, not a mechanic.
 5. **Finish on WARMTH.** The board lands on the word in its own scene line.
@@ -77,15 +84,25 @@ looking for it.
 Open the catalogue → **The Nineties** → the **INMATE** board. Four of its six
 rows are redacted clues:
 
-| Answer | Clue as shown |
-|---|---|
-| **NAME** | Destiny's Child wanted you to say it — Say My ———, 1999 |
-| **MINE** | Brandy and Monica, 1998 — The Boy Is ———, thirteen weeks of arguing over him |
-| **TIME** | SWV's debut, 1992 — It's About ——— |
-| **MINT** | ——— Condition — Minneapolis, a full band, and no interest in being a boy band |
+| # | Answer | Clue as shown |
+|---|---|---|
+| 1 | **MINE** | Brandy and Monica, 1998 — The Boy Is ———, thirteen weeks of arguing over him |
+| 2 | **MINT** | ——— Condition — Minneapolis, a full band, and no interest in being a boy band |
+| 3 | **NAME** | Destiny's Child wanted you to say it — Say My ———, 1999 |
+| | **TIME** | SWV's debut, 1992 — It's About ——— |
 
-Solve NAME and let them watch the line complete itself. Do this **only if the
-room is already interested** — it is board three of a demo, not board one.
+Same rule as board one: this board starts with M, I, N and E live and **A is the
+last letter to unlock**, so NAME cannot be spelled until two rows have landed.
+MINE, then MINT, then NAME.
+
+**Then press and hold the solved NAME chip.** This is the beat, and it is not
+automatic: solving a row moves the clue panel on to the next *unsolved* one, so
+nothing completes itself while you watch. The filled clue lives in a press-and-
+hold peek over a solved chip (hover, if you are on a laptop) — hold it and the
+line reads *"Destiny's Child wanted you to say it — Say My NAME, 1999."*
+
+Do this **only if the room is already interested** — it is board three of a
+demo, not board one.
 
 ### What not to do in Path A
 
@@ -155,6 +172,25 @@ pack. If somebody writes that the packs are community-reviewed, correct it.
 | Stale content after a deploy | Hard reload. The service worker is network-first with `cache: 'no-store'`, so one online load takes a correction. |
 | Board is not the one above | You are in a window with saved progress, or on a `?g0=` URL. New private window, plain URL. |
 | Everything looks unstyled | The host stripped `_next` (Jekyll). That is a deploy problem, not a demo one — fall back to a local `npm run build && npx serve -l 4310 out`. |
+
+## The recorded version
+
+    npm run build && node scripts/capture-demo.mjs
+
+Drives this runbook against the shipped export and writes `store/demo/` — eleven
+stills numbered in the order you perform them, and two clips (`demo-path-a.mp4`,
+the game; `demo-path-b.mp4`, the claims). Use them when you cannot hold a phone
+up, or to send ahead of a call.
+
+**It also checks this page.** Every beat above is a claim about what the app
+does, and the capture asserts the load-bearing ones — the teach is there and
+retires, the rank moves on one word, the traced word banks, the board completes,
+the policy reaches its last line. It exits non-zero rather than recording a demo
+that does not happen, which is how the unlock-ladder order and the press-and-hold
+peek above got corrected: both were written from the answer list and the source,
+not from the screen.
+
+Not committed — `store/demo/` is regenerated, and the script is the artifact.
 
 ## Running it locally instead
 
