@@ -177,10 +177,19 @@ pack. If somebody writes that the packs are community-reviewed, correct it.
 
     npm run build && node scripts/capture-demo.mjs
 
-Drives this runbook against the shipped export and writes `store/demo/` — eleven
-stills numbered in the order you perform them, and two clips (`demo-path-a.mp4`,
-the game; `demo-path-b.mp4`, the claims). Use them when you cannot hold a phone
-up, or to send ahead of a call.
+Drives this runbook against the shipped export and writes `store/demo/`:
+
+| File | |
+|---|---|
+| `demo-walkthrough.mp4` | ~56s, both paths end to end. **The one to send.** |
+| `demo-path-a.mp4` | ~43s, the game alone — for someone who might play it |
+| `demo-path-b.mp4` | ~13s, the claims alone — for someone checking them |
+| 15 stills | numbered in the order you perform them |
+
+Use them when you cannot hold a phone up, or to send ahead of a call. The
+walkthrough is a stream copy of the two parts, so it costs no quality, and the
+joined duration is checked against the sum of its parts — a concat that quietly
+drops one still produces a playable file.
 
 **It also checks this page.** Every beat above is a claim about what the app
 does, and the capture asserts the load-bearing ones — the teach is there and
