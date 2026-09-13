@@ -51,6 +51,11 @@ the safety net**, and `b3k` — which is the one to read first.
 > export and asserts every non-game route reaches its own last line at two
 > phone viewports.
 
+**Showing it to somebody:** `docs/DEMO.md` — two five-minute paths (the game,
+and the claims with the command that verifies each), the warm-up answers so you
+do not stall in front of a person, and the three questions you will be asked
+with the true answers to them.
+
 ## Where the catalogue stands
 
 **MEASURED 2026-09-09, not asserted.** HEAD `eb50ae4` plus this session's work.
