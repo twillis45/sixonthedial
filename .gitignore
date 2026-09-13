@@ -69,6 +69,10 @@ data/wordnet.json
 # mockup-* exceptions above); a second copy here would be 5 MB of git holding
 # two versions of the same file that can drift apart.
 /public/press/
+# Demo stills and clips — rebuilt by capture-demo.mjs from the shipped build.
+# The SCRIPT is the artifact, and it refuses to finish if a beat in
+# docs/DEMO.md does not actually happen.
+/store/demo/
 # Campaign clips — rebuilt by capture-video.mjs from the shipped build.
 /store/video/
 /store/marketing/manifest.json
