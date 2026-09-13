@@ -58,7 +58,9 @@ with the true answers to them.
 
 ## Where the catalogue stands
 
-**MEASURED 2026-09-09, not asserted.** HEAD `eb50ae4` plus this session's work.
+**MEASURED 2026-09-09, re-verified on merge 2026-09-13, not asserted.** `main`
+is at `978cdd2` — PR #63 rebase-merged, Pages deployed green, so the live site
+now carries the scroll fix and `/press`.
 **376 tests in 18 files. 21 check scripts.** 141 authored boards across 17
 themes, **518** puzzles shipped — counted from
 `public/data/puzzles.json`, which is what the app serves. An older line in this
