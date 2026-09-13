@@ -138,6 +138,45 @@ const type = async (page, word, ms = 165) => {
   await page.keyboard.press('Enter');
 };
 
+/** Click a control by its visible text. DOM clicks, not gestures — no camera
+    pause needed, because nothing here holds a pointer down. */
+const clickText = (page, re) =>
+  page.evaluate((src) => {
+    const b = [...document.querySelectorAll('button')]
+      .find((x) => new RegExp(src).test((x.textContent ?? '').trim()));
+    if (!b) return false;
+    b.click();
+    return true;
+  }, re.source);
+
+/** Click a control by its aria-label — the meta surfaces are labelled, not
+    captioned, so this is the handle for the catalogue, rank and rules. */
+const clickAria = (page, re) =>
+  page.evaluate((src) => {
+    const b = [...document.querySelectorAll('button')]
+      .find((x) => new RegExp(src, 'i').test(x.getAttribute('aria-label') ?? ''));
+    if (!b) return false;
+    b.click();
+    return true;
+  }, re.source);
+
+/** Shut whatever sheet is open, the way capture-store.mjs does. */
+async function closeSheet(page) {
+  for (let i = 0; i < 3; i++) {
+    const open = await page.evaluate(() => !!document.querySelector('[role="dialog"]'));
+    if (!open) return true;
+    const hit = await page.evaluate(() => {
+      const b = [...document.querySelectorAll('button')]
+        .find((x) => /^\s*(close|done|i.?ve got it|keep looking)\s*$/i.test(x.textContent || ''));
+      if (b) { b.click(); return true; }
+      return false;
+    });
+    if (!hit) await page.keyboard.press('Escape');
+    await wait(page, 600);
+  }
+  return !(await page.evaluate(() => !!document.querySelector('[role="dialog"]')));
+}
+
 /** Centre points of the dial tiles, by letter — for dragging rather than typing. */
 const tilePoints = (page) =>
   page.evaluate(() =>
@@ -306,7 +345,48 @@ const CLIPS = [
       await type(page, 'WARMTH');
       await wait(page, 3200);
       await assert(page, 'the board completes', () => /6\/6/.test(document.body.innerText));
+      await assert(page, 'and the cleared sheet names the rank it earned',
+        () => /WARM-UP 1 CLEARED/i.test(document.body.innerText));
       await shot(page, 'board-one-complete');
+
+      /* Beat 6 — board one was not a one-off. The cleared sheet offers the next
+         rung by name, so the walkthrough takes it rather than reloading. */
+      const wentOn = await clickText(page, /Warm-up 2/);
+      await wait(page, 2200);
+      if (!wentOn) failures.push('no "Warm-up 2" control on the cleared sheet');
+      await assert(page, 'board two is The Cookout',
+        () => /THE COOKOUT/i.test(document.body.innerText));
+      /* DIP first: startActive 3 over unlockOrder d,i,p,t,e,c, so D, I and P
+         are the only live tiles. The ladder again. */
+      await type(page, 'DIP');
+      await wait(page, 2200);
+      await assert(page, 'DIP banks on the second board',
+        () => /1\/6/.test(document.body.innerText));
+      await shot(page, 'board-two');
+
+      /* Beat 7 — the packs, which are the half of the game being sold. */
+      await clickAria(page, /Puzzles and themes/);
+      await wait(page, 1500);
+      await assert(page, 'the catalogue opens on the themed packs',
+        () => !!document.querySelector('[role="dialog"]'));
+      await shot(page, 'catalogue');
+      await closeSheet(page);
+      await wait(page, 700);
+
+      /* Beat 8 — the ladder a player is climbing. */
+      await clickAria(page, /Rank and progress/);
+      await wait(page, 1500);
+      await shot(page, 'rank-ladder');
+      await closeSheet(page);
+      await wait(page, 700);
+
+      /* Beat 9 — the whole rule set on one sheet, which is the answer to
+         "how long before I understand this". */
+      await clickAria(page, /How to play/);
+      await wait(page, 1500);
+      await shot(page, 'rules-and-settings');
+      await closeSheet(page);
+      await wait(page, 900);
     },
   },
   {
@@ -510,6 +590,41 @@ for (const clip of CLIPS) {
 }
 
 server.close();
+
+/*
+ * THE WALKTHROUGH — both parts as one file.
+ *
+ * The two clips are separately useful: path A is what you send someone who
+ * might play it, path B is what you send someone who wants to know whether the
+ * claims hold. But the thing most often actually wanted is "the demo", once,
+ * end to end, and asking somebody to play two files in the right order is a
+ * worse artifact than one that already is in the right order.
+ *
+ * Stream copy rather than re-encode: both parts come out of the same encoder
+ * settings at the same dimensions, so there is nothing to normalise and a
+ * re-encode would only cost a generation of quality.
+ */
+if (made.length === CLIPS.length) {
+  const list = path.join(DEST, 'walkthrough.txt');
+  fs.writeFileSync(list, made.map((m) => `file '${m.mp4}'`).join('\n') + '\n');
+  const walk = path.join(DEST, 'demo-walkthrough.mp4');
+  execFileSync('ffmpeg', ['-y', '-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', walk],
+    { stdio: 'pipe' });
+  fs.rmSync(list, { force: true });
+  const secs = Number(
+    execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration',
+      '-of', 'csv=p=0', walk], { encoding: 'utf8' }).trim()
+  );
+  /* A concat that silently drops a part still produces a playable file, so the
+     joined duration is checked against the sum of what went in. */
+  const want = made.reduce((n, m) => n + m.secs, 0);
+  if (Math.abs(secs - want) > 1.5) {
+    console.log(`\n✗ walkthrough is ${secs.toFixed(1)}s but its parts total ${want.toFixed(1)}s`);
+    failures.push('the joined walkthrough lost a part');
+  } else {
+    made.push({ name: 'demo-walkthrough', mp4: walk, secs, bytes: fs.statSync(walk).size });
+  }
+}
 
 console.log(`\n${shots.length} still(s) and ${made.length} clip(s) → store/demo/`);
 for (const m of made) console.log(`  ${m.name}.mp4  ${m.secs.toFixed(1)}s`);
