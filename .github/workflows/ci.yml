@@ -99,6 +99,14 @@ jobs:
           fi
           echo "catalogue.html is in step with data/themes.json"
 
+      # The same class of drift, one layer out: the catalogue is right and the
+      # PROSE describing it is wrong. Three separate corrections for this
+      # (373 vs 376 tests, 520 vs 518 puzzles, then five documents at once
+      # including AGENTS.md and the claim ledger) before it got a check. Pure
+      # node, no browser, no build — it belongs in the fast job.
+      - name: The prose agrees with the catalogue
+        run: npm run check:counts
+
   # The three checks that drive a real browser against the BUILT export. Until
   # 2026-08-14 none of them could run here: four resolved puppeteer out of a
   # different repository's node_modules on one laptop, and check-rail hardcoded

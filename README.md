@@ -30,16 +30,16 @@ npm run dev
 ## How it works
 
 **Puzzles are solved at build time.** `scripts/build-puzzles.mjs` reads
-`data/enable1.txt` (172k words) and emits 240 puzzles, each carrying its own
+`data/enable1.txt` (172k words) and emits 518 puzzles, each carrying its own
 complete answer set. The client never ships a dictionary — validating a word
 is a set lookup, so there is no network round-trip and no perceptible latency.
-The whole file is 92 KB.
+The whole file is 511 KB.
 
 Each puzzle is 6 distinct letters drawn from a 6-letter base word:
 
 - **grid** — 6 target words, always including the base. These are the blanks
   you're filling.
-- **bonus** — every *other* word the letters can make (~38 more). These still
+- **bonus** — every *other* word the letters can make (~40 more). These still
   score, and every 3 of them earns a hint. This is the retention engine that
   Wordscapes and Word Cookies both run on.
 
@@ -49,7 +49,8 @@ player gets the same letters with no server involved.
 ### Architecture notes
 
 - `src/lib/game.ts` — the whole rule set, pure and dependency-free. Scoring,
-  ranks, submission classification, the share card. All 22 tests hit this file.
+  ranks, submission classification, the share card. 151 of the suite's 376
+  tests hit this file.
 - `src/lib/storage.ts` — a `useSyncExternalStore` source, not component state.
   The page is statically prerendered so localStorage is client-only, and
   `commit` needs to read the current found-set *synchronously* while handling

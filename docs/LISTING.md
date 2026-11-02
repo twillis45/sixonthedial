@@ -97,7 +97,7 @@ subscription and no timers between boards.
 |---|---|
 | "Six letters… every word spelled from those six" | The core rule; `canSpell` in `lib/game.ts`, multiset-based, with LOCUST kept as a named regression case |
 | "Six rows to fill, one board a day" | `puzzle.grid.length` is 6; daily rollover at offset 0 |
-| "a clue somebody wrote by hand" | 118 boards across 15 declared themes, 14 carrying, every clue authored — `docs/AUTHORING.md` |
+| "a clue somebody wrote by hand" | 141 boards across 17 declared themes, all 17 carrying, every clue authored — `docs/AUTHORING.md` |
 | "researched" | `docs/research/CANON.md`, `data/canon.json`; `npm test` fails when a cited clue is edited without its canon entry |
 | "Tap the letters or drag across them; both work" | `LetterWheel.tsx` — both first-class; drag geometry guarded by `check:drag` |
 | "No account. No sign-in." | No auth exists in the codebase |
