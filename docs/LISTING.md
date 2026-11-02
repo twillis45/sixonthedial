@@ -29,10 +29,28 @@ Six on the Dial
 Six letters. Six words. Daily.
 ```
 
+**Primary category** (indexed by Apple search — see `docs/ASO.md`)
+```
+Games > Word
+```
+
 **Keywords** (≤100, comma-separated, no spaces — spaces are wasted characters)
 ```
-word game,daily puzzle,anagram,six letters,word search,vocabulary,spelling,brain,offline,no ads
+anagram,themed,clue,puzzle,spelling,vocabulary,brain,offline,no ads
 ```
+
+> **Why this field changed on 2026-11-02.** Apple's own search page states that
+> the name, subtitle, keywords and primary category are one relevance pool, and
+> then says plainly: *"Don't repeat any words included in your app name,
+> subtitle, or category."* The previous field repeated `word`, `game`, `daily`,
+> `six` and `letters` — all already indexed — spending **24 of 95 characters on
+> nothing**. It also carried neither `theme` nor `clue`, so the differentiator
+> COMPETITIVE.md ranks second-most-defensible was the one thing not searchable.
+> `word search` was dropped as well: it names a different genre.
+>
+> `scripts/check-listing.mjs` now enforces all of this, so the field cannot
+> drift back. **33 characters are deliberately unspent** — see the open question
+> in `docs/ASO.md` rather than filling them with terms no instrument supports.
 
 **Promotional text** (≤170, changeable without review)
 ```
