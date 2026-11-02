@@ -13,7 +13,15 @@ This file is the one that explains WHY, which a checklist cannot.
 
 | Artifact | URL | Source |
 |---|---|---|
-| Six on the Dial Path to Production | https://claude.ai/code/artifact/0af681a8-e5ad-445f-af1a-7d7d8cdae7f6 | `docs/artifact/tracker.html` |
+| Six on the Dial Path to Production | https://claude.ai/artifact/2MX1QHneSykHXRmwHoK65j | `docs/artifact/tracker.html` |
+
+The URL above changed form on 2026-11-02 — the platform now serves it as
+`claude.ai/artifact/<id>` rather than `claude.ai/code/artifact/<uuid>`. It is
+the **same artifact**, carrying the same version history (version 24 at that
+publish), not a new one. The old link was
+`claude.ai/code/artifact/0af681a8-e5ad-445f-af1a-7d7d8cdae7f6`; publish against
+either and you reach the same page. Recorded because "republish to the SAME
+url" below is only actionable if the url on this page is the live one.
 
 **Edit `docs/artifact/tracker-template.html`, never `docs/artifact/tracker.html`.** The published
 page regenerates its own source from a base64 copy of the template when a
