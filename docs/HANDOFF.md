@@ -32,7 +32,7 @@ exists because a hand edit once published a blank page while every other check
 said PASS.
 
 Republish to the SAME url or the project's history splits in two. State as of
-**2026-11-02: 96 of 121 items (97 with the b4h tick), 25 open, 4 blockers,
+**2026-11-02: 97 of 121 items (98 with the b4h tick), 24 open, 4 blockers,
 10 decisions on the operator, Verify gates 18/21.**
 
 > ### `s5l`: read this before anything else
@@ -53,17 +53,46 @@ Republish to the SAME url or the project's history splits in two. State as of
 > `s6b` is the same exposure by a second route: a Personal Play account
 > publishes developer name and address on the listing.
 
-Two items on 2026-11-02 — `b4u` closed (the prose had drifted from the
+Three items on 2026-11-02 — `b4u` closed (the prose had drifted from the
 catalogue in five documents, including AGENTS.md and the claim ledger; there is
-now a `check:counts` guard), and `s5l` opened, above. The orphaned memory
-commit from the 2026-09-09 Fable session was also carried onto main.
+now a `check:counts` guard), `s5l` opened, above, and **`b4s` closed**, below.
+The orphaned memory commit from the 2026-09-09 Fable session was also carried
+onto main.
+
+> ### `b4s`: the guard protecting the rail had been typing at the wrong board
+>
+> `check-rail` has a played case, because the card it watches — Your words —
+> grows all game and the whole point of `BONUS_CHIPS = 4` is a ceiling under
+> that growth. The words it typed were a hardcoded CRAFTY list. The `b1i`
+> ruling made board one **WARMTH / Sunday Dinner** on 2026-08-28, letters
+> A H M R T W, so for two months the check typed nineteen words at a board
+> that cannot spell them: **three banked, zero grid rows, reported green.**
+>
+> The 2026-09-09 diagnosis of `b4s` had the shape right — *"the cause is
+> scenario, not assertion"* — and underestimated it. The scenario was not
+> thin, it was absent.
+>
+> This is the third instance of one class in this file: **a fact written once
+> and never re-read.** The others are the counts (`b4u`) and the artifact URL.
+> `check-intro` hit this exact trap with this exact word list and went RED, so
+> it was noticed; this one went *vacuously* green, which is the `b4b` failure
+> mode — rows passing while measuring nothing. The transferable rule: a check
+> that names a fixture instead of reading it will outlive the fixture.
+>
+> Fixed by reading the dial and matching `public/data/puzzles.json`, solving
+> rows in the order the unlock ladder permits, banking bonus words as letters
+> open, never solving the last row (completion hands the screen to the sheet
+> and no further word is accepted), and **asserting the play happened** — under
+> five rows or ten bonus words now fails. Measured at 1440×900: 5/6 rows,
+> 29/29 bonus, scroller overflow 0px. **The shipped rail does hold**; this
+> found no layout defect, it found that nothing had been looking.
 
 Three items closed on 2026-09-09 — `b2n` (the reduced-motion ruling, which was
 ruled and implemented on 2026-08-31 and had simply never been ticked), `m2q`
 (the press kit, now live at `/press`) and `m6p` (the outreach list, drafted in
 `docs/OUTREACH.md`, nothing sent). Five added: `b4q` and `b4r` for two checks
-that were lying, `b4t` for a new one, **`b4s`, which is open and is a hole in
-the safety net**, and `b3k` — which is the one to read first.
+that were lying, `b4t` for a new one, `b4s` (a hole in the safety net, closed
+2026-11-02 — above), and `b3k` — which is the one to read first.
 
 > ### `b3k`: the privacy policy could not be scrolled, and it was live
 >
@@ -113,11 +142,16 @@ things a fresh session should know before it trusts a green board:
   served on `:4310` (`npx serve -l 4310 out`), the way CI does it. Neither was a
   product fault. Both are the same class of defect as the one
   `scripts/lib/browser.mjs` was written to end.
-- **`check:guards` is RED, on purpose, and should stay red until `b4s` is
-  fixed.** One mutation of sixteen — an unbounded bonus-chip list — is not
-  caught by the guard that owns it. It is not in CI (CI runs tests, the
-  catalogue check, rail, intro and hydration; it does not run lint, which has 5
-  pre-existing errors). Do not "fix" the harness by deleting the mutation.
+- **`check:guards` was RED on purpose until 2026-11-02 and is now GREEN at
+  16/16.** The red mutation was the unbounded bonus-chip list, `b4s`, and it
+  was never a weak assertion — the guard that owned it was typing at a board
+  it could not spell, so the ceiling the mutation attacks never loaded. Run
+  2026-11-02: every mutation caught by the guard that owns it. It is still not
+  in CI (CI runs tests, the catalogue check, counts, rail, intro and hydration;
+  it does not run lint, which has 5 pre-existing errors), and it is minutes per
+  run. If it goes red again, do not "fix" it by deleting a mutation — and
+  before suspecting the assertion, check that the scenario the mutation needs
+  is actually reached, which is what `b4s` cost two months.
 
 **CI does not run `check:pages`, `check:press`, `check:settings`, `check:a11y`,
 `check:motion` or `check:guards`.** That is not a recommendation to add all six
