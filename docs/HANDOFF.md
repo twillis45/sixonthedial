@@ -32,7 +32,7 @@ exists because a hand edit once published a blank page while every other check
 said PASS.
 
 Republish to the SAME url or the project's history splits in two. State as of
-**2026-11-02: 97 of 123 items (98 with the b4h tick), 26 open, 4 blockers,
+**2026-11-02: 100 of 124 items (101 with the b4h tick), 24 open, 4 blockers,
 12 decisions on the operator, Verify gates 18/21.**
 
 > ### `s5l`: read this before anything else
@@ -78,6 +78,31 @@ Republish to the SAME url or the project's history splits in two. State as of
 > cannot tell the difference. Two operator decisions came out of it — `m9r`
 > (the name carries no indexed genre term and half of it is unused) and the 33
 > deliberately unspent keyword characters.
+
+> ### The submission master was recording the game failing
+>
+> Found 2026-11-02 while starting `m9j`. `capture-video.mjs` produces the App
+> Store master and carried `ROWS = ['CRAFTY','CRY','FAT','TRAY']`; it clears
+> `localStorage` for a cold profile, so it gets board one — WARMTH since `b1i`.
+> Restoring the shipped list as a mutation measured **0 of 4 rows landed in
+> every clip**. The drag traced two tiles that do not exist, so the clip named
+> for tracing a word contained no drag. `dial-turns` showed a wheel that never
+> turned.
+>
+> **Nothing caught it because every assertion was about the encode** —
+> 886×1920, L4.0, bitrate, 15–30s, stereo. A video of the game failing passes
+> all five. That is the transferable part, and it is the same lesson as `b4s`
+> one level out: a check that measures the container never notices the contents.
+>
+> This bug now has **four** instances (`check-intro` red, `check-rail` green for
+> two months, this one in a submission asset, `capture-demo`'s hand-written
+> orders), so the derivation lives in `scripts/lib/board.mjs` and is imported,
+> following the `lib/browser.mjs` precedent.
+>
+> `m9j` closed on top of it: the preview's audio is now rendered by executing
+> the shipped `feedback.ts` through an `OfflineAudioContext` rather than
+> imitated in ffmpeg — a hand mix would have been a second source of truth for
+> the game's sound, which is the same failure wearing a different hat.
 
 Three items on 2026-11-02 — `b4u` closed (the prose had drifted from the
 catalogue in five documents, including AGENTS.md and the claim ledger; there is
@@ -168,8 +193,9 @@ things a fresh session should know before it trusts a green board:
   served on `:4310` (`npx serve -l 4310 out`), the way CI does it. Neither was a
   product fault. Both are the same class of defect as the one
   `scripts/lib/browser.mjs` was written to end.
-- **`check:guards` was RED on purpose until 2026-11-02 and is now GREEN at
-  16/16.** The red mutation was the unbounded bonus-chip list, `b4s`, and it
+- **`check:guards` is GREEN at 20/20** (16 until 2026-11-02; `b4v` added the
+  four `check-listing` rules, cheap because a `docs/` mutation needs no build).
+  It was RED on purpose before that day. The red mutation was the unbounded bonus-chip list, `b4s`, and it
   was never a weak assertion — the guard that owned it was typing at a board
   it could not spell, so the ceiling the mutation attacks never loaded. Run
   2026-11-02: every mutation caught by the guard that owns it. It is still not
