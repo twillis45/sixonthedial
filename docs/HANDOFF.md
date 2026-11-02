@@ -32,8 +32,8 @@ exists because a hand edit once published a blank page while every other check
 said PASS.
 
 Republish to the SAME url or the project's history splits in two. State as of
-**2026-11-02: 97 of 121 items (98 with the b4h tick), 24 open, 4 blockers,
-10 decisions on the operator, Verify gates 18/21.**
+**2026-11-02: 97 of 123 items (98 with the b4h tick), 26 open, 4 blockers,
+12 decisions on the operator, Verify gates 18/21.**
 
 > ### `s5l`: read this before anything else
 >
@@ -52,6 +52,32 @@ Republish to the SAME url or the project's history splits in two. State as of
 >
 > `s6b` is the same exposure by a second route: a Personal Play account
 > publishes developer name and address on the listing.
+
+> ### `m9o`: the ASO gap closed cheaper than expected, because Apple states the rule
+>
+> Tier 1 run 2026-11-02, written up in `docs/ASO.md`. Apple's own search page
+> says the name, subtitle, keywords and primary category are one relevance pool
+> and then, quoted: *"Don't repeat any words included in your app name,
+> subtitle, or category."* The committed keyword field repeated `word`, `game`,
+> `daily`, `six` and `letters` — all already indexed. **24 of 95 characters
+> bought nothing**, and nobody had noticed because the only thing `check-listing`
+> tested was whether the field *fit*.
+>
+> Worse, the field carried neither `theme` nor `clue`, so the differentiator
+> `COMPETITIVE.md` ranks second-most-defensible was the one claim not on the
+> indexed surface — while `themed clues` turns out to be the lowest-contest term
+> measured (top result 1,186 ratings, against 1,141,818 for Wordscapes on
+> `word wheel`). And the **primary category was written down nowhere in this
+> repository**, though Apple indexes it.
+>
+> All fixed, and `check:listing` now enforces it — red-proofed four ways.
+> It stays **partial**, not done: there is no volume instrument on this account
+> (Apple's hints endpoint answers 200 with an empty array; Ahrefs still
+> unavailable per `mp1b`), so every term is ranked by contest depth and never by
+> demand. A reachable term nobody searches is worth nothing and this sweep
+> cannot tell the difference. Two operator decisions came out of it — `m9r`
+> (the name carries no indexed genre term and half of it is unused) and the 33
+> deliberately unspent keyword characters.
 
 Three items on 2026-11-02 — `b4u` closed (the prose had drifted from the
 catalogue in five documents, including AGENTS.md and the claim ledger; there is
