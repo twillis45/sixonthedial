@@ -24,8 +24,31 @@ exists because a hand edit once published a blank page while every other check
 said PASS.
 
 Republish to the SAME url or the project's history splits in two. State as of
-**2026-09-09: 95 of 119 items (96 with the b4h tick), 24 open, 3 blockers,
-10 decisions on the operator, Verify gates 17/20.**
+**2026-11-02: 96 of 121 items (97 with the b4h tick), 25 open, 4 blockers,
+10 decisions on the operator, Verify gates 18/21.**
+
+> ### `s5l`: read this before anything else
+>
+> **A home address is published in this repository, which is public.**
+> `docs/STORE_READINESS.md` row 3.2 carries it, added 2026-08-29 in the
+> correction that found the Play account is Personal. Line 94 of the same file
+> states the opposite policy — *"Deliberately absent, and this repo is PUBLIC:
+> the EIN and the member's home address"* — and row 3.2's own text names the
+> trap before falling into it.
+>
+> Visibility was confirmed, not assumed: an unauthenticated API call returns
+> `200`, `visibility: public`. **Editing HEAD does not un-publish it** — it is
+> in history on a public remote, the same argument this repo's `.gitignore`
+> makes about keystores. The remedy is history rewriting or an accepted risk,
+> and either way it is the operator's, because it is a home address.
+>
+> `s6b` is the same exposure by a second route: a Personal Play account
+> publishes developer name and address on the listing.
+
+Two items on 2026-11-02 — `b4u` closed (the prose had drifted from the
+catalogue in five documents, including AGENTS.md and the claim ledger; there is
+now a `check:counts` guard), and `s5l` opened, above. The orphaned memory
+commit from the 2026-09-09 Fable session was also carried onto main.
 
 Three items closed on 2026-09-09 — `b2n` (the reduced-motion ruling, which was
 ruled and implemented on 2026-08-31 and had simply never been ticked), `m2q`
