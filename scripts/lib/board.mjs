@@ -163,3 +163,75 @@ export function bankOrder(board, { stopShort = true } = {}) {
   }
   return out.map((w) => w.toUpperCase());
 }
+
+/** The board whose six-letter base is `base` — how a pinned script names one. */
+export function boardByBase(base) {
+  return catalogue().puzzles.find(
+    (p) => String(p.base).toLowerCase() === base.toLowerCase(),
+  );
+}
+
+/**
+ * VALIDATE A SCRIPTED ORDER AGAINST THE LADDER, before a browser opens.
+ *
+ * `rowOrder` derives an order, which is right for a harness that only needs
+ * the board played. A WALKTHROUGH is different: capture-demo types a chosen
+ * sequence because the sequence is the story — a drag on THAW, a shuffle in
+ * the middle, landing on the word in the scene line — and deriving it would
+ * rewrite the demo rather than check it.
+ *
+ * So the script stays written down and this proves it legal. It is not
+ * protecting against a silent pass: capture-demo pins its boards with
+ * `#play=` and asserts `n/6` after every word, so a wrong word already fails
+ * it. What it was missing is WHICH word and WHY — a browser run dies at beat 3
+ * with "/3\\/6/ not found", and whoever picks that up has to re-derive the
+ * unlock ladder by hand to find out that the fourth letter had not opened yet.
+ * The reasoning lived in comments beside the words; now it runs.
+ *
+ * Returns the words unchanged, so the caller can destructure them and keep
+ * reading as a script:
+ *
+ *   const [HAM, WHAM, THAW] = validateScript('warmth', ['HAM','WHAM','THAW']);
+ *
+ * which also makes drift between a validated list and a typed literal
+ * impossible, because there is only one list.
+ */
+export function validateScript(base, words) {
+  const board = boardByBase(base);
+  if (!board) throw new Error(`no board based on "${base}" in the catalogue`);
+
+  const rows = new Set(board.grid.map((w) => w.toLowerCase()));
+  const bonus = new Set((board.bonus ?? []).map((w) => w.toLowerCase()));
+  const order = board.unlockOrder.map((c) => c.toLowerCase());
+  let solved = 0;
+
+  words.forEach((raw, i) => {
+    const w = raw.toLowerCase();
+    const where = `${base.toUpperCase()} word ${i + 1} (${raw})`;
+
+    if (!rows.has(w) && !bonus.has(w)) {
+      throw new Error(
+        `${where} is neither a grid row nor a bonus word on this board — ` +
+        `rows are ${board.grid.join(', ').toUpperCase()}`,
+      );
+    }
+
+    /* The letters live at this point: startActive, plus one per row ALREADY
+       landed. A bonus word banks without unlocking anything, which is why
+       `solved` only moves for rows. */
+    const active = order.slice(0, board.startActive + solved);
+    if (!spellable(w, active)) {
+      const missing = [...new Set([...w])]
+        .filter((c) => !active.includes(c))
+        .join('').toUpperCase();
+      throw new Error(
+        `${where} cannot be spelled yet: ${missing} still locked after ` +
+        `${solved} row(s). Live letters are ${active.join('').toUpperCase()}, ` +
+        `unlockOrder ${order.join('').toUpperCase()}, startActive ${board.startActive}`,
+      );
+    }
+    if (rows.has(w)) solved += 1;
+  });
+
+  return words;
+}

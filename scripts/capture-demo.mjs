@@ -32,6 +32,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { launch } from './lib/browser.mjs';
+import { validateScript } from './lib/board.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'out');
@@ -69,6 +70,40 @@ const indexOf = (base) => {
  * only by asserting the theme name after navigating.
  */
 const INMATE_LINK = indexOf('inmate') + 1;
+
+/*
+ * EVERY WORD THIS WALKTHROUGH TYPES, VALIDATED AGAINST THE LADDER BEFORE THE
+ * BROWSER OPENS.
+ *
+ * The order is chosen, not derived: the drag lands on THAW, the shuffle sits
+ * in the middle, and board one finishes on the word in its scene line. That is
+ * the story `docs/DEMO.md` tells a person, so deriving the order would rewrite
+ * the demo rather than check it.
+ *
+ * What this adds is the REASON, in code instead of in a comment beside the
+ * words. The script was already safe from passing wrongly — boards are pinned
+ * with `#play=` and every word is asserted as `n/6` — but when a word stopped
+ * being legal the failure was a browser run dying at beat 3 with "/3\/6/ not
+ * found", and whoever picked that up had to re-derive the unlock ladder by
+ * hand to find out that a letter had not opened yet. Now it says so by name,
+ * in a second, with no browser:
+ *
+ *   "WARMTH word 2 (HAT) cannot be spelled yet: T still locked after 1 row(s).
+ *    Live letters are HAMW, unlockOrder HAMWTR, startActive 3"
+ *
+ * which is exactly the mistake the runbook made before `docs/DEMO.md` was
+ * corrected — it was written from the answer list rather than from the ladder.
+ *
+ * Destructured rather than indexed so the beats below still read as words, and
+ * so a validated list and a typed literal cannot drift apart: there is one
+ * list.
+ */
+const [HAM, WHAM, THAW, HAT, WARM, WARMTH] =
+  validateScript('warmth', ['HAM', 'WHAM', 'THAW', 'HAT', 'WARM', 'WARMTH']);
+/* Board two is reached by clicking "Warm-up 2" on the cleared sheet rather
+   than by `#play=`, so the demo also asserts the theme name after landing. */
+const [DIP] = validateScript('depict', ['DIP']);
+const [MINE, MINT, NAME] = validateScript('inmate', ['MINE', 'MINT', 'NAME']);
 
 /** The first-run teach, as `scripts/check-intro.mjs` defines it. It is NOT the
     standing "Tap letters to spell a word" prompt, which never retires — a
@@ -231,11 +266,9 @@ async function dragWord(page, word, cam) {
   const tiles = await tilePoints(page);
   const pts = [...word].map((L) => tiles.find((t) => t.L === L)).filter(Boolean);
   if (pts.length !== word.length) return false;
-  cam.paused = true;
-  /* Let any in-flight screenshot finish before the gesture starts. Setting the
-     flag does not cancel one that is already mid-capture, and that single frame
-     was enough. */
-  await new Promise((r) => setTimeout(r, 300));
+  /* Waits for any in-flight screenshot rather than sleeping a guessed 300ms —
+     see `cam.still()`. */
+  await cam.still();
   await page.touchscreen.touchStart(pts[0].x, pts[0].y);
   for (const q of pts.slice(1)) {
     await page.touchscreen.touchMove(q.x, q.y);
@@ -243,7 +276,7 @@ async function dragWord(page, word, cam) {
   }
   await wait(page, 300);
   await page.touchscreen.touchEnd();
-  cam.paused = false;
+  cam.resume();
   return true;
 }
 
@@ -272,13 +305,15 @@ const CLIPS = [
     name: 'demo-path-a',
     what: 'the game: first run, board one solved, board two, the packs',
     size: { width: 390, height: 844, dsf: 2 },
-    play: async (page, cam) => {
+    /* The navigation happens BEFORE the camera starts — see the runner. */
+    open: async (page) => {
       await page.evaluateOnNewDocument((k) => {
         try { localStorage.removeItem(k); } catch { /* first run */ }
       }, KEY);
       await page.goto(BASE, { waitUntil: 'networkidle0' });
       await wait(page, 1400);
-
+    },
+    play: async (page, cam) => {
       /* Beat 1 — the first thing a stranger sees. */
       await assert(page, 'the board opens on Warm-up 1, Sunday Dinner',
         () => /Warm-up 1/.test(document.body.innerText) &&
@@ -294,7 +329,7 @@ const CLIPS = [
       await shot(page, 'first-run');
 
       /* Beat 2 — open on a three so banking is visible in ten seconds. */
-      await type(page, 'HAM');
+      await type(page, HAM);
       await wait(page, 2100);
       await assert(page, 'HAM banks — one row of six',
         () => /1\/6/.test(document.body.innerText));
@@ -314,13 +349,13 @@ const CLIPS = [
        * rather than from the ladder. The order below is derived from the
        * board's own unlockOrder.
        */
-      await type(page, 'WHAM');
+      await type(page, WHAM);
       await wait(page, 2000);
       await assert(page, 'WHAM banks — the second unlock is W, not T',
         () => /2\/6/.test(document.body.innerText));
 
       /* Beat 3 — the same thing with a finger instead of a keyboard. */
-      const dragged = await dragWord(page, 'THAW', cam);
+      const dragged = await dragWord(page, THAW, cam);
       await wait(page, 2200);
       if (!dragged) failures.push('could not trace THAW across the dial');
       await assert(page, 'tracing THAW with a finger banks it, same as tapping',
@@ -341,8 +376,8 @@ const CLIPS = [
       await shot(page, 'shuffled');
 
       /* Beat 5 — finish, landing on the word in the scene line. */
-      for (const w of ['HAT', 'WARM']) { await type(page, w); await wait(page, 1900); }
-      await type(page, 'WARMTH');
+      for (const w of [HAT, WARM]) { await type(page, w); await wait(page, 1900); }
+      await type(page, WARMTH);
       await wait(page, 3200);
       await assert(page, 'the board completes', () => /6\/6/.test(document.body.innerText));
       await assert(page, 'and the cleared sheet names the rank it earned',
@@ -358,7 +393,7 @@ const CLIPS = [
         () => /THE COOKOUT/i.test(document.body.innerText));
       /* DIP first: startActive 3 over unlockOrder d,i,p,t,e,c, so D, I and P
          are the only live tiles. The ladder again. */
-      await type(page, 'DIP');
+      await type(page, DIP);
       await wait(page, 2200);
       await assert(page, 'DIP banks on the second board',
         () => /1\/6/.test(document.body.innerText));
@@ -393,16 +428,17 @@ const CLIPS = [
     name: 'demo-path-b',
     what: 'the claims: the redacted clue, the press kit, and the policy that now scrolls',
     size: { width: 390, height: 844, dsf: 2 },
-    play: async (page, cam) => {
+    open: async (page) => {
       await page.evaluateOnNewDocument((k) => {
         try { localStorage.removeItem(k); } catch { /* first run */ }
       }, KEY);
-
       /* The clue that completes itself. A `#play=` link outranks the warm-up
          ladder — and it is 1-based, so the board is asserted by name rather
          than trusted, because the off-by-one renders a real board quietly. */
       await page.goto(`${BASE}/#play=${INMATE_LINK}`, { waitUntil: 'networkidle0' });
       await wait(page, 1700);
+    },
+    play: async (page, cam) => {
       await assert(page, 'the link lands on The Nineties, not the board next door',
         () => /THE NINETIES/i.test(document.body.innerText));
 
@@ -417,8 +453,8 @@ const CLIPS = [
        * cannot be spelled until two rows have landed. Typing it first banks
        * nothing and looks, on a recording, exactly like a broken keyboard.
        */
-      for (const w of ['MINE', 'MINT']) { await type(page, w); await wait(page, 2000); }
-      await type(page, 'NAME');
+      for (const w of [MINE, MINT]) { await type(page, w); await wait(page, 2000); }
+      await type(page, NAME);
       await wait(page, 2800);
       await assert(page, 'three rows land on The Nineties board',
         () => /3\/6/.test(document.body.innerText));
@@ -445,14 +481,13 @@ const CLIPS = [
       if (chip) {
         /* Same reason as the drag: the hold is a timed pointer sequence, and a
            free-running shutter delivers it as a tap. */
-        cam.paused = true;
-        await new Promise((r) => setTimeout(r, 300));
+        await cam.still();
         await page.touchscreen.touchStart(chip.x, chip.y);
         await wait(page, 1200);
         filled = await page.evaluate(() => /Say My NAME/i.test(document.body.innerText));
         await shot(page, 'clue-filled');
         await page.touchscreen.touchEnd();
-        cam.paused = false;
+        cam.resume();
       } else {
         await shot(page, 'clue-filled');
       }
@@ -500,7 +535,15 @@ const CLIPS = [
 const made = [];
 for (const clip of CLIPS) {
   console.log(`\n  ${clip.name} — ${clip.what}`);
-  const browser = await launch({ headless: true });
+  /*
+   * protocolTimeout, because the default is 180 SECONDS and that is how one
+   * hung screenshot took out a whole run. See the camera note below: a
+   * captureScreenshot that races a navigation never returns, and while it is
+   * in flight every touch gesture on the page is cancelled. At the default it
+   * sat there for the entire clip and reported nothing until the end; bounded,
+   * it fails while there is still something to do about it.
+   */
+  const browser = await launch({ headless: true, protocolTimeout: 30_000 });
   const page = await browser.newPage();
   page.setDefaultNavigationTimeout(60_000);
   await page.setViewport({
@@ -512,6 +555,39 @@ for (const clip of CLIPS) {
      defect check:settings was caught by. */
   await page.emulateMediaFeatures([{ name: 'prefers-color-scheme', value: 'dark' }]);
 
+  /*
+   * NAVIGATE FIRST, THEN START THE CAMERA. This ordering is the whole bug.
+   *
+   * The grabber used to start before `clip.play`, and every play began with
+   * `page.goto`. So the first captureScreenshot fired at `about:blank` and
+   * raced the navigation — it never returned. Two things followed from that
+   * one race, and together they were all nine failures this script reported:
+   *
+   *   the camera died at frame zero, because a failed grab breaks the loop,
+   *   so both clips recorded 0 frames;
+   *
+   *   and a screenshot stayed IN FLIGHT for the rest of the run, which
+   *   cancels every touch gesture on the page — the effect this file already
+   *   documents as "a screenshot taken mid-gesture cancels the gesture",
+   *   except holding for the whole clip rather than one frame. Keyboard input
+   *   is unaffected, which is exactly the signature: every typed word banked
+   *   and every traced word and press-and-hold failed, so it read as a
+   *   gameplay bug rather than a harness one.
+   *
+   * The navigation moves into `clip.open`, and the dial is asserted present
+   * before recording starts — the same rule capture-video keeps, for the same
+   * reason: a recording harness that cannot tell it missed its subject is
+   * worse than none, because it produces something shippable.
+   */
+  await clip.open(page);
+  const framed = await page.evaluate(() => !!document.querySelector('.liquid-disc'));
+  if (!framed) {
+    console.log(`  \u2717 ${clip.name} — no dial in the DOM after opening; not recording`);
+    failures.push(`${clip.name} never opened`);
+    await page.close(); await browser.close();
+    continue;
+  }
+
   const frameDir = fs.mkdtempSync(path.join(os.tmpdir(), 'sixdial-demo-'));
   const stamps = [];
   let grabbing = true;
@@ -520,13 +596,40 @@ for (const clip of CLIPS) {
      drive it by hand for the duration of a touch sequence. */
   const cam = {
     paused: false,
+    /* The grab currently in flight, so `still()` can WAIT for it instead of
+       guessing how long it takes. */
+    inflight: null,
     async grab() {
       const file = path.join(frameDir, `f${String(stamps.length).padStart(5, '0')}.png`);
-      try { await page.screenshot({ path: file, optimizeForSpeed: true }); }
+      const shot = page.screenshot({ path: file, optimizeForSpeed: true });
+      cam.inflight = shot;
+      try { await shot; }
       catch { return false; }
+      finally { cam.inflight = null; }
       stamps.push({ file, at: Date.now() - started });
       return true;
     },
+    /*
+     * STOP THE SHUTTER AND WAIT FOR IT TO ACTUALLY STOP.
+     *
+     * Setting `paused` does not cancel a capture already in flight, and one
+     * frame landing mid-gesture is all it takes — this file's own note. The
+     * answer used to be `paused = true` followed by a 300ms sleep, which is a
+     * guess about how long a screenshot takes. Measured on this runner it
+     * takes ~320ms at dsf 2 and ~700ms at dsf 3, so the guess was under the
+     * real figure and the press-and-hold beat was FLAKY rather than broken:
+     * it passed or failed depending on where in a capture the pause landed.
+     * Adding two debug log lines was enough to make it pass.
+     *
+     * Awaiting the in-flight promise replaces the guess with the fact, and
+     * removes a tuned constant that would have had to be re-tuned on every
+     * machine and every viewport.
+     */
+    async still() {
+      cam.paused = true;
+      try { await cam.inflight; } catch { /* a failed frame still stops it */ }
+    },
+    resume() { cam.paused = false; },
   };
   /*
    * THE GRABBER HAS TO YIELD, or it eats the gestures it is filming.
@@ -541,9 +644,19 @@ for (const clip of CLIPS) {
    * at real durations anyway, and it leaves the event loop enough room to
    * deliver a touch sequence in order.
    */
+  /* A single failed grab no longer kills the clip. It used to `break`, so one
+     bad frame cost every frame after it; now it takes five in a row, which
+     still exits a genuinely dead page. */
   const grabber = (async () => {
+    let misses = 0;
     while (grabbing) {
-      if (!cam.paused) { if (!(await cam.grab())) break; }
+      if (!cam.paused) {
+        if (await cam.grab()) misses = 0;
+        else if (++misses >= 5) {
+          console.log(`     !! ${clip.name} — camera gave up after 5 failed frames`);
+          break;
+        }
+      }
       await new Promise((r) => setTimeout(r, 60));
     }
   })();
