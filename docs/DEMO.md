@@ -76,7 +76,7 @@ ladder**, and **settings** — theme, accent, feedback intensity, text size.
 
 ### The one extra beat worth setting up
 
-On 131 of the 518 boards a clue is written *around* its answer with the answer
+On 131 of the 518 puzzles a clue is written *around* its answer with the answer
 blanked, and solving the row puts it back. It is the best thirty seconds in the
 product and **neither warm-up board has one** — so it only happens if you go
 looking for it.

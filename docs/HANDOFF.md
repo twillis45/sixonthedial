@@ -58,10 +58,11 @@ with the true answers to them.
 
 ## Where the catalogue stands
 
-**MEASURED 2026-09-09, re-verified on merge 2026-09-13, not asserted.** `main`
-is at `978cdd2` — PR #63 rebase-merged, Pages deployed green, so the live site
-now carries the scroll fix and `/press`.
-**376 tests in 18 files. 21 check scripts.** 141 authored boards across 17
+**RE-MEASURED 2026-11-02, not asserted.** `main` is at `f4ecb4a`, Pages
+deployed green, so the live site carries the scroll fix and `/press`. The
+49 days between that deploy and this measurement changed nothing in the
+repository — the counts below were re-run, not carried forward.
+**376 tests in 18 files. 22 check scripts.** 141 authored boards across 17
 themes, **518** puzzles shipped — counted from
 `public/data/puzzles.json`, which is what the app serves. An older line in this
 file said 520, which is the number in the `npm run puzzles` command

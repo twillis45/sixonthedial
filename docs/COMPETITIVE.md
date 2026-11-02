@@ -55,7 +55,7 @@ Not the wheel. Three things, in descending order of defensibility:
    letters, and the board is those six letters exhausted. Wordscapes gives you
    a wheel per level; the constraint here is that a base is only ever six
    letters, which is also why `mantle` and `mental` are the same puzzle.
-2. **Cited, themed clues.** 300 hand-authored puzzles across 15 themes, most
+2. **Cited, themed clues.** 141 hand-authored themed boards across 17 themes, most
    describing Black American cultural life, where a clue is a factual claim
    carrying a canon citation and the build fails when a cited clue is edited
    without its source. CodyCross is themed and clued, so this is a difference

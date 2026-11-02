@@ -10,7 +10,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # Themed content is cited content
 
-The paid half of this game is 300 hand-authored themed puzzles across 15
+The paid half of this game is 141 hand-authored themed boards across 17
 themes, and most of them describe Black American cultural life. Before writing,
 changing or reviewing any of that content, read:
 
