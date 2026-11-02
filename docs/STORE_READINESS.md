@@ -65,31 +65,51 @@ name and address you type against the D-U-N-S record. A record saying Oakland
 while the application says Baltimore fails verification, and the failure
 arrives after the wait rather than before it.
 
-**STATUS 2026-08-29: the address change is STARTED, not confirmed.** Recorded
-as in-flight deliberately — this row's neighbour above is a monument to writing
-down an intention as a completed fact. It is done when the public record shows
-Baltimore, not when the form was submitted. **Re-check the profile before
-applying to either store**, because the stores match what they read against
-what you type, and a change still propagating reads exactly like a change that
-never happened.
+**STATUS 2026-11-02: the operator reports the address is UPDATED to the
+Baltimore address.** Recorded as operator-reported and dated, not as verified,
+because this row's neighbour above is a monument to writing down an intention
+as a completed fact and the distinction is cheap to keep.
 
-**Three things to establish, in this order:**
+What was and was not checked on 2026-11-02: the D&B public business directory
+could not be reached for this record from the session that wrote this line —
+the profile URL is not guessable and a name search did not surface it, so
+**there is no independent confirmation here, only the operator's**. That is
+enough to stop treating the Oakland address as the live blocker, and it is not
+enough to retire the instruction below.
 
-1. **Is this record even ours?** The name matches exactly and Maryland ID
-   `W26948752` is the authoritative check. It may equally be a formation
-   service's address picked up by D&B, or a different company.
-2. **Reveal the number without paying.** The directory masks it and offers a
-   credit report; the free route is *Claim it via D-U-N-S Profile Manager*
-   on the company profile page. Claiming is free; the credit report is not.
-3. **Correct the address on the record before applying anywhere**, or the
-   store verification will not match.
+**Still re-check the profile immediately before applying to either store.**
+The stores match what they read against what you type, and a change still
+propagating reads exactly like a change that never happened. That hazard is
+about timing rather than about whether the edit was made, so it survives the
+edit being confirmed.
 
-**Timing, corrected.** An earlier note in this session said a D-U-N-S takes
-"several business days". Verified on dnb.com 2026-08-29: **free requests take
-up to 30 BUSINESS DAYS**; expedited is 8 business days and costs money. D&B
+**The three things that had to be established — state as of 2026-11-02:**
+
+1. **Is this record even ours?** ~~Open~~ — settled in practice: the operator
+   holds the number for the LLC, which is only possible on a claimed record.
+   Maryland ID `W26948752` remains the authoritative check if it is ever
+   disputed.
+2. **Reveal the number without paying.** **DONE** — the operator has the
+   D-U-N-S number. It is deliberately NOT written here; see the absent-values
+   note below. It lives with the EIN, in the LLC folder.
+3. **Correct the address on the record.** **Operator-reported done
+   2026-11-02**, Baltimore. Not independently verified from here — see the
+   status block above.
+
+**Timing — this is no longer the long pole, and that changes the sequencing.**
+The 2026-08-29 figures below described REQUESTING a number: free requests take
+up to 30 business days on dnb.com, expedited is 8 and costs money, and D&B
 offers dedicated *"I'm a Google Developer"* and *"I'm an Apple developer"*
-paths in its request flow. One number serves both stores — this is the longest
-pole in the store track and it is not close.
+paths. **None of that applies now** — the record exists, the number is in
+hand, and one number serves both stores. The 30-day wait was the reason this
+row outranked everything else in the store track; it is spent.
+
+What remains on the calendar is the accounts themselves, which is days rather
+than weeks: Apple Developer Program enrollment (`s6a`), and the Play
+Organization account (`s6b`) — where the 12-testers-for-14-days rule applies
+to the current **Personal** account and an Organization account is exempt, so
+that choice is still worth two weeks. The figures above are kept because a
+future entity, or a lost claim, would need them again.
 
 **Deliberately absent, and this repo is PUBLIC:** the EIN and the member's home
 address. Both are on file with the IRS — the CP 575 lists the LLC at a home
