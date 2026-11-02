@@ -79,6 +79,53 @@ Republish to the SAME url or the project's history splits in two. State as of
 > (the name carries no indexed genre term and half of it is unused) and the 33
 > deliberately unspent keyword characters.
 
+> ### The D-U-N-S is no longer the long pole
+>
+> Operator-reported 2026-11-02: the number is in hand and the record's address
+> is corrected to Baltimore. **Not independently verified** — the D&B public
+> directory could not be reached for this record from the session that wrote
+> it, and `STORE_READINESS.md` records that distinction rather than smoothing
+> it over.
+>
+> The sequencing consequence is real. The 30-business-day free-request wait was
+> why that row outranked everything else in the store track, and it is spent.
+> What is left is days: Apple enrollment (`s6a`) and the Play account decision
+> (`s6b`) — where Organization is still worth **two weeks**, because the
+> 12-testers-for-14-days rule applies to the current Personal account and
+> Organization accounts are exempt, and it also removes the home address from
+> the listing, which is half of `s5l`.
+>
+> One instruction survives the update and should not be dropped: **re-check the
+> D&B profile immediately before applying to either store.** The stores match
+> what they read against what you type, and a change still propagating reads
+> exactly like a change that never happened. That hazard is about timing, not
+> about whether the edit was made, so confirming the edit does not retire it.
+
+> ### `capture-demo` was red, and I had said it was fine
+>
+> I told the operator `capture-demo` carried the same latent bug as
+> `capture-video`. **It does not**, and the two properties that protect it are
+> the ones worth copying: it pins its boards with `#play=` (and `indexOf`
+> throws if a base leaves the catalogue) and it asserts `n/6` after every word.
+> So it degrades to RED like `check-intro`, never to a vacuous pass.
+>
+> It was red — nine beats — and nobody had run it since 2026-09-13. **One race
+> caused eight of them.** The grabber started before `clip.play`, every play
+> began with `page.goto`, so the first screenshot raced the navigation and never
+> returned: the camera died at frame zero, and a capture stayed in flight for
+> the whole clip, which cancels every touch gesture. Keyboard input is immune,
+> which is the signature that made it look like a game bug — every typed word
+> banked, every traced word and press-and-hold failed.
+>
+> The ninth was the press-and-hold, and it was **flaky, not broken**: the pause
+> slept a guessed 300ms while a screenshot measures ~320ms at dsf 2 and ~700ms
+> at dsf 3. Adding two debug lines made it pass. `cam.still()` awaits the
+> in-flight capture now, which is the fact instead of the guess.
+>
+> The transferable part: a tuned sleep that stands in for "wait until X is
+> finished" is a flake waiting for a slower machine, and the thing it waits on
+> can usually be awaited directly.
+
 > ### The submission master was recording the game failing
 >
 > Found 2026-11-02 while starting `m9j`. `capture-video.mjs` produces the App
