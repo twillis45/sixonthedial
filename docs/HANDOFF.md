@@ -32,7 +32,7 @@ exists because a hand edit once published a blank page while every other check
 said PASS.
 
 Republish to the SAME url or the project's history splits in two. State as of
-**2026-11-02: 100 of 124 items (101 with the b4h tick), 24 open, 4 blockers,
+**2026-11-02: 100 of 125 items (101 with the b4h tick), 25 open, 4 blockers,
 12 decisions on the operator, Verify gates 18/21.**
 
 > ### `s5l`: read this before anything else
@@ -103,6 +103,13 @@ Republish to the SAME url or the project's history splits in two. State as of
 > the shipped `feedback.ts` through an `OfflineAudioContext` rather than
 > imitated in ffmpeg — a hand mix would have been a second source of truth for
 > the game's sound, which is the same failure wearing a different hat.
+>
+> One limit of that, opened as `b4w` rather than left implicit: the SOUNDS are
+> provably the game's, but the event MAPPING is modelled from the capture
+> script's actions rather than observed from the game. A later change that
+> moved a sound onto a different action would not be noticed. The fix is exact
+> and cheap — wrap `OscillatorNode.prototype.start` on an unmuted throwaway
+> page and compare onset clusters against the model.
 
 Three items on 2026-11-02 — `b4u` closed (the prose had drifted from the
 catalogue in five documents, including AGENTS.md and the claim ledger; there is
