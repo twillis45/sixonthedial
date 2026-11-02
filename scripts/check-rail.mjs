@@ -24,6 +24,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { launch } from './lib/browser.mjs';
+import { bankOrder, boardFor, dialLetters } from './lib/board.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'out');
@@ -204,86 +205,17 @@ const TEXT_SCALES = ['default', 'large', 'larger', 'browser20'];
  * more unlocks per row landed, so a list in the wrong order banks nothing
  * however correct its spelling.
  */
-const CATALOGUE = JSON.parse(
-  fs.readFileSync(path.join(ROOT, 'public', 'data', 'puzzles.json'), 'utf8')
-);
-
-/** The board whose six letters are the ones on the dial right now. */
-function boardFor(letters) {
-  const key = [...letters].map((c) => c.toLowerCase()).sort().join('');
-  return CATALOGUE.puzzles.find(
-    (p) => [...p.letters].map((c) => c.toLowerCase()).sort().join('') === key
-  );
-}
-
-/**
- * A play order the board will actually accept, and that leaves it UNFINISHED.
+/*
+ * The derivation now lives in `scripts/lib/board.mjs`, shared with
+ * capture-video.mjs. It was duplicated there first and the duplicate had the
+ * SAME defect in a worse place: capture-video typed CRAFTY, CRY, FAT and TRAY
+ * into the App Store submission master, where all four are rejected. Two
+ * copies of this reasoning is how that happens, so there is one.
  *
- * Two constraints, both learned by getting it wrong:
- *
- *   Rows unlock letters. `startActive` letters are live at the start and one
- *   more unlocks per row landed, so a list in the wrong order banks nothing
- *   however correct its spelling.
- *
- *   NEVER SOLVE THE LAST ROW. Completing the board ends the session — the
- *   completion sheet takes over and no further word is accepted. Solving all
- *   six first banked 6/6 rows and then exactly 4 bonus words out of 29,
- *   because the other 25 were typed at a finished board. The rail is being
- *   measured mid-game, with a Your-words card that has grown all game, which
- *   is the state the BONUS_CHIPS ceiling exists for.
- *
- * So: unlock with rows, bank every bonus word that becomes spellable as the
- * letters open up, and stop one row short of the end.
+ * `bankOrder` is what this check wants: rows and bonus words interleaved as
+ * the letters open up, stopping one row short so the completion sheet never
+ * takes the screen and blocks further input.
  */
-function playOrder(board) {
-  const order = board.unlockOrder.map((c) => c.toLowerCase());
-  /* Multiset containment: a board may carry a doubled letter, so a Set would
-     say CHURCH is spellable from four distinct tiles. Same rule canSpell uses. */
-  const spellable = (word, pool) => {
-    const left = [...pool];
-    return [...word.toLowerCase()].every((ch) => {
-      const i = left.indexOf(ch);
-      if (i < 0) return false;
-      left.splice(i, 1);
-      return true;
-    });
-  };
-  const out = [];
-  const rows = board.grid.map((w) => w.toLowerCase());
-  const bonus = (board.bonus ?? []).map((w) => w.toLowerCase());
-  const sent = new Set();
-
-  /* The ACTIVE LETTERS ARE THE POOL, one tile each. An earlier version padded
-     it to six copies of every letter, which made the multiset check above
-     decorative — `spellable` would have accepted HAHAHA off a single H. It
-     emitted words the board then rejected, so the count it reported was not
-     the count it had typed. */
-  const bankBonus = (active) => {
-    for (const w of bonus) {
-      if (!sent.has(w) && spellable(w, active)) { out.push(w); sent.add(w); }
-    }
-  };
-
-  bankBonus(order.slice(0, board.startActive));
-  /*
-   * STOP ONE ROW SHORT — and the stopping point is fixed BEFORE the loop.
-   *
-   * Written as `solved < rows.length - 1` it was re-read against an array the
-   * loop body splices, so the target fell by one every iteration and met the
-   * counter halfway: three rows of six on WARMTH, not five. The rail was
-   * measured at half the state it was supposed to be measured at, which is a
-   * quieter version of the bug this whole function exists to fix.
-   */
-  const target = rows.length - 1;
-  for (let solved = 0; solved < target; solved++) {
-    const active = order.slice(0, board.startActive + solved);
-    const i = rows.findIndex((w) => spellable(w, active));
-    if (i < 0) break;
-    out.push(rows.splice(i, 1)[0]);
-    bankBonus(order.slice(0, board.startActive + solved + 1));
-  }
-  return out.map((w) => w.toUpperCase());
-}
 const isPhone = (vp) => vp.w < 500;
 
 for (const vp of VIEWPORTS) {
@@ -373,10 +305,7 @@ for (const vp of VIEWPORTS) {
      * cold profile meets, and it has changed once already without this file
      * noticing.
      */
-    const letters = await page.evaluate(() =>
-      [...document.querySelectorAll('button[aria-label^="Letter "]')]
-        .map((b) => b.getAttribute('aria-label').match(/Letter (\w)/)[1])
-    );
+    const letters = await dialLetters(page);
     const board = boardFor(letters);
     if (!board) {
       console.log(`✗  ${vp.w}x${vp.h} — no catalogue board spells ${letters.join('')}`);
@@ -384,7 +313,7 @@ for (const vp of VIEWPORTS) {
       await page.close();
       continue;
     }
-    for (const word of playOrder(board)) {
+    for (const word of bankOrder(board)) {
       for (const ch of word) await page.keyboard.press(ch);
       await page.keyboard.press('Enter');
       await new Promise((r) => setTimeout(r, 60));
