@@ -20,9 +20,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { boardFor, dialLetters, rowOrder, spellable } from './lib/board.mjs';
+import { renderMix } from './lib/preview-audio.mjs';
 import { launch } from './lib/browser.mjs';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url)).replace(/\/scripts$/, '');
@@ -113,8 +114,13 @@ async function plan(page, afterRows = 2) {
  * wraps it in a try/catch with a comment saying capture is an optimisation.
  * Checked before relying on it.
  */
-async function dragWord(page, word, holdMs) {
-  return page.evaluate(async ({ word, holdMs }) => {
+async function dragWord(page, word, holdMs, beat) {
+  /* The gesture runs inside ONE page.evaluate, so every beat emitted around it
+     would land on the same millisecond. The letters actually join one per
+     segment, `holdMs` apart, so the taps are placed at that spacing from the
+     moment the gesture started — absolute wall-clock, converted by `beat`. */
+  const t0 = Date.now();
+  const ok = await page.evaluate(async ({ word, holdMs }) => {
     const btns = [...document.querySelectorAll('button[aria-label^="Letter "]')];
     const info = btns.map((b) => {
       const r = b.getBoundingClientRect();
@@ -161,6 +167,11 @@ async function dragWord(page, word, holdMs) {
     fire('pointerup', last.x, last.y, last.el);
     return true;
   }, { word, holdMs });
+  if (ok) {
+    [...word].forEach((_, i) => beat?.('tap', 0, t0 + i * holdMs));
+    beat?.('bonus');
+  }
+  return ok;
 }
 
 /**
@@ -172,10 +183,15 @@ async function dragWord(page, word, holdMs) {
  * fix for the same reason; here it is what let `store-preview` bank only 2 of
  * its 4 rows, because the two after the drag were swallowed.
  */
-async function typeWord(page, word, perChar, after) {
+async function typeWord(page, word, perChar, after, beat, kind = 'correct', step = 0) {
   await page.evaluate(() => document.activeElement?.blur?.());
-  for (const ch of word) { await page.keyboard.press(ch); await wait(page, perChar); }
+  for (const ch of word) {
+    await page.keyboard.press(ch);
+    beat?.('tap');
+    await wait(page, perChar);
+  }
   await page.keyboard.press('Enter');
+  beat?.(kind, step);
   await wait(page, after);
 }
 
@@ -247,12 +263,16 @@ const CLIPS = [
     /* Four of the board's six rows land, so the completion sheet never takes
        the screen — a preview that ends on a modal is a preview of a modal. */
     verify: { rows: 4, drag: true },
-    play: async (page, { rows, drag }) => {
+    play: async (page, { rows, drag, beat }) => {
       await wait(page, 600);
-      for (const w of rows.slice(0, 2)) await typeWord(page, w, 170, 2100);
-      if (drag) await dragWord(page, drag, 240);
+      /* `step` rises with each row banked: feedback.correct() walks a C-major
+         scale and the step is which rung it plays. Passing the real index is
+         what makes the mix rise the way the game does. */
+      let step = 0;
+      for (const w of rows.slice(0, 2)) await typeWord(page, w, 170, 2100, beat, 'correct', step++);
+      if (drag) await dragWord(page, drag, 240, beat);
       await wait(page, 2100);
-      for (const w of rows.slice(2, 4)) await typeWord(page, w, 170, 2100);
+      for (const w of rows.slice(2, 4)) await typeWord(page, w, 170, 2100, beat, 'correct', step++);
       await wait(page, 1800);
     },
   },
@@ -272,9 +292,10 @@ const CLIPS = [
     /* The whole subject of the clip. Two rows must land, because the dial
        advances 60 degrees per row and this is the clip that shows that. */
     verify: { rows: 2 },
-    play: async (page, { rows }) => {
+    play: async (page, { rows, beat }) => {
       await wait(page, 1400);
-      for (const w of rows.slice(0, 2)) await typeWord(page, w, 150, 1800);
+      let step = 0;
+      for (const w of rows.slice(0, 2)) await typeWord(page, w, 150, 1800, beat, 'correct', step++);
     },
   },
   {
@@ -286,10 +307,10 @@ const CLIPS = [
        produced a file named for a drag with no drag in it. */
     verify: { rows: 1, drag: true },
     afterRows: 1,
-    play: async (page, { rows, drag }) => {
+    play: async (page, { rows, drag, beat }) => {
       await wait(page, 1200);
-      await typeWord(page, rows[0], 120, 1600);
-      if (drag) await dragWord(page, drag, 220);
+      await typeWord(page, rows[0], 120, 1600, beat, 'correct', 0);
+      if (drag) await dragWord(page, drag, 220, beat);
       await wait(page, 1800);
     },
   },
@@ -301,9 +322,10 @@ const CLIPS = [
        completion sheet and no further word is accepted — the same thing that
        cost check-rail its measurement. */
     verify: { rows: 4 },
-    play: async (page, { rows }) => {
+    play: async (page, { rows, beat }) => {
       await wait(page, 1400);
-      for (const w of rows.slice(0, 4)) await typeWord(page, w, 130, 1500);
+      let step = 0;
+      for (const w of rows.slice(0, 4)) await typeWord(page, w, 130, 1500, beat, 'correct', step++);
       await wait(page, 900);
     },
   },
@@ -315,6 +337,9 @@ const made = [];
    separate because the file is produced either way and the frames are worth
    looking at. Fails the run at the end. */
 const badPlay = [];
+/* Clips whose audio render failed and fell back to silence. Not fatal — the
+   picture is fine and a silent track still satisfies Apple's spec. */
+const audioFell = [];
 
 for (const clip of CLIPS) {
   /*
@@ -409,7 +434,22 @@ for (const clip of CLIPS) {
    * `plan` throws if the dial spells nothing in the catalogue, which is louder
    * than recording a run of rejections.
    */
+  /*
+   * THE BEAT TIMELINE, on the same clock as the frames.
+   *
+   * `stamps` records each frame at `Date.now() - started`, and so does this, so
+   * the mix and the picture cannot drift apart by construction. `at` may be
+   * passed absolutely for events that happen inside a single page.evaluate.
+   */
+  const beats = [];
+  const beat = (kind, step = 0, abs) => beats.push({
+    at: (abs ?? Date.now()) - started,
+    kind,
+    args: kind === 'correct' ? [step] : [],
+  });
+
   const ctx = await plan(page, clip.afterRows ?? 2);
+  ctx.beat = beat;
   const before = await banked(page, ctx.board);
   await clip.play(page, ctx);
 
@@ -464,11 +504,45 @@ for (const clip of CLIPS) {
     { stdio: 'pipe' });
   /* The submission master is encoded from THESE frames, not from the mp4 just
      written -- see the mastering pass. Everything else can drop its frames. */
+  /*
+   * THE REAL MIX — m9j.
+   *
+   * Rendered from the shipped `src/lib/feedback.ts` through an
+   * OfflineAudioContext, at the clip's own measured length so the track and
+   * the picture are the same duration. See scripts/lib/preview-audio.mjs for
+   * why the module is executed rather than imitated in ffmpeg.
+   *
+   * A failure here does NOT fail the clip: the picture is already on disk and
+   * is worth having. It drops to the silent track and says so, because a
+   * preview with no audio stream is rejected outright while a silent one is
+   * merely the thing m9j was opened about.
+   */
+  const secs = stamps.at(-1).at / 1000;
+  let mixWav = null;
+  try {
+    const wavPath = path.join(frameDir, 'mix.wav');
+    /*
+     * RENDERED LONGER THAN THE CLIP, ON PURPOSE.
+     *
+     * The frame list holds its last frame for the median gap, so the video is
+     * a touch longer than `stamps.at(-1).at`. With `-shortest` in the master
+     * encode, an audio track even a frame short would TRIM THE PICTURE — the
+     * exact hazard this file already warns about for the silent track. Half a
+     * second of tail costs nothing and guarantees the trim falls on the audio.
+     */
+    const mix = await renderMix(beats, secs + 0.6, wavPath);
+    mixWav = wavPath;
+    console.log(`  \u2669 ${clip.name.padEnd(18)} ${mix.events} beats, ${secs.toFixed(1)}s, peak ${mix.peak.toFixed(3)}`);
+  } catch (e) {
+    console.log(`  \u2717 ${clip.name.padEnd(18)} audio render failed (${e.message}); falling back to a silent track`);
+    audioFell.push(clip.name);
+  }
+
   const keepFrames = clip.name === 'store-preview';
   if (!keepFrames) fs.rmSync(frameDir, { recursive: true, force: true });
 
   const bytes = fs.statSync(mp4).size;
-  made.push({ name: clip.name, what: clip.what, mp4, bytes, list: keepFrames ? list : null, frameDir: keepFrames ? frameDir : null });
+  made.push({ name: clip.name, what: clip.what, mp4, bytes, list: keepFrames ? list : null, frameDir: keepFrames ? frameDir : null, mixWav: keepFrames ? mixWav : null, beats: beats.length });
   console.log(`  ✔ ${clip.name.padEnd(18)} ${clip.size.width}x${clip.size.height}  ${(bytes / 1024 / 1024).toFixed(1)}MB`);
 }
 
@@ -487,10 +561,13 @@ for (const clip of CLIPS) {
  *              macroblocks; at 886x1920 the same footage fits inside 4.0
  *   ~11 Mbps   Apple targets 10-12; the capture sits near 1, which is fine for
  *              a web page and reads as mush next to a 12 Mbps neighbour
- *   silent AAC Apple's table lists stereo audio as a specification. A silent
- *              256k stereo track satisfies it. The game HAS sound, and a real
- *              mix would be better -- this only guarantees the file is not
- *              rejected for a missing track.
+ *   real AAC   Apple's table lists stereo audio as a specification, and a
+ *              SILENT 256k stereo track satisfies it. That was m9j: the spec
+ *              met and nothing more. The track is now rendered from the
+ *              shipped src/lib/feedback.ts -- the game's own tap, the rising
+ *              C-major scale as each row lands, the bonus chime -- placed on
+ *              the same clock as the frames. It falls back to silence only if
+ *              the render fails, and says so when it does.
  *
  * Duration is the one thing no encode can fix, which is why store-preview is
  * captured long rather than stretched.
@@ -498,8 +575,11 @@ for (const clip of CLIPS) {
 const submission = made.find((m) => m.name === 'store-preview');
 if (submission) {
   const out = path.join(OUT, 'store-preview__886x1920.mp4');
+  const audioIn = submission.mixWav
+    ? ['-i', submission.mixWav]
+    : ['-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=48000'];
   execFileSync('ffmpeg', ['-y', '-f', 'concat', '-safe', '0', '-i', submission.list,
-    '-f', 'lavfi', '-i', 'anullsrc=channel_layout=stereo:sample_rate=48000',
+    ...audioIn,
     '-vf', 'scale=886:1920:flags=lanczos',
     '-c:v', 'libx264', '-profile:v', 'high', '-level:v', '4.0',
     '-crf', '16', '-maxrate', '12M', '-bufsize', '24M',
@@ -520,11 +600,41 @@ if (submission) {
   if (v.level > 40) bad.push(`H.264 level ${v.level / 10}, need <= 4.0`);
   if (secs < 15 || secs > 30) bad.push(`${secs.toFixed(1)}s, Apple requires 15-30s`);
   if (!a || a.channels !== 2) bad.push('no stereo audio track');
-  if (bad.length) console.log(`\n\u2716 store-preview__886x1920.mp4 is NOT submittable: ${bad.join('; ')}`);
+  /*
+   * AND THAT THE TRACK CARRIES SOUND — m9j's actual assertion.
+   *
+   * `channels === 2` was the only thing ever checked here, and a silent track
+   * passes it, which is precisely how the preview shipped mute for two months
+   * with a green line of output. ffmpeg's volumedetect reports -91 dB for
+   * digital silence; a real mix of this game measures around -10 dB peak
+   * because the bus feeds a limiter at -12. The floor is set well below that
+   * and well above silence, so it catches an empty track without pretending to
+   * judge the mix.
+   */
+  /* spawnSync, not execFileSync: volumedetect reports on STDERR, and
+     execFileSync returns stdout only — which is null here, and reading
+     .toString() off it is how this assertion first crashed. */
+  const vol = spawnSync('ffmpeg', ['-i', out, '-af', 'volumedetect', '-f', 'null', '-'],
+    { encoding: 'utf8' }).stderr ?? '';
+  const peakDb = Number((vol.match(/max_volume:\s*(-?[\d.]+) dB/) || [])[1]);
+  if (!Number.isFinite(peakDb)) bad.push('could not measure the audio track');
+  else if (peakDb < -60) bad.push(`audio track is silent (${peakDb} dB peak)`);
+  if (bad.length) {
+    console.log(`\n\u2716 store-preview__886x1920.mp4 is NOT submittable: ${bad.join('; ')}`);
+    /*
+     * AND FAIL. This branch printed and exited 0, so every spec violation it
+     * found was advisory — a run that produced an unsubmittable master was
+     * indistinguishable, to anything but a reader, from one that did not. The
+     * silence assertion added above would have inherited that: it fires
+     * correctly and then let the run succeed.
+     */
+    process.exitCode = 1;
+  }
   else {
     const mbps = (Number(v.bit_rate) / 1e6).toFixed(1);
     const note = Number(v.bit_rate) < 10e6 ? `; ${mbps} Mbps, under Apple's 10-12 target -- a target, not a floor, and CRF 16 says the picture is there` : `; ${mbps} Mbps`;
-    console.log(`\n\u2714 store-preview__886x1920.mp4 meets Apple's preview spec (${secs.toFixed(1)}s, 886x1920, L${v.level / 10}, stereo${note})`);
+    const aud = submission.mixWav ? `real mix, ${peakDb} dB peak, ${submission.beats} beats` : 'SILENT track';
+    console.log(`\n\u2714 store-preview__886x1920.mp4 meets Apple's preview spec (${secs.toFixed(1)}s, 886x1920, L${v.level / 10}, stereo \u2014 ${aud}${note})`);
   }
 }
 
