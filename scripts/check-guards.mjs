@@ -234,6 +234,84 @@ const MUTATIONS = [
     guard: 'check-motion',
     why: 'letters lie on their side for the 420ms a shuffle takes',
   },
+
+  /*
+   * THE STORE LISTING. All four of check-listing's content rules, not a
+   * representative one — this is `b4v`, and `b4v` exists because those rules
+   * were red-proofed by hand on 2026-11-02 and then sat outside this net,
+   * which is the shape of `b4s`: a guard nobody checks can stop checking
+   * without saying so.
+   *
+   * `build: false` on every one. docs/LISTING.md is never compiled, and the
+   * reason that matters is in the run loop below: a build here would cost 55
+   * seconds and could credit a compiler that never read the file. It is also
+   * what makes four mutations affordable instead of one.
+   *
+   * The guard reads docs/LISTING.md and takes Apple's rule as stated at
+   * developer.apple.com/app-store/search/: name, subtitle, keywords and
+   * primary category are one relevance pool, so "Don't repeat any words
+   * included in your app name, subtitle, or category."
+   */
+  {
+    /*
+     * The defect that actually shipped. The committed field read
+     * `word game,daily puzzle,anagram,six letters,word search,...` and spent
+     * 24 of 95 characters on words already indexed through the name and
+     * subtitle. Nothing caught it because the only thing checked here was
+     * whether the field FIT.
+     */
+    name: 'a keyword repeats an already-indexed word',
+    file: 'docs/LISTING.md',
+    from: 'anagram,themed,clue,puzzle',
+    to: 'anagram,themed,clue,word puzzle',
+    guard: 'check-listing',
+    build: false,
+    why: 'keyword characters are spent on a word the name, subtitle or category already indexes',
+  },
+  {
+    /*
+     * COMPETITIVE.md ranks the cited themed clues second-most-defensible, and
+     * `themed clues` measured as the lowest-contest term in the 2026-11-02
+     * sweep — top result 1,186 ratings. Dropping it puts the differentiator
+     * back off the indexed surface, which is where it was.
+     */
+    name: 'the differentiator leaves the indexed surface',
+    file: 'docs/LISTING.md',
+    from: 'anagram,themed,clue,puzzle',
+    to: 'anagram,puzzle',
+    guard: 'check-listing',
+    build: false,
+    why: 'the one claim worth ranking for is the one claim not searchable',
+  },
+  {
+    /*
+     * The category is indexed by Apple and was written down nowhere in this
+     * repository until 2026-11-02, so the duplicate rule could not even be
+     * computed. Removing it must fail rather than silently narrow the pool.
+     */
+    name: 'the indexed primary category goes undeclared',
+    file: 'docs/LISTING.md',
+    from: '**Primary category** (indexed by Apple search',
+    to: '**Primary category, FYI** (indexed by Apple search',
+    guard: 'check-listing',
+    build: false,
+    why: 'the duplicate rule silently stops seeing category words and passes on a narrower pool',
+  },
+  {
+    /*
+     * Board rule 1 read the other way round. It forbids CLAIMING the wheel; it
+     * never stopped anyone buying wheel KEYWORDS, which is the more expensive
+     * mistake — measured 2026-11-02, Wordscapes is the #1 App Store result for
+     * `word wheel` with 1,141,818 ratings.
+     */
+    name: 'the listing buys keywords Wordscapes owns',
+    file: 'docs/LISTING.md',
+    from: 'anagram,themed',
+    to: 'word wheel,anagram,themed',
+    guard: 'check-listing',
+    build: false,
+    why: 'the keyword budget is spent losing to a 1.1M-rating incumbent on its own term',
+  },
 ];
 
 /*
@@ -392,7 +470,22 @@ for (const m of MUTATIONS) {
   let broken = original;
   for (const e of edits) broken = broken.replace(e.from, e.to);
   fs.writeFileSync(file, broken);
-  const built = run('npm run build');
+  /*
+   * `build: false` for a mutation the build cannot see.
+   *
+   * The build exists to materialise a `src/` or CSS change into `out/`, which
+   * is what the browser-driving guards read. A mutation to a file under
+   * `docs/` is never compiled, so building after it costs ~55s and proves
+   * nothing — and it is worse than slow: if that build failed for an
+   * unrelated reason the run would report "the compiler caught it", crediting
+   * a compiler that never looked at the file.
+   *
+   * This is also what makes it affordable to put ALL of a cheap guard's rules
+   * in the net rather than a representative one. Four listing mutations cost
+   * about four seconds between them; with a build each they would cost four
+   * minutes, which is how a rule ends up outside the net to save time.
+   */
+  const built = m.build === false ? true : run('npm run build');
   /*
    * A mutation that will not BUILD proves nothing about the guard — the
    * compiler caught it, which is a different and earlier line of defence.
