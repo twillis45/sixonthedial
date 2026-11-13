@@ -46,6 +46,35 @@ written down. A name recorded without its rejected alternatives cannot be
 defended later, and the same collision gets rediscovered by the next person who
 likes the same name — so this is a gap, noted rather than invented.
 
+### Where the consoles actually are
+
+This file told you what to do in them and never once said where they were.
+Every link below was checked 2026-11-13 and returned 200, except where noted.
+
+| what | link |
+|---|---|
+| **Account type check** — Setup → Developer account → Account details | `play.google.com/console/u/0/developers/8527330358555903551/account-details` |
+| Play Console root, if that path has moved | `play.google.com/console` |
+| Play support — the conversion question | `support.google.com/googleplay/android-developer/gethelp` |
+| Play Console Requirements (states the D-U-N-S rule for Organization) | `support.google.com/googleplay/android-developer/answer/10788890` |
+| Testing requirements (12 testers / 14 days, scoped to **personal** accounts) | `support.google.com/googleplay/android-developer/answer/14151465` |
+| Verify developer identity | `support.google.com/googleplay/android-developer/answer/10841920` |
+| Developer account types | `support.google.com/googleplay/android-developer/answer/6112435` |
+| Apple Developer Program enrollment (`s6a`) | `developer.apple.com/programs/enroll/` |
+| D&B — get or manage a D-U-N-S | `dnb.com/duns-number/get-a-duns.html` |
+
+Two notes that are not pedantry:
+
+**A 200 from the Play Console deep link proves nothing about the path.** The
+console serves a sign-in shell and resolves routes client-side after auth, so
+an unauthenticated check cannot tell a valid deep link from a wrong one. It
+will either land on Account details or drop you at the console home.
+
+**`iupdate.dnb.com` refuses the connection outright** (reset, not a 404), and
+`dnb.com`'s directory returns 403 to automated requests. That is the same
+blocking that makes the D-U-N-S record unverifiable from a session, recorded
+above — it is a robots wall, not a missing record.
+
 ### D-U-N-S — the record is ours, and the address is corrected
 
 **SETTLED 2026-11-13.** This section used to read "a record already exists, and
