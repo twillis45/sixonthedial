@@ -53,7 +53,8 @@ Every link below was checked 2026-11-13 and returned 200, except where noted.
 
 | what | link |
 |---|---|
-| **Account type check** — Setup → Developer account → Account details | `play.google.com/console/u/0/developers/8527330358555903551/account-details` |
+| **Account type check** — Setup → Developer account → Account details | `play.google.com/console/developers/8527330358555903551/account-details` |
+| Every developer account the signed-in Google account can reach | `play.google.com/console/developers` |
 | Play Console root, if that path has moved | `play.google.com/console` |
 | Play support — the conversion question | `support.google.com/googleplay/android-developer/gethelp` |
 | Play Console Requirements (states the D-U-N-S rule for Organization) | `support.google.com/googleplay/android-developer/answer/10788890` |
@@ -69,6 +70,25 @@ Two notes that are not pedantry:
 console serves a sign-in shell and resolves routes client-side after auth, so
 an unauthenticated check cannot tell a valid deep link from a wrong one. It
 will either land on Account details or drop you at the console home.
+
+**The link above deliberately has no `/u/N/` segment.** That segment is
+Google's MULTI-LOGIN INDEX — which Google account you are signed in as — and
+it is not the developer account. It was written as `/u/0/` first, meaning "the
+first Google account signed in on this browser", which is the wrong one here
+more often than not: the Play account owner is `toddswillis@gmail.com` while
+the operator's working identity is a different Google account. Without the
+segment, Google resolves to whichever signed-in account has access.
+
+**Being signed in as the wrong Google account cannot mislead you**, which is
+worth knowing when the question being answered is "are we sure". The developer
+ID is in the PATH, so a wrong login yields an access error or the account
+chooser — never a different developer account's details under this one's
+heading. You either see `8527330358555903551` or you see nothing.
+
+**The page shows both identities, and they are different things.** `Account
+owner` is the Play account's owner, recorded 2026-08-29 as
+`toddswillis@gmail.com`; the signed-in Google account appears separately in
+the avatar. Check the account type against the former, not the latter.
 
 **`iupdate.dnb.com` refuses the connection outright** (reset, not a 404), and
 `dnb.com`'s directory returns 403 to automated requests. That is the same
