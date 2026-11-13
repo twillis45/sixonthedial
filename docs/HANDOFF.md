@@ -32,7 +32,7 @@ exists because a hand edit once published a blank page while every other check
 said PASS.
 
 Republish to the SAME url or the project's history splits in two. State as of
-**2026-11-02: 100 of 125 items (101 with the b4h tick), 25 open, 4 blockers,
+**2026-11-13: 100 of 126 items (101 with the b4h tick), 26 open, 4 blockers,
 12 decisions on the operator, Verify gates 18/21.**
 
 > ### `s5l`: read this before anything else
@@ -78,6 +78,42 @@ Republish to the SAME url or the project's history splits in two. State as of
 > cannot tell the difference. Two operator decisions came out of it — `m9r`
 > (the name carries no indexed genre term and half of it is unused) and the 33
 > deliberately unspent keyword characters.
+
+> ### `s6b` ruled: Organization — but ask support before opening a second account
+>
+> Ruled 2026-11-13. What is still open is the **route**, and the two differ by
+> more than paperwork.
+>
+> **Route A — new Organization account.** A new account means a new app, a new
+> Play-managed signing key, and a **new SHA-256**. `public/.well-known/assetlinks.json`
+> and the file live at `sixonthedial.com` both carry the fingerprint taken from
+> the *personal* account's app on 2026-08-27. They would silently become wrong,
+> `s6c` re-opens, and row 0.3's "both placeholders are now filled" stops being
+> true. $25 again.
+>
+> **Route B — convert in place via support.** Keeps the app, the key, the
+> fingerprint, `s6c` and the $25. Google does not document a
+> personal-to-organization conversion; third-party guides describe a "Change
+> account type" flow, and `s6b`'s own former text said it needs support.
+>
+> **So ask support first.** Opening the second account is the one-way door — an
+> organization account cannot be changed back — and the question is free.
+>
+> Verified at source 2026-11-13 rather than carried forward: Google's testing
+> page says *"Developers with **personal** accounts created after November 13,
+> 2023, must run a closed test"* with *"a minimum of 12 testers… opted in
+> continuously for at least 14 days."* This account was created 2026-08-27, so
+> it applies. Google **does not mention organization accounts on that page at
+> all**, so the exemption is an inference from the rule being scoped to personal
+> accounts, not a stated exemption. Worth the precision, because that two-week
+> saving is the main argument for the whole move. The D-U-N-S requirement for
+> Organization *is* stated by Google directly.
+>
+> `b4x` opened alongside it: **`check:assetlinks` proves the two files agree,
+> not that either is right.** It has no Play API access, so after Route A local
+> and served would stay identical to each other and identical to the old
+> account's fingerprint — green, while the TWA silently falls back to a Custom
+> Tab with an address bar. Same shape as `b4s` and `m9s`.
 
 > ### The D-U-N-S is no longer the long pole
 >
