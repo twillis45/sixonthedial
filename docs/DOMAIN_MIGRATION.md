@@ -21,6 +21,18 @@ below, `<domain>` is whatever gets bought. Exactly two files carry the choice:
 Cloudflare Registrar, both already on Cloudflare nameservers. `6onthedial.com`
 and `6onthedial.app` were left available.
 
+> **STALE — corrected 2026-11-13 from the registry.** The digit pair was NOT
+> left available; both were bought. Verified by RDAP: all four domains are
+> registered at Cloudflare, every one expiring **2028-08-21**, and the three
+> non-canonical ones 301 to `sixonthedial.com` — checked live. STORE_READINESS
+> row 0.3 already said "the three defensive domains 301 to the canonical one",
+> so the two files disagreed and this one was wrong. Recorded rather than
+> silently edited, because this is the fourth instance in this repo of a fact
+> written once and never re-read.
+>
+> **`clientTransferProhibited` is set** on the canonical domain — registrar
+> lock on, which is what you want and was never written down either.
+
 **The purchase preceded clearance, deliberately.** Two paragraphs below, and in
 STORE_READINESS 1.11, this file says not to buy until the attorney closes the
 trademark question. That instruction was not followed and the reasoning is
