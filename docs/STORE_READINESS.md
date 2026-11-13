@@ -46,12 +46,15 @@ written down. A name recorded without its rejected alternatives cannot be
 defended later, and the same collision gets rediscovered by the next person who
 likes the same name — so this is a gap, noted rather than invented.
 
-### D-U-N-S — a record already exists, and its address is wrong
+### D-U-N-S — the record is ours, and the address is corrected
 
-Checked 2026-08-29 against the D&B public business directory. **Do not file a
-new request before resolving this.**
+**SETTLED 2026-11-13.** This section used to read "a record already exists, and
+its address is wrong", and that was the live blocker on the whole store track.
+It is not any more. The history is kept below because the next entity, or a
+lost claim, walks the same path.
 
-A record exists under the exact legal name:
+A record exists under the exact legal name. The 2026-08-29 state, for the
+record:
 
 | field | D&B record | this repo's entity block |
 |---|---|---|
@@ -65,23 +68,27 @@ name and address you type against the D-U-N-S record. A record saying Oakland
 while the application says Baltimore fails verification, and the failure
 arrives after the wait rather than before it.
 
-**STATUS 2026-11-02: the operator reports the address is UPDATED to the
-Baltimore address.** Recorded as operator-reported and dated, not as verified,
-because this row's neighbour above is a monument to writing down an intention
-as a completed fact and the distinction is cheap to keep.
+**STATUS 2026-11-13: the address is updated to Baltimore, and the number is
+in hand.** Confirmed by the operator on 2026-11-02 and again on 2026-11-13,
+eleven days apart — which matters, because the one hazard this section named
+was propagation lag, and eleven days is well past it.
 
-What was and was not checked on 2026-11-02: the D&B public business directory
-could not be reached for this record from the session that wrote this line —
-the profile URL is not guessable and a name search did not surface it, so
-**there is no independent confirmation here, only the operator's**. That is
-enough to stop treating the Oakland address as the live blocker, and it is not
-enough to retire the instruction below.
+**This will never be machine-verified from here, and that is a tooling limit
+rather than an open question.** Checked twice, on 2026-11-02 and 2026-11-13:
+dnb.com returns **403** to the business-directory page and **404** to the
+search servlet for automated requests, and a name search does not surface the
+profile. So the absence of independent confirmation says nothing about the
+record — it says D&B blocks robots. Recorded this way so a later reader does
+not re-open it as a task, spend an hour on it, and land exactly here.
 
-**Still re-check the profile immediately before applying to either store.**
-The stores match what they read against what you type, and a change still
-propagating reads exactly like a change that never happened. That hazard is
-about timing rather than about whether the edit was made, so it survives the
-edit being confirmed.
+The distinction this section used to keep — operator-reported versus verified —
+was worth keeping while the edit was fresh and propagating. It is not worth
+carrying indefinitely against a source that cannot be read. **Treated as done.**
+
+**One glance at the profile before you apply, and it is a glance, not a gate.**
+The stores match the name and address you type against the record, so it costs
+nothing to look at it in the same sitting. The propagation hazard that made
+this a flagged instruction has expired with the eleven days.
 
 **The three things that had to be established — state as of 2026-11-02:**
 

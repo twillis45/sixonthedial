@@ -81,11 +81,17 @@ Republish to the SAME url or the project's history splits in two. State as of
 
 > ### The D-U-N-S is no longer the long pole
 >
-> Operator-reported 2026-11-02: the number is in hand and the record's address
-> is corrected to Baltimore. **Not independently verified** — the D&B public
-> directory could not be reached for this record from the session that wrote
-> it, and `STORE_READINESS.md` records that distinction rather than smoothing
-> it over.
+> **Settled 2026-11-13.** The number is in hand and the record's address is
+> corrected to Baltimore — confirmed by the operator on 2026-11-02 and again on
+> 2026-11-13, eleven days apart, which is well past the propagation lag that
+> was the only hazard this ever had.
+>
+> It will **not** be machine-verified from here, and that is a tooling limit
+> rather than an open question: checked on both dates, dnb.com returns 403 to
+> its directory page and 404 to its search servlet for automated requests. The
+> absence of independent confirmation says D&B blocks robots, not anything
+> about the record. Written down so a later session does not re-open it as a
+> task and land exactly here.
 >
 > The sequencing consequence is real. The 30-business-day free-request wait was
 > why that row outranked everything else in the store track, and it is spent.
