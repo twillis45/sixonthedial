@@ -62,7 +62,12 @@ Every link below was checked 2026-11-13 and returned 200, except where noted.
 | Verify developer identity | `support.google.com/googleplay/android-developer/answer/10841920` |
 | Developer account types | `support.google.com/googleplay/android-developer/answer/6112435` |
 | Apple Developer Program enrollment (`s6a`) | `developer.apple.com/programs/enroll/` |
-| D&B — get or manage a D-U-N-S | `dnb.com/duns-number/get-a-duns.html` |
+| **D&B — look the number up** (free; start here) | `dnb.com/duns-number/lookup.html` |
+| D&B — what it is / manage it | `dnb.com/duns-number.html` |
+| D&B — get or claim a D-U-N-S | `dnb.com/duns-number/get-a-duns.html` |
+| D&B — business directory (the profile; number shows MASKED) | `dnb.com/business-directory.html` |
+| D&B — iUpdate / Profile Manager (claim and edit; free) | `iupdate.dnb.com` |
+| D&B — support, if the record will not surface | `support.dnb.com` |
 
 Two notes that are not pedantry:
 
@@ -93,7 +98,18 @@ the avatar. Check the account type against the former, not the latter.
 **`iupdate.dnb.com` refuses the connection outright** (reset, not a 404), and
 `dnb.com`'s directory returns 403 to automated requests. That is the same
 blocking that makes the D-U-N-S record unverifiable from a session, recorded
-above — it is a robots wall, not a missing record.
+above — it is **a robots wall, not a missing record or a dead link.** Both
+work normally in a browser. The three `dnb.com/duns-number/*` pages above do
+answer a scripted request (200, checked 2026-11-14), so a future session can
+at least confirm those still exist.
+
+**Searching for the record: use the legal name, and try BOTH addresses.** The
+directory masks the number and offers a paid credit report; the free route is
+*Claim it via D-U-N-S Profile Manager*, which is what step 2 above has said
+since 2026-08-29. Search `NO GUESSWORK SYSTEMS LLC`. If Baltimore does not
+find it, try `5000 Thayer Ctr, Oakland, MD 21550` — the pre-correction
+address. **Which one answers is the propagation test** this file could never
+run from a session, and it is worth noting the result here either way.
 
 ### D-U-N-S — the record is ours, and the address is corrected
 
