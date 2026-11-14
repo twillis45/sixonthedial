@@ -90,18 +90,37 @@ Two things that make the choice cheap rather than a trade-off:
 
 - **Players are unaffected.** The link users click comes from *Store listing
   contact details*, a separate field, which stays `sixonthedial.com`.
-- **Whether this field is shown publicly could not be established**, and does
-  not need to be. Google's verification page files the website under
-  information "shown to users on Google Play after it's been verified", while
-  the account-details documentation describes the organization website as not
-  shown on Play; the two conflict and neither is decisive. It does not matter:
-  even if it IS public, a developer profile for *No Guesswork Systems*
-  pointing at that domain is correct, and it still reads correctly when a
-  second app ships. A developer profile pointing at one game's site would not.
+- **It is NOT shown publicly — settled 2026-11-14 at source.** This was
+  recorded here as unresolved, because Google's verification page files the
+  website under information "shown to users on Google Play after it's been
+  verified" while the account-details page says otherwise, and resolving a
+  conflict in favour of one's own recommendation is how this file acquires its
+  corrections. The account-details page is the decisive one and says it
+  plainly: *"Organization website: The URL of your organization's main
+  website. **This is not shown on Google Play.**"* So the recommendation has
+  no public-facing cost at all, and the earlier hedge can go.
 
-Recorded unresolved rather than resolved in favour of the recommendation,
-because picking the convenient reading of two conflicting sources is how this
-file acquires its corrections.
+**The conversion is gated on verifying this website, and that is how we learned
+Route B exists** — see `s6b`. Play redirects to Google Search Console and the
+check is a **DNS TXT record on the root domain**. Three ways it fails quietly
+here:
+
+1. **The record goes in Cloudflare, not at the registrar.**
+   `noguessworksystems.com` is registered at DomainRegistry.com but answered
+   by `MEGAN`/`NILE.NS.CLOUDFLARE.COM`. A TXT record added at the registrar
+   does nothing.
+2. **Add a TXT record; do not edit the existing one.** That domain already
+   carries `v=spf1 a mx include:spf.postal.businessidentity.llc ~all`.
+   Several TXT records coexist; several SPF records do not.
+3. **Do the Search Console step signed in as the Play account owner**
+   (`toddswillis@gmail.com`). Three Google identities are in play on this
+   project, and verifying under the wrong one leaves Play unable to see it —
+   a failure that reads like a DNS problem.
+
+**The contact email needs a one-time password**, in Google's own words, so
+`info@noguessworksystems.com` must actually receive — through
+`businessidentity.llc`. That moves the dependency noted below from a
+continuity risk to a prerequisite: confirm the inbox before starting.
 
 If `sixonthedial.com` ever has to be the organisation site instead, the
 address is Cloudflare Email Routing — free, DNS is already there, and it adds
