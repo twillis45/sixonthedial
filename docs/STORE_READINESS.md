@@ -74,10 +74,34 @@ publicly**, so it is a separate thing from the support address on the listing.
 Use **`info@noguessworksystems.com`** and set the organization's website to
 **`noguessworksystems.com`**. The mismatch Play warns about is between two
 fields the operator controls, and changing the website field costs nothing
-while creating a mailbox costs something. It is also the more correct answer:
-Play verifies the ORGANISATION, and the organisation is the LLC, whose site is
-that domain. `sixonthedial.com` is one product it publishes, and that URL
-belongs in the app listing.
+while creating a mailbox costs something.
+
+**The operator reasonably used the game's domain, since that is the app being
+shipped. The judgement is to change it, and the deciding fact is evidential
+rather than aesthetic.** Organization verification is Google matching a LEGAL
+ENTITY against its D&B record — `NO GUESSWORK SYSTEMS LLC`, Baltimore.
+Checked live 2026-11-14: `noguessworksystems.com` names the LLC, states the
+address and describes the business. On `sixonthedial.com`, the LLC is named on
+`/press/` **and nowhere else** — not on privacy, terms or support (that gap is
+`s5m`). So one domain is the evidence Google is asking for and the other is
+barely evidence at all.
+
+Two things that make the choice cheap rather than a trade-off:
+
+- **Players are unaffected.** The link users click comes from *Store listing
+  contact details*, a separate field, which stays `sixonthedial.com`.
+- **Whether this field is shown publicly could not be established**, and does
+  not need to be. Google's verification page files the website under
+  information "shown to users on Google Play after it's been verified", while
+  the account-details documentation describes the organization website as not
+  shown on Play; the two conflict and neither is decisive. It does not matter:
+  even if it IS public, a developer profile for *No Guesswork Systems*
+  pointing at that domain is correct, and it still reads correctly when a
+  second app ships. A developer profile pointing at one game's site would not.
+
+Recorded unresolved rather than resolved in favour of the recommendation,
+because picking the convenient reading of two conflicting sources is how this
+file acquires its corrections.
 
 If `sixonthedial.com` ever has to be the organisation site instead, the
 address is Cloudflare Email Routing — free, DNS is already there, and it adds
