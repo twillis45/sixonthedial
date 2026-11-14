@@ -46,6 +46,53 @@ written down. A name recorded without its rejected alternatives cannot be
 defended later, and the same collision gets rediscovered by the next person who
 likes the same name — so this is a gap, noted rather than invented.
 
+### The company's own domain and mail — none of this was recorded
+
+Established 2026-11-14, from the registry and DNS, because Play's Organization
+verification asked for an organization website and a contact email on its
+domain and nothing here said what the company had.
+
+| fact | value | how it was checked |
+|---|---|---|
+| `noguessworksystems.com` | **held**, registered 2026-02-08, expires 2028-02-08 | RDAP |
+| its registrar | DomainRegistry.com LLC — *not* Cloudflare | RDAP |
+| its DNS | `MEGAN`/`NILE.NS.CLOUDFLARE.COM` — **the same pair as `sixonthedial.com`**, so the same Cloudflare account | RDAP |
+| its website | a real company site: names the LLC, describes the business, Baltimore address, privacy and terms | fetched |
+| its mail | MX `mailserver.businessidentity.llc`, SPF `include:spf.postal.businessidentity.llc` | DNS |
+| `sixonthedial.com` mail | **no MX at all** — it cannot receive mail | DNS |
+
+Note the domain was registered **eighteen days before** the LLC's Maryland
+registration (2026-02-26), which is why it is at a different registrar from
+the product domains.
+
+**PLAY ORGANIZATION CONTACT EMAIL — the ruling.** Play's form requires a
+contact email that is different from the Google Account's own address,
+represents the organization, and *should* match the domain of the
+organization's website; it may be a group list, and it is **not shown
+publicly**, so it is a separate thing from the support address on the listing.
+
+Use **`info@noguessworksystems.com`** and set the organization's website to
+**`noguessworksystems.com`**. The mismatch Play warns about is between two
+fields the operator controls, and changing the website field costs nothing
+while creating a mailbox costs something. It is also the more correct answer:
+Play verifies the ORGANISATION, and the organisation is the LLC, whose site is
+that domain. `sixonthedial.com` is one product it publishes, and that URL
+belongs in the app listing.
+
+If `sixonthedial.com` ever has to be the organisation site instead, the
+address is Cloudflare Email Routing — free, DNS is already there, and it adds
+the MX and SPF itself. Receive-only is not a limitation for this field, which
+is inbound and private; it *would* be one for replying to a reviewer.
+
+**The dependency worth knowing:** business mail is hosted by
+`businessidentity.llc`, which reads as a formation or registered-agent
+service. That is the same class of dependency as the registered-agent address
+— and `info@noguessworksystems.com` is **published on the live support page
+that both stores open during review**. If that service lapses, the support
+email on the store listing goes dead and app review notices before we do.
+Confirm the mailbox is reachable under our own control, not only through that
+provider's portal.
+
 ### Where the consoles actually are
 
 This file told you what to do in them and never once said where they were.
