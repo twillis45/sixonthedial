@@ -145,9 +145,35 @@ this a flagged instruction has expired with the eleven days.
    holds the number for the LLC, which is only possible on a claimed record.
    Maryland ID `W26948752` remains the authoritative check if it is ever
    disputed.
-2. **Reveal the number without paying.** **DONE** — the operator has the
-   D-U-N-S number. It is deliberately NOT written here; see the absent-values
-   note below. It lives with the EIN, in the LLC folder.
+2. **Reveal the number without paying.** **The operator has it** (stated
+   2026-11-02 and 2026-11-13). It is deliberately NOT written here; see the
+   absent-values note below.
+
+   > **Correction 2026-11-14 — I wrote down a location I had not checked.**
+   > This step previously read *"It lives with the EIN, in the LLC folder."*
+   > The first half of that sentence was the operator's; **the second half was
+   > my inference** from the absent-values note below, which says the EIN and
+   > home address live there. Written as fact, never verified.
+   >
+   > Checked 2026-11-14, and it is not there. `/No-Guesswork-Systems/LLC/`
+   > holds exactly two files — the Maryland Certificate of Status and
+   > `CP_575_G.pdf`, the IRS CP 575. A Dropbox title search for `DUNS` returns
+   > music files; a content search scoped to the LLC tree returns nothing; and
+   > the connected mailbox has nothing from `dnb.com` and no `D-U-N-S` subject
+   > at all.
+   >
+   > So **the number's location is unrecorded**, and this file asserting one
+   > was worse than it admitting none — it sends the next reader to the wrong
+   > folder with confidence. The same failure this file catalogues elsewhere,
+   > committed in the file that catalogues it.
+   >
+   > A likely reason the mail search found nothing: **three Google identities
+   > are in play.** The connected mailbox is one address, the Play account
+   > owner is recorded as another, and the operator's working identity is a
+   > third. A D&B confirmation sent to any of the other two is invisible to a
+   > search of the first. Whoever records the number should record WHICH
+   > identity holds the D&B profile alongside it — that is the fact that makes
+   > it findable again, and it is the same gap as `s6e` for the domains.
 3. **Correct the address on the record.** **Operator-reported done
    2026-11-02**, Baltimore. Not independently verified from here — see the
    status block above.
